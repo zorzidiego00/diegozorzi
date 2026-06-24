@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diego Zorzi — Product & R&D Project Manager</title>
+<meta name="description" content="Product & R&D Project Manager specializzato in sviluppo di macchine industriali per il packaging flessibile. Verona, Italia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white: #FFFFFF;
+  --ink: #0A0A0A;
+  --mid: #707070;
+  --faint: #E8E8E8;
+  --bg: #F5F5F5;
+  --blue: #0047FF;
+  --blue-light: #E0E8FF;
+  --font: 'Space Grotesk', system-ui, sans-serif;
+  --max: 1100px;
+  --col: 780px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(255,255,255,0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--faint);
+}
+.nav-inner {
+  max-width: var(--max); margin: 0 auto; padding: 0 2rem;
+  height: 60px; display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  font-size: 0.85rem; font-weight: 600; letter-spacing: 0.02em;
+  text-transform: uppercase; color: var(--ink);
+}
+.nav-right { display: flex; align-items: center; gap: 2.5rem; }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  font-size: 0.8rem; font-weight: 400; color: var(--mid);
+  letter-spacing: 0.02em; transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--ink); }
+.lang-toggle { display: flex; gap: 4px; }
+.lang-btn {
+  font-family: var(--font); font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  border: 1px solid var(--faint); background: none;
+  cursor: pointer; color: var(--mid); padding: 3px 8px; border-radius: 4px;
+  transition: all 0.15s;
+}
+.lang-btn.active { color: var(--white); background: var(--blue); border-color: var(--blue); }
+.lang-btn:hover:not(.active) { border-color: var(--ink); color: var(--ink); }
+
+/* ── HERO ── */
+#hero {
+  padding-top: 60px; min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding-bottom: 0; border-top: none;
+  border-bottom: 1px solid var(--faint);
+}
+.hero-top {
+  max-width: var(--max); margin: 0 auto; padding: 5rem 2rem 3rem;
+  display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: start;
+}
+.hero-label {
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--blue); margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.hero-label::before {
+  content: ''; display: block; width: 20px; height: 1px; background: var(--blue);
+}
+.hero-name {
+  font-size: clamp(3.5rem, 7vw, 6.5rem); font-weight: 700;
+  line-height: 0.95; letter-spacing: -0.03em; color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+.hero-name span { color: var(--blue); }
+.hero-desc {
+  font-size: 1.05rem; font-weight: 300; line-height: 1.7;
+  color: var(--mid); max-width: 500px; margin-bottom: 2.5rem;
+}
+.hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.7rem 1.5rem; font-family: var(--font);
+  font-size: 0.8rem; font-weight: 500; letter-spacing: 0.04em;
+  text-transform: uppercase; border-radius: 4px; cursor: pointer;
+  transition: all 0.15s; border: 1px solid transparent;
+}
+.btn-blue { background: var(--blue); color: var(--white); }
+.btn-blue:hover { background: #003ACC; }
+.btn-outline { border-color: var(--faint); color: var(--ink); background: var(--white); }
+.btn-outline:hover { border-color: var(--ink); }
+.hero-photo {
+  width: 140px; height: 140px; border-radius: 50%;
+  overflow: hidden; flex-shrink: 0;
+  outline: 3px solid var(--blue-light); outline-offset: 3px;
+}
+.hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+
+/* Hero bottom strip — numeri */
+.hero-strip {
+  border-top: 1px solid var(--faint);
+  background: var(--white);
+}
+.hero-strip-inner {
+  max-width: var(--max); margin: 0 auto; padding: 0 2rem;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+}
+.strip-item {
+  padding: 1.5rem 0; border-right: 1px solid var(--faint);
+  display: flex; gap: 1rem; align-items: center;
+}
+.strip-item:last-child { border-right: none; padding-left: 2rem; }
+.strip-item:nth-child(2) { padding-left: 2rem; }
+.strip-n {
+  font-size: 2rem; font-weight: 700; letter-spacing: -0.04em;
+  color: var(--blue); line-height: 1;
+}
+.strip-label {
+  font-size: 0.78rem; color: var(--mid); line-height: 1.4; font-weight: 400;
+}
+
+/* ── SECTIONS ── */
+section { border-top: 1px solid var(--faint); padding: clamp(3.5rem, 7vw, 6rem) 0; }
+#hero { border-top: none; }
+.container { max-width: var(--max); margin: 0 auto; padding: 0 2rem; }
+.col { max-width: var(--col); }
+.sec-label {
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--blue); margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.sec-label::before {
+  content: ''; display: block; width: 16px; height: 1px; background: var(--blue);
+}
+.sec-title {
+  font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700;
+  letter-spacing: -0.025em; line-height: 1.05; margin-bottom: 1.5rem;
+}
+.sec-intro {
+  font-size: 1rem; color: var(--mid); line-height: 1.75; max-width: 580px;
+  font-weight: 300; margin-bottom: 3rem;
+}
+
+/* ── ABOUT ── */
+#about { background: var(--bg); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.about-card {
+  background: var(--white); padding: 2rem; border-radius: 6px;
+  border: 1px solid var(--faint);
+}
+.about-card-label {
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--blue); margin-bottom: 0.8rem;
+}
+.about-card p { font-size: 0.88rem; color: var(--mid); line-height: 1.8; margin-bottom: 1.2rem; }
+.tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.tag {
+  font-size: 0.72rem; font-weight: 500; padding: 0.25rem 0.6rem;
+  background: var(--bg); border: 1px solid var(--faint);
+  border-radius: 3px; color: var(--ink); letter-spacing: 0.02em;
+}
+
+/* ── EXPERIENCE ── */
+.exp-item {
+  display: grid; grid-template-columns: 200px 1fr;
+  gap: 2rem; padding: 2.5rem 0; border-bottom: 1px solid var(--faint);
+}
+.exp-item:last-child { border-bottom: none; }
+.exp-co { font-weight: 600; font-size: 0.88rem; margin-bottom: 0.2rem; }
+.exp-period, .exp-loc { font-size: 0.75rem; color: var(--mid); }
+.exp-role {
+  font-size: 1rem; font-weight: 600; color: var(--ink);
+  margin-bottom: 0.7rem;
+}
+.exp-role span { color: var(--blue); }
+.exp-desc { font-size: 0.88rem; line-height: 1.8; color: var(--mid); }
+
+/* ── PROJECTS ── */
+#projects { background: var(--bg); }
+.proj-list { display: flex; flex-direction: column; gap: 1px; }
+.proj-card {
+  background: var(--white); border-radius: 6px; overflow: hidden;
+  border: 1px solid var(--faint);
+}
+.proj-head {
+  display: grid; grid-template-columns: 80px 1fr auto;
+  align-items: center; gap: 1.5rem;
+  padding: 1.8rem 2rem; cursor: pointer;
+  transition: background 0.15s;
+}
+.proj-head:hover { background: var(--bg); }
+.proj-num {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+  color: var(--blue); text-transform: uppercase;
+}
+.proj-head-info {}
+.proj-name {
+  font-size: 1.3rem; font-weight: 700; letter-spacing: -0.02em;
+  line-height: 1.1; margin-bottom: 0.2rem;
+}
+.proj-tag {
+  font-size: 0.72rem; font-weight: 500; color: var(--mid);
+  letter-spacing: 0.04em; text-transform: uppercase;
+}
+.proj-arrow {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid var(--faint); display: flex; align-items: center;
+  justify-content: center; flex-shrink: 0; transition: all 0.3s;
+  font-size: 0.9rem; color: var(--mid);
+}
+.proj-card.open .proj-arrow {
+  background: var(--blue); color: var(--white); border-color: var(--blue);
+  transform: rotate(45deg);
+}
+
+/* Proj body */
+.proj-body { display: none; border-top: 1px solid var(--faint); }
+.proj-card.open .proj-body { display: block; }
+.proj-image {
+  width: 100%; height: 360px; background: #EBEBEA; overflow: hidden;
+}
+.proj-image img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.proj-image.contain img { object-fit: contain; padding: 2rem; }
+.proj-gallery {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--faint);
+}
+.proj-gallery-main { grid-column: 1/-1; height: 320px; overflow: hidden; background: var(--bg); }
+.proj-gallery-main img { width: 100%; height: 100%; object-fit: cover; }
+.proj-gallery-thumb { height: 180px; overflow: hidden; background: var(--bg); }
+.proj-gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.proj-content { padding: 2.5rem 2rem; }
+.proj-summary { font-size: 1rem; font-weight: 300; color: var(--mid); line-height: 1.75; margin-bottom: 2rem; max-width: 640px; }
+
+/* Toggle detail */
+.proj-detail-toggle {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: var(--font); font-size: 0.75rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  background: none; border: 1px solid var(--faint);
+  padding: 0.55rem 1rem; border-radius: 4px; cursor: pointer;
+  color: var(--ink); transition: all 0.15s; margin-bottom: 0;
+}
+.proj-detail-toggle:hover { border-color: var(--blue); color: var(--blue); }
+.proj-detail-toggle .arr { transition: transform 0.3s; display: inline-block; }
+.proj-detail-toggle.open .arr { transform: rotate(180deg); }
+.proj-detail { display: none; margin-top: 2.5rem; padding-top: 2.5rem; border-top: 1px solid var(--faint); }
+.proj-detail.open { display: block; }
+
+/* Process grid */
+.proc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin: 2rem 0; }
+.proc-step {
+  padding: 1.2rem; background: var(--bg); border-radius: 4px;
+  border-left: 3px solid var(--blue);
+}
+.proc-n { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; color: var(--blue); margin-bottom: 0.4rem; text-transform: uppercase; }
+.proc-title { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.3rem; }
+.proc-desc { font-size: 0.8rem; color: var(--mid); line-height: 1.6; }
+
+/* KPI */
+.kpi-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+  background: var(--faint); border-radius: 6px; overflow: hidden;
+  margin: 2rem 0;
+}
+.kpi-item { background: var(--white); padding: 1.5rem 1.2rem; }
+.kpi-val { font-size: 2.2rem; font-weight: 700; letter-spacing: -0.04em; color: var(--blue); line-height: 1; margin-bottom: 0.3rem; }
+.kpi-lbl { font-size: 0.75rem; color: var(--mid); line-height: 1.4; }
+
+.dh { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin: 2rem 0 0.6rem; display: flex; align-items: center; gap: 0.5rem; }
+.dh::before { content: ''; display: block; width: 12px; height: 1px; background: var(--blue); }
+.dt { font-size: 0.88rem; line-height: 1.85; color: var(--mid); margin-bottom: 1rem; }
+.dt strong { color: var(--ink); font-weight: 600; }
+.ext-link { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.8rem; font-weight: 500; color: var(--blue); margin-top: 0.5rem; }
+.ext-link:hover { text-decoration: underline; }
+
+/* ── EDU ── */
+.edu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.edu-card {
+  padding: 1.8rem; border-radius: 6px; border: 1px solid var(--faint);
+  position: relative; overflow: hidden;
+}
+.edu-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 3px; background: var(--blue);
+}
+.edu-deg { font-weight: 700; font-size: 0.92rem; margin-bottom: 0.3rem; letter-spacing: -0.01em; }
+.edu-school { font-size: 0.8rem; color: var(--mid); margin-bottom: 0.2rem; }
+.edu-year { font-size: 0.75rem; color: var(--blue); font-weight: 500; margin-bottom: 0.8rem; }
+.edu-note { font-size: 0.8rem; color: var(--mid); line-height: 1.65; }
+
+/* ── CONTACT ── */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+.ci h3 { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 0.7rem; }
+.ci p { font-size: 0.88rem; color: var(--mid); line-height: 1.75; margin-bottom: 1.5rem; }
+.ci-link {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.85rem; color: var(--ink); margin-bottom: 0.6rem;
+  font-weight: 500; transition: color 0.15s;
+}
+.ci-link:hover { color: var(--blue); }
+.ci-link::before { content: '→'; color: var(--blue); font-size: 0.8rem; }
+
+/* Form */
+.fg { margin-bottom: 1.2rem; }
+.fg label { display: block; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); margin-bottom: 0.4rem; }
+.fg input, .fg textarea {
+  width: 100%; padding: 0.7rem 0.9rem; border: 1px solid var(--faint);
+  border-radius: 4px; font-family: var(--font); font-size: 0.88rem;
+  color: var(--ink); background: var(--white); outline: none; transition: border-color 0.15s;
+}
+.fg input:focus, .fg textarea:focus { border-color: var(--blue); }
+.fg textarea { resize: vertical; min-height: 120px; }
+.fs {
+  width: 100%; padding: 0.75rem; background: var(--blue); color: var(--white);
+  border: none; font-family: var(--font); font-size: 0.8rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
+  border-radius: 4px; transition: background 0.15s;
+}
+.fs:hover { background: #003ACC; }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--faint); padding: 1.8rem 0; background: var(--white);
+}
+.footer-inner {
+  max-width: var(--max); margin: 0 auto; padding: 0 2rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.fc { font-size: 0.75rem; color: var(--mid); }
+.fl { display: flex; gap: 1.5rem; }
+.fl a { font-size: 0.75rem; color: var(--mid); transition: color 0.15s; }
+.fl a:hover { color: var(--blue); }
+
+/* ── RESPONSIVE ── */
+@media(max-width:700px) {
+  .hero-top { grid-template-columns: 1fr; }
+  .hero-photo { order: -1; width: 100px; height: 100px; }
+  .hero-strip-inner { grid-template-columns: 1fr; }
+  .strip-item { border-right: none; border-bottom: 1px solid var(--faint); padding-left: 0 !important; }
+  .strip-item:last-child { border-bottom: none; }
+  .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+  .proc-grid { grid-template-columns: 1fr; }
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .edu-grid { grid-template-columns: 1fr; }
+  .proj-gallery { grid-template-columns: 1fr; }
+  .proj-gallery-main { grid-column: 1; }
+  .proj-head { grid-template-columns: 60px 1fr auto; }
+  .nav-links { display: none; }
+  .footer-inner { flex-direction: column; gap: 0.8rem; text-align: center; }
+}
+@media(prefers-reduced-motion:reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <span class="nav-logo">Diego Zorzi</span>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#about" data-i18n="nav.about">Chi sono</a></li>
+        <li><a href="#experience" data-i18n="nav.exp">Esperienze</a></li>
+        <li><a href="#projects" data-i18n="nav.proj">Progetti</a></li>
+        <li><a href="#education" data-i18n="nav.edu">Formazione</a></li>
+        <li><a href="#contact" data-i18n="nav.contact">Contatti</a></li>
+      </ul>
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('it')" id="btn-it">IT</button>
+        <button class="lang-btn" onclick="setLang('en')" id="btn-en">EN</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-top">
+    <div>
+      <p class="hero-label" data-i18n="hero.label">Product & R&D Project Manager</p>
+      <h1 class="hero-name">Diego<br><span>Zorzi</span></h1>
+      <p class="hero-desc" data-i18n="hero.desc">Gestisco l'intero ciclo di vita di prodotti industriali complessi — dalla diagnosi di mercato al prototipo fisico — coordinando team R&D cross-funzionali con metodologie strutturate.</p>
+      <div class="hero-actions">
+        <a href="CV_Diego_Zorzi_ITA.pdf" class="btn btn-blue" data-i18n="hero.cv">Scarica CV</a>
+        <a href="#projects" class="btn btn-outline" data-i18n="hero.proj">Vedi progetti</a>
+        <a href="https://www.linkedin.com/in/diegozorzi/" target="_blank" rel="noopener" class="btn btn-outline">LinkedIn ↗</a>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <!-- EDIT: file IMG_6986.png nella stessa cartella -->
+      <img src="IMG_6986.png" alt="Diego Zorzi" loading="eager">
+    </div>
+  </div>
+  <div class="hero-strip">
+    <div class="hero-strip-inner">
+      <div class="strip-item">
+        <span class="strip-n">4+</span>
+        <span class="strip-label" data-i18n="strip.1">Anni in R&D<br>product management</span>
+      </div>
+      <div class="strip-item">
+        <span class="strip-n">5</span>
+        <span class="strip-label" data-i18n="strip.2">Progetti R&D<br>gestiti in parallelo</span>
+      </div>
+      <div class="strip-item">
+        <span class="strip-n">3</span>
+        <span class="strip-label" data-i18n="strip.3">Prodotti sviluppati<br>dal concept al prototipo</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHI SONO -->
+<section id="about">
+  <div class="container">
+    <p class="sec-label" data-i18n="about.label">Chi sono</p>
+    <h2 class="sec-title col" data-i18n="about.title">Ingegneria di prodotto e visione strategica</h2>
+    <p class="sec-intro" data-i18n="about.intro">Ho iniziato come Product Design Intern e in quattro anni sono diventato Product & Project Manager R&D, seguendo in prima persona lo sviluppo di macchine da stampa e converting di livello internazionale. Parallelamente al lavoro a tempo pieno, sto conseguendo una laurea in Economia Aziendale e Management.</p>
+    <div class="about-grid">
+      <div class="about-card">
+        <p class="about-card-label" data-i18n="about.pm">Product Management</p>
+        <p data-i18n="about.pm.text">Analisi di mercato e competitive intelligence, definizione dei requisiti di prodotto, business planning, roadmap e gestione del ciclo di vita dal concept al lancio.</p>
+        <div class="tags">
+          <span class="tag">QFD</span><span class="tag">AHP</span><span class="tag">Modello Kano</span><span class="tag">Target Cost</span><span class="tag">Value Analysis</span><span class="tag">Market Intelligence</span>
+        </div>
+      </div>
+      <div class="about-card">
+        <p class="about-card-label" data-i18n="about.rd">R&D Project Management</p>
+        <p data-i18n="about.rd.text">Coordinamento di team cross-funzionali, gestione multi-progetto con Gantt e milestone presidiate, monitoraggio di tempi, budget e obiettivi tecnici fino alla validazione del prototipo.</p>
+        <div class="tags">
+          <span class="tag">Stage-Gate</span><span class="tag">Gantt Planning</span><span class="tag">Jira</span><span class="tag">Design to Cost</span><span class="tag">Test Planning</span><span class="tag">BOM Management</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ESPERIENZE -->
+<section id="experience">
+  <div class="container">
+    <p class="sec-label" data-i18n="exp.label">Esperienze professionali</p>
+    <div class="exp-item">
+      <div>
+        <p class="exp-co">Uteco Converting SpA</p>
+        <p class="exp-period">03/2022 — presente</p>
+        <p class="exp-loc">Verona, Italia</p>
+      </div>
+      <div>
+        <p class="exp-role" data-i18n="uteco.role">Product & Project Manager<span> — R&D Product Innovation</span></p>
+        <p class="exp-desc" data-i18n="uteco.desc">Responsabile dello sviluppo di nuove famiglie di prodotto nel segmento delle macchine da stampa flessografica e converting per il packaging flessibile. Ho seguito l'intero processo — dalla diagnosi di mercato alla validazione del prototipo fisico — coordinando team cross-funzionali di circa 12 persone tra progettazione meccanica, elettrica, software, acquisti e marketing. Gestione simultanea di fino a 5 progetti R&D con metodologie strutturate: QFD, AHP, Design to Cost, Stage-Gate e Gantt multi-livello.</p>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div>
+        <p class="exp-co">Henry & Co. Design Studio</p>
+        <p class="exp-period">02/2021 — 07/2021</p>
+        <p class="exp-loc">Verona, Italia</p>
+      </div>
+      <div>
+        <p class="exp-role" data-i18n="henry.role">Product Design Intern</p>
+        <p class="exp-desc" data-i18n="henry.desc">Sviluppo di concept di prodotto applicando il Circular Design Thinking, metodologia proprietaria dello studio che integra principi di economia circolare nel processo progettuale. Analisi di mercato, definizione requisiti, concept design e modellazione 3D. Progettazione del tavolo Edo per Cafedesart, selezionato per il Salone del Mobile 2022 di Milano.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGETTI -->
+<section id="projects">
+  <div class="container">
+    <p class="sec-label" data-i18n="proj.label">Progetti selezionati</p>
+    <p class="sec-intro" data-i18n="proj.intro">Tre progetti che mostrano approcci diversi: dalla gestione di un programma R&D complesso, al lancio di un prodotto satellite in un segmento nuovo, al product design per il mercato del lusso.</p>
+
+    <div class="proj-list">
+
+      <!-- PRISMA -->
+      <div class="proj-card" id="pc1">
+        <div class="proj-head" onclick="toggleProj('pc1')">
+          <p class="proj-num">01</p>
+          <div class="proj-head-info">
+            <p class="proj-name">PRISMA <span style="font-weight:300;color:var(--mid);font-size:0.8em;">NCL23</span></p>
+            <p class="proj-tag" data-i18n="prisma.role">R&D Project Manager · Uteco Converting SpA</p>
+          </div>
+          <div class="proj-arrow">+</div>
+        </div>
+        <div class="proj-body">
+          <!-- EDIT: file Frontale_PRISMA_CLG_4k_23.png -->
+          <div class="proj-image">
+            <img src="Frontale_PRISMA_CLG_4k_23.png" alt="Uteco PRISMA CLG" loading="lazy">
+          </div>
+          <div class="proj-content">
+            <p class="proj-summary" data-i18n="prisma.summary">Nuova gamma di macchine Coating & Laminating per Uteco — dal concept al prototipo fisico presentato a Drupa 2024. Obiettivo: +10% di market share in 5 anni su un mercato di riferimento da oltre 260 M€.</p>
+            <button class="proj-detail-toggle" onclick="toggleDetail(this)">
+              <span data-i18n="proj.more">Approfondisci</span> <span class="arr">↓</span>
+            </button>
+            <div class="proj-detail">
+              <p class="dh" data-i18n="prisma.h1">Il problema di business</p>
+              <p class="dt" data-i18n="prisma.t1">Uteco deteneva una quota marginale su un mercato da oltre 260 M€, con vendite C&L stagnanti da cinque anni nonostante una crescita sostenuta del settore. L'analisi interna rivelava una gamma frammentata — bassa condivisione di componenti tra le macchine, alta percentuale di larghezze mai ordinate — e un posizionamento di prezzo non competitivo rispetto ai principali player europei (Bobst, NordMeccanica, Comexi). L'obiettivo: ridisegnare l'intera gamma secondo logiche di modularità, Design to Cost e family feeling con la nuova gamma flessografica.</p>
+              <p class="dh" data-i18n="prisma.h2">Metodologia e processo</p>
+              <div class="proc-grid">
+                <div class="proc-step"><p class="proc-n">01</p><p class="proc-title" data-i18n="prisma.s1t">Diagnosi di mercato</p><p class="proc-desc" data-i18n="prisma.s1d">Benchmark competitivo su 4 player principali, analisi portfolio capability e identificazione dei gap non presidiati da Uteco.</p></div>
+                <div class="proc-step"><p class="proc-n">02</p><p class="proc-title" data-i18n="prisma.s2t">AHP + QFD</p><p class="proc-desc" data-i18n="prisma.s2d">Ponderazione di 15 bisogni di mercato via AHP. Traduzione in 67 requisiti funzionali misurabili via QFD con target quantitativi per design driver.</p></div>
+                <div class="proc-step"><p class="proc-n">03</p><p class="proc-title" data-i18n="prisma.s3t">Design to Cost</p><p class="proc-desc" data-i18n="prisma.s3d">Target cost per modulo, commonality analysis, beachhead strategy e 15 moduli standard con interfacce meccaniche, elettriche e di segnale unificate.</p></div>
+                <div class="proc-step"><p class="proc-n">04</p><p class="proc-title" data-i18n="prisma.s4t">Sviluppo R&D</p><p class="proc-desc" data-i18n="prisma.s4d">Coordinamento di ~12 persone tra progettazione meccanica, elettrica, software, acquisti e marketing. Gantt multi-livello con milestone bimestrali.</p></div>
+                <div class="proc-step"><p class="proc-n">05</p><p class="proc-title" data-i18n="prisma.s5t">Test Plan</p><p class="proc-desc" data-i18n="prisma.s5d">Pianificazione e coordinamento dei test funzionali, di processo e di validazione. Redazione del test plan con tutti gli attori coinvolti.</p></div>
+                <div class="proc-step"><p class="proc-n">06</p><p class="proc-title" data-i18n="prisma.s6t">Lancio Drupa 2024</p><p class="proc-desc" data-i18n="prisma.s6d">Coordinamento della preparazione commerciale — pricing, materiali marketing, training venditori — per il lancio alla fiera internazionale Drupa 2024.</p></div>
+              </div>
+              <p class="dh" data-i18n="prisma.h3">Target progettuali</p>
+              <div class="kpi-grid">
+                <div class="kpi-item"><p class="kpi-val">−12%</p><p class="kpi-lbl" data-i18n="prisma.k1">Costi materiali</p></div>
+                <div class="kpi-item"><p class="kpi-val">−60%</p><p class="kpi-lbl" data-i18n="prisma.k2">Codici unici supply chain</p></div>
+                <div class="kpi-item"><p class="kpi-val">−50%</p><p class="kpi-lbl" data-i18n="prisma.k3">Tempo change over</p></div>
+                <div class="kpi-item"><p class="kpi-val">−27%</p><p class="kpi-lbl" data-i18n="prisma.k4">Ingombro triplex</p></div>
+              </div>
+              <p class="dh" data-i18n="prisma.h4">Gli 8 design driver</p>
+              <p class="dt" data-i18n="prisma.t2">Il progetto è stato strutturato attorno a 8 driver progettuali: <strong>Design to Cost</strong> per la competitività di prezzo, <strong>Design for Supply Chain</strong> per ridurre la frammentazione dei componenti, <strong>Design for Assembly</strong> per ottimizzare i tempi interni, <strong>Design for Productivity</strong> con automazioni di change over e setup, <strong>Design for Compactness</strong> per ridurre l'ingombro della configurazione triplex, <strong>Design for Sustainability</strong> con recupero adesivo e riduzione scarti, <strong>Design for Configurability</strong> con 15 moduli standard e interfacce unificate, <strong>Design for Serviceability</strong> con upgrade plug & play.</p>
+              <!-- EDIT: file Prospettica_PRISMA_CLG_4k_22.png -->
+              <div class="proj-image" style="margin-top:1.5rem;height:260px;border-radius:4px;overflow:hidden;">
+                <img src="Prospettica_PRISMA_CLG_4k_22.png" alt="PRISMA CLG — vista prospettica" loading="lazy">
+              </div>
+              <a href="https://www.uteco.com/it/i-nostri-prodotti/spalmatrici-e-accoppiatrici/prismaclg" target="_blank" rel="noopener" class="ext-link" style="margin-top:1rem;">PRISMA CLG su uteco.com ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FLEXLIGHT -->
+      <div class="proj-card" id="pc2">
+        <div class="proj-head" onclick="toggleProj('pc2')">
+          <p class="proj-num">02</p>
+          <div class="proj-head-info">
+            <p class="proj-name">Flexlight</p>
+            <p class="proj-tag" data-i18n="flex.role">Product Manager · Uteco Converting SpA</p>
+          </div>
+          <div class="proj-arrow">+</div>
+        </div>
+        <div class="proj-body">
+          <!-- EDIT: file Inspection_Table_2_6.png -->
+          <div class="proj-image contain" style="background:#EBEBEA;">
+            <img src="Inspection_Table_2_6.png" alt="Flexlight — Uteco Inspection Table" loading="lazy">
+          </div>
+          <div class="proj-content">
+            <p class="proj-summary" data-i18n="flex.summary">Prodotto satellite per l'ispezione offline della qualità di stampa — sviluppato per completare il portfolio Uteco e aprire un nuovo stream di vendite nel segmento mid-low, non presidiato dai competitor al momento dell'analisi.</p>
+            <button class="proj-detail-toggle" onclick="toggleDetail(this)">
+              <span data-i18n="proj.more">Approfondisci</span> <span class="arr">↓</span>
+            </button>
+            <div class="proj-detail">
+              <p class="dh" data-i18n="flex.h1">Contesto strategico</p>
+              <p class="dt" data-i18n="flex.t1">Attorno alle macchine da stampa Uteco gravita un ecosistema di prodotti satellite — sistemi di stoccaggio, tavoli di ispezione, lavatori di anilox — che i clienti acquistano da terze parti. L'analisi dell'ecosistema ha identificato il tavolo di ispezione come punto di ingresso strategico: ciclo di sviluppo breve e un gap preciso nel posizionamento mid-low, non occupato da nessun player. I competitor si dividevano tra prodotti basic senza tecnologia e soluzioni high-tech ad alto prezzo, senza nulla nel mezzo.</p>
+              <p class="dh" data-i18n="flex.h2">Processo</p>
+              <div class="proc-grid" style="grid-template-columns:repeat(2,1fr);">
+                <div class="proc-step"><p class="proc-n">01</p><p class="proc-title" data-i18n="flex.s1t">Analisi ecosistema</p><p class="proc-desc" data-i18n="flex.s1d">Mappatura dei prodotti satellite per tipologia di macchina (Flexo, Roto, C&L), stima dello sforzo ingegneristico e identificazione del prodotto con il miglior rapporto impatto/effort.</p></div>
+                <div class="proc-step"><p class="proc-n">02</p><p class="proc-title" data-i18n="flex.s2t">AHP + QFD + Requisiti</p><p class="proc-desc" data-i18n="flex.s2d">Interviste agli utenti interni, definizione dei bisogni chiave, applicazione di AHP e QFD per tradurli in requisiti funzionali prioritizzati e specifiche tecniche misurabili.</p></div>
+                <div class="proc-step"><p class="proc-n">03</p><p class="proc-title" data-i18n="flex.s3t">Concept & Target Cost</p><p class="proc-desc" data-i18n="flex.s3d">Concept sviluppato con modellazione 3D. Target cost per module-level. Posizionamento mid-low con specifiche mid-high: ISO 3364:2009, microscopio Dino-Lite integrato, monitor touch, superficie inclinabile.</p></div>
+                <div class="proc-step"><p class="proc-n">04</p><p class="proc-title" data-i18n="flex.s4t">Sviluppo & Prototipazione</p><p class="proc-desc" data-i18n="flex.s4d">Gestione del Gantt bisettimanale con 7 fasi presidiate. Il progetto ha raggiunto il secondo prototipo fisico, attualmente in fase di validazione.</p></div>
+              </div>
+              <p class="dt" data-i18n="flex.brand">Il prodotto è stato denominato <strong>Flexlight</strong> e brandizzato con il marchio <strong>Dimotion</strong>, creando coerenza visiva con le macchine Uteco.</p>
+              <a href="https://www.uteco.com/it/i-nostri-prodotti/accessori-ed-equipaggiamento-add/flexlight-tavolo-di-controllo-qualita-la-stampa" target="_blank" rel="noopener" class="ext-link">Flexlight su uteco.com ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EDO -->
+      <div class="proj-card" id="pc3">
+        <div class="proj-head" onclick="toggleProj('pc3')">
+          <p class="proj-num">03</p>
+          <div class="proj-head-info">
+            <p class="proj-name">Edo</p>
+            <p class="proj-tag" data-i18n="edo.role">Product Designer · Henry & Co. / Cafedesart</p>
+          </div>
+          <div class="proj-arrow">+</div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-gallery">
+            <!-- EDIT: Soufflè_Cafedesart_1_front.jpg, top_diamond_chiaro.jpg, Soufflè_Cafedesart_gambe.jpg -->
+            <div class="proj-gallery-main"><img src="Soufflè_Cafedesart_1_front.jpg" alt="Edo — Cafedesart dining table" loading="lazy"></div>
+            <div class="proj-gallery-thumb"><img src="top_diamond_chiaro.jpg" alt="Edo — piano diamond" loading="lazy"></div>
+            <div class="proj-gallery-thumb"><img src="Soufflè_Cafedesart_gambe.jpg" alt="Edo — basi" loading="lazy"></div>
+          </div>
+          <div class="proj-content">
+            <p class="proj-summary" data-i18n="edo.summary">Tavolo da pranzo per Cafedesart, brand italiano di arredo di lusso Art Déco e Mid Century. Selezionato per il Salone del Mobile 2022 di Milano. Sviluppato con il metodo Circular Design Thinking di Henry & Co.</p>
+            <button class="proj-detail-toggle" onclick="toggleDetail(this)">
+              <span data-i18n="proj.more">Approfondisci</span> <span class="arr">↓</span>
+            </button>
+            <div class="proj-detail">
+              <p class="dh" data-i18n="edo.h1">Il contesto</p>
+              <p class="dt" data-i18n="edo.t1">Henry & Co. applica il <strong>Circular Design Thinking</strong>, metodologia strutturata in quattro fasi non lineari — Comprensione, Definizione, Sviluppo e Pubblicazione — che integra principi di economia circolare nel processo progettuale. Il brief di Cafedesart richiedeva un tavolo da pranzo moderno, leggero nelle forme, adatto al living contemporaneo, coerente con il DNA Art Déco e Mid Century del brand.</p>
+              <div class="proc-grid" style="grid-template-columns:repeat(2,1fr);">
+                <div class="proc-step"><p class="proc-n">01</p><p class="proc-title" data-i18n="edo.s1t">Analisi di mercato</p><p class="proc-desc" data-i18n="edo.s1d">Studio dell'offerta competitor per dimensioni, forme, materiali e posizionamento. Gap identificato: tavolo moderno con forme organiche e materiali naturali.</p></div>
+                <div class="proc-step"><p class="proc-n">02</p><p class="proc-title" data-i18n="edo.s2t">Concept & 3D</p><p class="proc-desc" data-i18n="edo.s2d">Piano dalle proporzioni ampie con angoli arrotondati, basi cilindriche asimmetriche. Modellazione in Rhino e Shapr3D con iterazioni sulla geometria.</p></div>
+                <div class="proc-step"><p class="proc-n">03</p><p class="proc-title" data-i18n="edo.s3t">CMF Selection</p><p class="proc-desc" data-i18n="edo.s3d">Piallacciature in legno con pattern intarsiati geometrici (X e Diamond) in varianti chiare e scure. Dettaglio in ottone sul bordo del piano.</p></div>
+                <div class="proc-step"><p class="proc-n">04</p><p class="proc-title" data-i18n="edo.s4t">Salone del Mobile</p><p class="proc-desc" data-i18n="edo.s4d">Il prototipo fisico è stato selezionato per il Salone del Mobile 2022. Il tavolo Edo è attualmente in vendita nel catalogo Cafedesart.</p></div>
+              </div>
+              <div class="proj-gallery" style="margin-top:1.5rem;border-radius:4px;overflow:hidden;">
+                <!-- EDIT: Soufflè_Cafedesart_2_front.jpg, Soufflè_Cafedesart_3_front.jpg, top_X_scuro.jpg, top_X_chiaro.jpg -->
+                <div class="proj-gallery-thumb"><img src="Soufflè_Cafedesart_2_front.jpg" alt="Edo variante marmo" loading="lazy"></div>
+                <div class="proj-gallery-thumb"><img src="Soufflè_Cafedesart_3_front.jpg" alt="Edo variante dark" loading="lazy"></div>
+                <div class="proj-gallery-thumb"><img src="top_X_scuro.jpg" alt="Edo piano X dark" loading="lazy"></div>
+                <div class="proj-gallery-thumb"><img src="top_X_chiaro.jpg" alt="Edo piano X light" loading="lazy"></div>
+              </div>
+              <a href="https://cafedesart.com/prodotto/edo/" target="_blank" rel="noopener" class="ext-link" style="margin-top:1rem;">Edo su cafedesart.com ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FORMAZIONE -->
+<section id="education">
+  <div class="container">
+    <p class="sec-label" data-i18n="edu.label">Formazione</p>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <p class="edu-deg" data-i18n="edu1.deg">Economia Aziendale e Management</p>
+        <p class="edu-school">Università di Verona</p>
+        <p class="edu-year">2025 — in corso</p>
+        <p class="edu-note" data-i18n="edu1.note">Percorso part-time in parallelo al lavoro a tempo pieno, per integrare le competenze tecniche con una solida base strategica e di business.</p>
+      </div>
+      <div class="edu-card">
+        <p class="edu-deg" data-i18n="edu2.deg">Product & Design Management</p>
+        <p class="edu-school">ITS Machina Lonati, Brescia</p>
+        <p class="edu-year">2019 — 2021</p>
+        <p class="edu-note" data-i18n="edu2.note">Diploma con 98/100. Competenze in product management, project management e product design con focus su ideazione, sviluppo e prototipazione rapida.</p>
+      </div>
+      <div class="edu-card">
+        <p class="edu-deg" data-i18n="edu3.deg">Elettronica ed Elettrotecnica</p>
+        <p class="edu-school">ITIS G. Marconi, Verona</p>
+        <p class="edu-year">2014 — 2019</p>
+        <p class="edu-note" data-i18n="edu3.note">Conoscenze di base di sistemi elettronici e informatici, utili per la comprensione tecnica dei prodotti industriali gestiti.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATTI -->
+<section id="contact">
+  <div class="container">
+    <p class="sec-label" data-i18n="contact.label">Contatti</p>
+    <h2 class="sec-title" data-i18n="contact.title">Parliamo.</h2>
+    <div class="contact-grid">
+      <div class="ci">
+        <h3 data-i18n="contact.h">Posizione aperta o collaborazione?</h3>
+        <p data-i18n="contact.p">Sono sempre disponibile per una conversazione — product management, R&D project management o un progetto interessante nel settore manifatturiero.</p>
+        <a href="mailto:zorzi.diego.00@gmail.com" class="ci-link">zorzi.diego.00@gmail.com</a>
+        <a href="https://www.linkedin.com/in/diegozorzi/" target="_blank" rel="noopener" class="ci-link">LinkedIn — Diego Zorzi</a>
+      </div>
+      <div>
+        <!-- EDIT: sostituisci mojojpoy con il tuo Formspree ID -->
+        <form action="https://formspree.io/f/mojojpoy" method="POST">
+          <div class="fg"><label for="name" data-i18n="form.name">Nome</label><input type="text" id="name" name="name" required autocomplete="name"></div>
+          <div class="fg"><label for="email" data-i18n="form.email">Email</label><input type="email" id="email" name="email" required autocomplete="email"></div>
+          <div class="fg"><label for="msg" data-i18n="form.msg">Messaggio</label><textarea id="msg" name="message" required></textarea></div>
+          <button type="submit" class="fs" data-i18n="form.send">Invia messaggio</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <span class="fc">© 2026 Diego Zorzi</span>
+    <div class="fl">
+      <a href="mailto:zorzi.diego.00@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/diegozorzi/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="CV_Diego_Zorzi_ITA.pdf" data-i18n="footer.cv">Curriculum</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Accordion progetti */
+function toggleProj(id) {
+  const card = document.getElementById(id);
+  const wasOpen = card.classList.contains('open');
+  document.querySelectorAll('.proj-card').forEach(c => c.classList.remove('open'));
+  if (!wasOpen) { card.classList.add('open'); card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+}
+
+/* Accordion dettaglio */
+function toggleDetail(btn) {
+  const d = btn.nextElementSibling;
+  const open = d.classList.contains('open');
+  d.classList.toggle('open', !open);
+  btn.classList.toggle('open', !open);
+}
+
+/* i18n */
+const T = {
+it: {
+  "nav.about":"Chi sono","nav.exp":"Esperienze","nav.proj":"Progetti","nav.edu":"Formazione","nav.contact":"Contatti",
+  "hero.label":"Product & R&D Project Manager · Verona, Italia",
+  "hero.desc":"Gestisco l'intero ciclo di vita di prodotti industriali complessi — dalla diagnosi di mercato al prototipo fisico — coordinando team R&D cross-funzionali con metodologie strutturate.",
+  "hero.cv":"Scarica CV","hero.proj":"Vedi progetti",
+  "strip.1":"Anni in R&D\nproduct management","strip.2":"Progetti R&D\ngestiti in parallelo","strip.3":"Prodotti sviluppati\ndal concept al prototipo",
+  "about.label":"Chi sono","about.title":"Ingegneria di prodotto e visione strategica",
+  "about.intro":"Ho iniziato come Product Design Intern e in quattro anni sono diventato Product & Project Manager R&D, seguendo in prima persona lo sviluppo di macchine da stampa e converting di livello internazionale. Parallelamente al lavoro a tempo pieno, sto conseguendo una laurea in Economia Aziendale e Management.",
+  "about.pm":"Product Management","about.pm.text":"Analisi di mercato e competitive intelligence, definizione dei requisiti di prodotto, business planning, roadmap e gestione del ciclo di vita dal concept al lancio.",
+  "about.rd":"R&D Project Management","about.rd.text":"Coordinamento di team cross-funzionali, gestione multi-progetto con Gantt e milestone presidiate, monitoraggio di tempi, budget e obiettivi tecnici fino alla validazione del prototipo.",
+  "exp.label":"Esperienze professionali",
+  "uteco.role":"Product & Project Manager","henry.role":"Product Design Intern",
+  "uteco.desc":"Responsabile dello sviluppo di nuove famiglie di prodotto nel segmento delle macchine da stampa flessografica e converting per il packaging flessibile. Ho seguito l'intero processo — dalla diagnosi di mercato alla validazione del prototipo fisico — coordinando team cross-funzionali di circa 12 persone. Gestione simultanea di fino a 5 progetti R&D: QFD, AHP, Design to Cost, Stage-Gate, Gantt multi-livello.",
+  "henry.desc":"Sviluppo di concept di prodotto applicando il Circular Design Thinking. Analisi di mercato, definizione requisiti, concept design e modellazione 3D. Progettazione del tavolo Edo per Cafedesart, selezionato per il Salone del Mobile 2022 di Milano.",
+  "proj.label":"Progetti selezionati","proj.intro":"Tre progetti che mostrano approcci diversi: dalla gestione di un programma R&D complesso, al lancio di un prodotto satellite in un segmento nuovo, al product design per il mercato del lusso.",
+  "proj.more":"Approfondisci",
+  "prisma.role":"R&D Project Manager · Uteco Converting SpA",
+  "prisma.summary":"Nuova gamma di macchine Coating & Laminating per Uteco — dal concept al prototipo fisico presentato a Drupa 2024. Obiettivo: +10% di market share in 5 anni su un mercato da oltre 260 M€.",
+  "prisma.h1":"Il problema di business","prisma.t1":"Uteco deteneva una quota marginale su un mercato da oltre 260 M€, con vendite C&L stagnanti da cinque anni nonostante una crescita sostenuta del settore. L'analisi interna rivelava una gamma frammentata — bassa condivisione di componenti, alta percentuale di larghezze mai ordinate — e un posizionamento di prezzo non competitivo rispetto ai principali player europei (Bobst, NordMeccanica, Comexi). Obiettivo: ridisegnare l'intera gamma secondo logiche di modularità, Design to Cost e family feeling.",
+  "prisma.h2":"Metodologia e processo",
+  "prisma.s1t":"Diagnosi di mercato","prisma.s1d":"Benchmark competitivo su 4 player principali, analisi portfolio capability e identificazione dei gap non presidiati da Uteco.",
+  "prisma.s2t":"AHP + QFD","prisma.s2d":"Ponderazione di 15 bisogni di mercato via AHP. Traduzione in 67 requisiti funzionali misurabili via QFD con target per design driver.",
+  "prisma.s3t":"Design to Cost","prisma.s3d":"Target cost per modulo, commonality analysis, beachhead strategy e 15 moduli standard con interfacce unificate.",
+  "prisma.s4t":"Sviluppo R&D","prisma.s4d":"Coordinamento di ~12 persone tra progettazione meccanica, elettrica, software, acquisti e marketing.",
+  "prisma.s5t":"Test Plan","prisma.s5d":"Pianificazione e coordinamento test funzionali, di processo e di validazione con tutti gli attori coinvolti.",
+  "prisma.s6t":"Lancio Drupa 2024","prisma.s6d":"Pricing, materiali marketing e training venditori per il lancio a Drupa 2024.",
+  "prisma.h3":"Target progettuali","prisma.k1":"Costi materiali","prisma.k2":"Codici unici supply chain","prisma.k3":"Tempo change over","prisma.k4":"Ingombro triplex",
+  "prisma.h4":"Gli 8 design driver","prisma.t2":"Il progetto è strutturato attorno a 8 driver: Design to Cost, Design for Supply Chain, Design for Assembly, Design for Productivity, Design for Compactness, Design for Sustainability, Design for Configurability (15 moduli, interfacce unificate) e Design for Serviceability.",
+  "flex.role":"Product Manager · Uteco Converting SpA",
+  "flex.summary":"Prodotto satellite per l'ispezione offline della qualità di stampa — per completare il portfolio Uteco e aprire un nuovo stream di vendite nel segmento mid-low, non presidiato dai competitor.",
+  "flex.h1":"Contesto strategico","flex.t1":"Attorno alle macchine Uteco gravita un ecosistema di prodotti satellite che i clienti acquistano da terze parti. L'analisi ha identificato il tavolo di ispezione come punto di ingresso strategico: ciclo di sviluppo breve e un gap preciso nel posizionamento mid-low. I competitor si dividevano tra prodotti basic e soluzioni high-tech ad alto prezzo, senza nulla nel mezzo.",
+  "flex.h2":"Processo",
+  "flex.s1t":"Analisi ecosistema","flex.s1d":"Mappatura dei prodotti satellite per tipologia di macchina (Flexo, Roto, C&L) e identificazione del prodotto col miglior rapporto impatto/effort.",
+  "flex.s2t":"AHP + QFD + Requisiti","flex.s2d":"Interviste agli utenti interni, definizione bisogni chiave, AHP e QFD per tradurli in requisiti funzionali e specifiche tecniche.",
+  "flex.s3t":"Concept & Target Cost","flex.s3d":"Concept con modellazione 3D. Target cost per module-level. Specifiche: ISO 3364:2009, Dino-Lite integrato, monitor touch, superficie inclinabile.",
+  "flex.s4t":"Sviluppo & Prototipazione","flex.s4d":"Gantt bisettimanale con 7 fasi. Il progetto ha raggiunto il secondo prototipo fisico, in fase di validazione.",
+  "flex.brand":"Il prodotto è denominato Flexlight, brandizzato Dimotion per coerenza visiva con le macchine Uteco.",
+  "edo.role":"Product Designer · Henry & Co. / Cafedesart",
+  "edo.summary":"Tavolo da pranzo per Cafedesart, brand italiano di arredo di lusso Art Déco e Mid Century. Selezionato per il Salone del Mobile 2022 di Milano.",
+  "edo.h1":"Il contesto","edo.t1":"Henry & Co. applica il Circular Design Thinking, metodologia in quattro fasi non lineari — Comprensione, Definizione, Sviluppo e Pubblicazione — che integra economia circolare nel processo progettuale. Il brief richiedeva un tavolo moderno, leggero nelle forme, coerente con il DNA del brand.",
+  "edo.s1t":"Analisi di mercato","edo.s1d":"Studio competitor per dimensioni, forme, materiali e posizionamento. Gap: tavolo moderno con forme organiche e materiali naturali.",
+  "edo.s2t":"Concept & 3D","edo.s2d":"Piano con angoli arrotondati, basi cilindriche asimmetriche. Modellazione in Rhino e Shapr3D con iterazioni sulla geometria.",
+  "edo.s3t":"CMF Selection","edo.s3d":"Piallacciature con pattern intarsiati (X e Diamond) in varianti chiare e scure. Dettaglio in ottone sul bordo del piano.",
+  "edo.s4t":"Salone del Mobile","edo.s4d":"Prototipo selezionato per il Salone del Mobile 2022. Il tavolo Edo è attualmente in vendita nel catalogo Cafedesart.",
+  "edu.label":"Formazione",
+  "edu1.deg":"Economia Aziendale e Management","edu1.note":"Part-time in parallelo al lavoro, per integrare le competenze tecniche con una base strategica e di business.",
+  "edu2.deg":"Product & Design Management","edu2.note":"Diploma con 98/100. Competenze in product management, project management e product design.",
+  "edu3.deg":"Elettronica ed Elettrotecnica","edu3.note":"Conoscenze di base di sistemi elettronici e informatici.",
+  "contact.label":"Contatti","contact.title":"Parliamo.","contact.h":"Posizione aperta o collaborazione?",
+  "contact.p":"Sono sempre disponibile per una conversazione — product management, R&D project management o un progetto nel settore manifatturiero.",
+  "form.name":"Nome","form.email":"Email","form.msg":"Messaggio","form.send":"Invia messaggio","footer.cv":"Curriculum"
+},
+en: {
+  "nav.about":"About","nav.exp":"Experience","nav.proj":"Projects","nav.edu":"Education","nav.contact":"Contact",
+  "hero.label":"Product & R&D Project Manager · Verona, Italy",
+  "hero.desc":"I manage the full lifecycle of complex industrial products — from market diagnosis to physical prototype — coordinating cross-functional R&D teams with structured methodologies.",
+  "hero.cv":"Download CV","hero.proj":"See projects",
+  "strip.1":"Years in R&D\nproduct management","strip.2":"R&D projects\nmanaged in parallel","strip.3":"Products developed\nfrom concept to prototype",
+  "about.label":"About","about.title":"Product engineering and strategic vision",
+  "about.intro":"I started as a Product Design Intern and in four years became Product & R&D Project Manager, personally overseeing the development of international-level printing and converting machinery. Alongside full-time work, I am completing a degree in Business Administration and Management.",
+  "about.pm":"Product Management","about.pm.text":"Market analysis and competitive intelligence, product requirements definition, business planning, roadmap and lifecycle management from concept to launch.",
+  "about.rd":"R&D Project Management","about.rd.text":"Cross-functional team coordination, multi-project management with Gantt and milestone tracking, monitoring time, budget and technical objectives through prototype validation.",
+  "exp.label":"Professional Experience",
+  "uteco.role":"Product & Project Manager","henry.role":"Product Design Intern",
+  "uteco.desc":"Responsible for the development of new product families in the flexographic printing and converting machinery segment. I oversaw the entire process — from market diagnosis to physical prototype validation — coordinating cross-functional teams of ~12 people. Simultaneous management of up to 5 R&D projects: QFD, AHP, Design to Cost, Stage-Gate, multi-level Gantt.",
+  "henry.desc":"Product concept development applying Circular Design Thinking. Market analysis, requirements definition, concept design and 3D modelling. Design of the Edo dining table for Cafedesart, selected for Salone del Mobile 2022.",
+  "proj.label":"Selected Projects","proj.intro":"Three projects illustrating different approaches: managing a complex R&D programme, launching a satellite product in a new segment, and industrial product design for the luxury market.",
+  "proj.more":"Explore",
+  "prisma.role":"R&D Project Manager · Uteco Converting SpA",
+  "prisma.summary":"New Coating & Laminating machine range for Uteco — from concept to physical prototype presented at Drupa 2024. Target: +10% market share in 5 years on a reference market of over 260 M€.",
+  "prisma.h1":"The business problem","prisma.t1":"Uteco held a marginal share of a market worth over 260 M€, with stagnant C&L sales for five years despite sustained growth. Internal analysis revealed a fragmented range — low component sharing, high percentage of widths never ordered — and non-competitive pricing versus leading European players (Bobst, NordMeccanica, Comexi). Objective: redesign the entire range around modularity, Design to Cost and visual family feeling.",
+  "prisma.h2":"Methodology & process",
+  "prisma.s1t":"Market diagnosis","prisma.s1d":"Competitive benchmark across 4 major players, portfolio capability analysis and identification of market gaps not covered by Uteco.",
+  "prisma.s2t":"AHP + QFD","prisma.s2d":"Weighting of 15 market needs via AHP. Translation into 67 measurable functional requirements via QFD with targets per design driver.",
+  "prisma.s3t":"Design to Cost","prisma.s3d":"Module-level target costs, commonality analysis, beachhead strategy and 15 standard modules with unified interfaces.",
+  "prisma.s4t":"R&D Development","prisma.s4d":"Coordination of ~12 people across mechanical, electrical, software design, procurement and marketing.",
+  "prisma.s5t":"Test Plan","prisma.s5d":"Planning and coordination of functional, process and validation tests with all stakeholders involved.",
+  "prisma.s6t":"Drupa 2024 Launch","prisma.s6d":"Pricing, marketing materials and sales force training for the launch at Drupa 2024.",
+  "prisma.h3":"Design targets","prisma.k1":"Material costs","prisma.k2":"Unique codes supply chain","prisma.k3":"Change over time","prisma.k4":"Triplex footprint",
+  "prisma.h4":"The 8 design drivers","prisma.t2":"The project is structured around 8 drivers: Design to Cost, Design for Supply Chain, Design for Assembly, Design for Productivity, Design for Compactness, Design for Sustainability, Design for Configurability (15 modules, unified interfaces) and Design for Serviceability.",
+  "flex.role":"Product Manager · Uteco Converting SpA",
+  "flex.summary":"Satellite product for offline print quality inspection — to complete Uteco's portfolio and open a new sales stream in the mid-low segment, unoccupied by competitors at the time of analysis.",
+  "flex.h1":"Strategic context","flex.t1":"Around Uteco's machines exists an ecosystem of satellite products that customers source from third parties. Analysis identified the inspection table as the strategic entry point: short development cycle and a gap in the mid-low positioning. Competitors divided between basic products and high-tech high-price solutions, with nothing in between.",
+  "flex.h2":"Process",
+  "flex.s1t":"Ecosystem analysis","flex.s1d":"Mapping of satellite products by machine type (Flexo, Roto, C&L) and identification of the best impact/effort product.",
+  "flex.s2t":"AHP + QFD + Requirements","flex.s2d":"Internal user interviews, key needs definition, AHP and QFD to translate them into prioritised functional requirements and specifications.",
+  "flex.s3t":"Concept & Target Cost","flex.s3d":"Concept with 3D modelling. Module-level target costs. Specs: ISO 3364:2009, integrated Dino-Lite, touch monitor, tiltable surface.",
+  "flex.s4t":"Development & Prototyping","flex.s4d":"Bi-weekly Gantt across 7 tracked phases. The project reached its second physical prototype, currently in validation.",
+  "flex.brand":"The product is named Flexlight, branded Dimotion for visual consistency with Uteco machines.",
+  "edo.role":"Product Designer · Henry & Co. / Cafedesart",
+  "edo.summary":"Dining table for Cafedesart, Italian luxury furniture brand inspired by Art Déco and Mid Century. Selected for Salone del Mobile 2022 in Milan.",
+  "edo.h1":"Context","edo.t1":"Henry & Co. applies Circular Design Thinking, a methodology in four non-linear phases — Understanding, Definition, Development and Publication — integrating circular economy into the design process. The brief called for a modern dining table, light in form, coherent with the brand's DNA.",
+  "edo.s1t":"Market analysis","edo.s1d":"Competitor study across dimensions, forms, materials and positioning. Gap: modern dining table with organic forms and natural materials.",
+  "edo.s2t":"Concept & 3D","edo.s2d":"Rounded-corner top, asymmetric cylindrical bases. 3D modelling in Rhino and Shapr3D with iterative refinement.",
+  "edo.s3t":"CMF Selection","edo.s3d":"Wood veneers with inlaid geometric patterns (X and Diamond) in light and dark variants. Brass detail on the top edge.",
+  "edo.s4t":"Salone del Mobile","edo.s4d":"Prototype selected for Salone del Mobile 2022. The Edo table is currently available in the Cafedesart catalogue.",
+  "edu.label":"Education",
+  "edu1.deg":"Business Administration & Management","edu1.note":"Part-time alongside full-time work, integrating technical expertise with strategic and business foundations.",
+  "edu2.deg":"Product & Design Management","edu2.note":"Graduated 98/100. Competencies in product management, project management and product design.",
+  "edu3.deg":"Electronics & Electrical Engineering","edu3.note":"Foundation knowledge in electronic and computer systems.",
+  "contact.label":"Contact","contact.title":"Let's talk.","contact.h":"Open role or collaboration?",
+  "contact.p":"I am always available for a conversation — product management, R&D project management or an interesting project in the manufacturing sector.",
+  "form.name":"Name","form.email":"Email","form.msg":"Message","form.send":"Send message","footer.cv":"Curriculum Vitae"
+}
+};
+
+function setLang(lang) {
+  document.getElementById('btn-it').classList.toggle('active', lang === 'it');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    if (T[lang][k] !== undefined) el.textContent = T[lang][k];
+  });
+}
+</script>
+</body>
+</html>
