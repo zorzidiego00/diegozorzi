@@ -245,9 +245,10 @@ section { border-top: 1px solid var(--faint); padding: clamp(3.5rem, 7vw, 6rem) 
 .proj-card.open .proj-body { display: block; }
 .proj-image {
   width: 100%; height: 360px; background: #EBEBEA; overflow: hidden;
+  padding: 2rem;
 }
-.proj-image img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
-.proj-image.contain img { object-fit: contain; padding: 2rem; }
+.proj-image img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
+.proj-image.contain img { object-fit: contain; }
 .proj-gallery {
   display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--faint);
 }
@@ -299,6 +300,34 @@ section { border-top: 1px solid var(--faint); padding: clamp(3.5rem, 7vw, 6rem) 
 .dt strong { color: var(--ink); font-weight: 600; }
 .ext-link { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.8rem; font-weight: 500; color: var(--blue); margin-top: 0.5rem; }
 .ext-link:hover { text-decoration: underline; }
+
+/* ── TIMELINE ── */
+.tl-wrap { margin: 2rem 0; }
+.tl-track { position: relative; display: flex; justify-content: space-between; align-items: flex-start; }
+.tl-line-bg { position: absolute; top: 20px; left: 5%; right: 5%; height: 1px; background: var(--faint); z-index: 0; }
+.tl-line-fill { position: absolute; top: 20px; left: 5%; height: 1px; background: var(--blue); z-index: 1; transition: width 0.35s ease; }
+.tl-step { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; cursor: pointer; z-index: 2; flex: 1; }
+.tl-dot { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--faint); background: var(--white); display: flex; align-items: center; justify-content: center; font-size: 0.62rem; font-weight: 700; color: var(--mid); transition: all 0.2s; flex-shrink: 0; letter-spacing: 0.04em; }
+.tl-step.tl-done .tl-dot { background: var(--blue-light); border-color: var(--blue); color: var(--blue); }
+.tl-step.tl-active .tl-dot { background: var(--blue); border-color: var(--blue); color: var(--white); }
+.tl-step-name { font-size: 0.68rem; font-weight: 500; color: var(--mid); text-align: center; line-height: 1.3; max-width: 72px; transition: color 0.2s; }
+.tl-step.tl-active .tl-step-name { color: var(--blue); font-weight: 600; }
+.tl-step.tl-done .tl-step-name { color: var(--ink); }
+.tl-panel { margin-top: 1.8rem; background: var(--bg); border-radius: 6px; border-left: 3px solid var(--blue); padding: 1.5rem; }
+.tl-panel-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.8rem; flex-wrap: wrap; }
+.tl-panel-num { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; color: var(--blue); text-transform: uppercase; margin-bottom: 0.2rem; }
+.tl-panel-title { font-size: 0.95rem; font-weight: 700; letter-spacing: -0.015em; color: var(--ink); }
+.tl-panel-badge { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; background: var(--blue-light); color: var(--blue); padding: 3px 9px; border-radius: 3px; white-space: nowrap; flex-shrink: 0; }
+.tl-panel-body { font-size: 0.85rem; color: var(--mid); line-height: 1.75; margin-bottom: 1rem; }
+.tl-panel-output { padding-top: 0.8rem; border-top: 1px solid var(--faint); display: flex; gap: 0.5rem; align-items: baseline; flex-wrap: wrap; }
+.tl-panel-output-label { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue); white-space: nowrap; }
+.tl-panel-output-val { font-size: 0.8rem; color: var(--ink); font-weight: 500; line-height: 1.6; }
+.tl-nav { display: flex; gap: 0.5rem; margin-top: 1rem; }
+.tl-btn { font-family: var(--font); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; border: 1px solid var(--faint); background: var(--white); color: var(--ink); transition: all 0.15s; }
+.tl-btn:hover { border-color: var(--blue); color: var(--blue); }
+.tl-btn.tl-primary { background: var(--blue); color: var(--white); border-color: var(--blue); }
+.tl-btn.tl-primary:hover { background: #003ACC; }
+.tl-btn:disabled { opacity: 0.3; cursor: default; pointer-events: none; }
 
 /* ── EDU ── */
 .edu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
@@ -548,13 +577,22 @@ footer {
               <p class="dh" data-i18n="prisma.h1">Il problema di business</p>
               <p class="dt" data-i18n="prisma.t1">Uteco deteneva una quota marginale su un mercato da oltre 260 M€, con vendite C&L stagnanti da cinque anni nonostante una crescita sostenuta del settore. L'analisi interna rivelava una gamma frammentata, con bassa condivisione di componenti tra le macchine e alta percentuale di larghezze mai ordinate, e un posizionamento di prezzo non competitivo rispetto ai principali player europei (Bobst, NordMeccanica, Comexi). L'obiettivo: ridisegnare l'intera gamma secondo logiche di modularità, Design to Cost e family feeling con la nuova gamma flessografica.</p>
               <p class="dh" data-i18n="prisma.h2">Metodologia e processo</p>
-              <div class="proc-grid">
-                <div class="proc-step"><p class="proc-n">01</p><p class="proc-title" data-i18n="prisma.s1t">Diagnosi di mercato</p><p class="proc-desc" data-i18n="prisma.s1d">Benchmark competitivo su 4 player principali, analisi portfolio capability e identificazione dei gap non presidiati da Uteco.</p></div>
-                <div class="proc-step"><p class="proc-n">02</p><p class="proc-title" data-i18n="prisma.s2t">AHP + QFD</p><p class="proc-desc" data-i18n="prisma.s2d">Ponderazione di 15 bisogni di mercato via AHP. Traduzione in 67 requisiti funzionali misurabili via QFD con target quantitativi per design driver.</p></div>
-                <div class="proc-step"><p class="proc-n">03</p><p class="proc-title" data-i18n="prisma.s3t">Design to Cost</p><p class="proc-desc" data-i18n="prisma.s3d">Target cost per modulo, commonality analysis, beachhead strategy e 15 moduli standard con interfacce meccaniche, elettriche e di segnale unificate.</p></div>
-                <div class="proc-step"><p class="proc-n">04</p><p class="proc-title" data-i18n="prisma.s4t">Sviluppo R&D</p><p class="proc-desc" data-i18n="prisma.s4d">Coordinamento di ~12 persone tra progettazione meccanica, elettrica, software, acquisti e marketing. Gantt multi-livello con milestone bimestrali.</p></div>
-                <div class="proc-step"><p class="proc-n">05</p><p class="proc-title" data-i18n="prisma.s5t">Test Plan</p><p class="proc-desc" data-i18n="prisma.s5d">Pianificazione e coordinamento dei test funzionali, di processo e di validazione. Redazione del test plan con tutti gli attori coinvolti.</p></div>
-                <div class="proc-step"><p class="proc-n">06</p><p class="proc-title" data-i18n="prisma.s6t">Lancio Drupa 2024</p><p class="proc-desc" data-i18n="prisma.s6d">Costruzione della value proposition commerciale e coordinamento del progetto per garantire il rispetto della scadenza della fiera internazionale Drupa 2024.</p></div>
+              <div class="tl-wrap" id="tl-prisma">
+                <div class="tl-track">
+                  <div class="tl-line-bg"></div>
+                  <div class="tl-line-fill" id="tlf-prisma"></div>
+                  <div class="tl-step" onclick="tlSet('prisma',0)"><div class="tl-dot">01</div><span class="tl-step-name" data-i18n="prisma.s1t">Diagnosi di mercato</span></div>
+                  <div class="tl-step" onclick="tlSet('prisma',1)"><div class="tl-dot">02</div><span class="tl-step-name" data-i18n="prisma.s2t">AHP + QFD</span></div>
+                  <div class="tl-step" onclick="tlSet('prisma',2)"><div class="tl-dot">03</div><span class="tl-step-name" data-i18n="prisma.s3t">Design to Cost</span></div>
+                  <div class="tl-step" onclick="tlSet('prisma',3)"><div class="tl-dot">04</div><span class="tl-step-name" data-i18n="prisma.s4t">Sviluppo R&D</span></div>
+                  <div class="tl-step" onclick="tlSet('prisma',4)"><div class="tl-dot">05</div><span class="tl-step-name" data-i18n="prisma.s5t">Test Plan</span></div>
+                  <div class="tl-step" onclick="tlSet('prisma',5)"><div class="tl-dot">06</div><span class="tl-step-name" data-i18n="prisma.s6t">Lancio Drupa</span></div>
+                </div>
+                <div class="tl-panel" id="tlp-prisma"></div>
+                <div class="tl-nav">
+                  <button class="tl-btn" id="tlprev-prisma" onclick="tlPrev('prisma')">← Precedente</button>
+                  <button class="tl-btn tl-primary" id="tlnext-prisma" onclick="tlNext('prisma')">Successivo →</button>
+                </div>
               </div>
               <p class="dh" data-i18n="prisma.h3">Target progettuali</p>
               <div class="kpi-grid">
@@ -598,11 +636,20 @@ footer {
               <p class="dh" data-i18n="flex.h1">Contesto strategico</p>
               <p class="dt" data-i18n="flex.t1">Attorno alle macchine da stampa Uteco gravita un ecosistema di prodotti satellite, come sistemi di stoccaggio, tavoli di ispezione e lavatori di anilox, che i clienti acquistano da terze parti. L'analisi dell'ecosistema ha identificato il tavolo di ispezione come punto di ingresso strategico: ciclo di sviluppo breve e un gap preciso nel posizionamento mid-low, non occupato da nessun player. I competitor si dividevano tra prodotti basic senza tecnologia e soluzioni high-tech ad alto prezzo, senza nulla nel mezzo.</p>
               <p class="dh" data-i18n="flex.h2">Processo</p>
-              <div class="proc-grid" style="grid-template-columns:repeat(2,1fr);">
-                <div class="proc-step"><p class="proc-n">01</p><p class="proc-title" data-i18n="flex.s1t">Analisi ecosistema</p><p class="proc-desc" data-i18n="flex.s1d">Mappatura dei prodotti satellite per tipologia di macchina (Flexo, Roto, C&L), stima dello sforzo ingegneristico e identificazione del prodotto con il miglior rapporto impatto/effort.</p></div>
-                <div class="proc-step"><p class="proc-n">02</p><p class="proc-title" data-i18n="flex.s2t">AHP + QFD + Requisiti</p><p class="proc-desc" data-i18n="flex.s2d">Interviste agli utenti interni, definizione dei bisogni chiave, applicazione di AHP e QFD per tradurli in requisiti funzionali prioritizzati e specifiche tecniche misurabili.</p></div>
-                <div class="proc-step"><p class="proc-n">03</p><p class="proc-title" data-i18n="flex.s3t">Concept & Target Cost</p><p class="proc-desc" data-i18n="flex.s3d">Concept sviluppato con modellazione 3D. Target cost per module-level. Posizionamento mid-low con specifiche mid-high: ISO 3364:2009, microscopio Dino-Lite integrato, monitor touch, superficie inclinabile.</p></div>
-                <div class="proc-step"><p class="proc-n">04</p><p class="proc-title" data-i18n="flex.s4t">Sviluppo & Prototipazione</p><p class="proc-desc" data-i18n="flex.s4d">Gestione del Gantt bisettimanale con 7 fasi presidiate. Il progetto ha raggiunto il secondo prototipo fisico, attualmente in fase di validazione.</p></div>
+              <div class="tl-wrap" id="tl-flex">
+                <div class="tl-track">
+                  <div class="tl-line-bg"></div>
+                  <div class="tl-line-fill" id="tlf-flex"></div>
+                  <div class="tl-step" onclick="tlSet('flex',0)"><div class="tl-dot">01</div><span class="tl-step-name" data-i18n="flex.s1t">Analisi ecosistema</span></div>
+                  <div class="tl-step" onclick="tlSet('flex',1)"><div class="tl-dot">02</div><span class="tl-step-name" data-i18n="flex.s2t">AHP + QFD</span></div>
+                  <div class="tl-step" onclick="tlSet('flex',2)"><div class="tl-dot">03</div><span class="tl-step-name" data-i18n="flex.s3t">Concept & Cost</span></div>
+                  <div class="tl-step" onclick="tlSet('flex',3)"><div class="tl-dot">04</div><span class="tl-step-name" data-i18n="flex.s4t">Prototipazione</span></div>
+                </div>
+                <div class="tl-panel" id="tlp-flex"></div>
+                <div class="tl-nav">
+                  <button class="tl-btn" id="tlprev-flex" onclick="tlPrev('flex')">← Precedente</button>
+                  <button class="tl-btn tl-primary" id="tlnext-flex" onclick="tlNext('flex')">Successivo →</button>
+                </div>
               </div>
               <a href="https://www.uteco.com/it/i-nostri-prodotti/accessori-ed-equipaggiamento-add/flexlight-tavolo-di-controllo-qualita-la-stampa" target="_blank" rel="noopener" class="ext-link">Flexlight su uteco.com ↗</a>
               <div class="proj-image contain" style="background:#EBEBEA;margin-top:1.5rem;height:280px;border-radius:4px;overflow:hidden;">
@@ -638,11 +685,20 @@ footer {
             <div class="proj-detail">
               <p class="dh" data-i18n="edo.h1">Il contesto</p>
               <p class="dt" data-i18n="edo.t1">Henry & Co. applica il <strong>Circular Design Thinking</strong>, metodologia strutturata in quattro fasi non lineari (Comprensione, Definizione, Sviluppo e Pubblicazione) che integra principi di economia circolare nel processo progettuale. Il brief di Cafedesart richiedeva un tavolo da pranzo moderno, leggero nelle forme, adatto al living contemporaneo, coerente con il DNA Art Déco e Mid Century del brand.</p>
-              <div class="proc-grid" style="grid-template-columns:repeat(2,1fr);">
-                <div class="proc-step"><p class="proc-n">01</p><p class="proc-title" data-i18n="edo.s1t">Analisi di mercato</p><p class="proc-desc" data-i18n="edo.s1d">Studio dell'offerta competitor per dimensioni, forme, materiali e posizionamento. Gap identificato: tavolo moderno con forme organiche e materiali naturali.</p></div>
-                <div class="proc-step"><p class="proc-n">02</p><p class="proc-title" data-i18n="edo.s2t">Concept & 3D</p><p class="proc-desc" data-i18n="edo.s2d">Piano dalle proporzioni ampie con angoli arrotondati, basi cilindriche asimmetriche. Modellazione in Rhino e Shapr3D con iterazioni sulla geometria.</p></div>
-                <div class="proc-step"><p class="proc-n">03</p><p class="proc-title" data-i18n="edo.s3t">CMF Selection</p><p class="proc-desc" data-i18n="edo.s3d">Piallacciature in legno con pattern intarsiati geometrici (X e Diamond) in varianti chiare e scure. Dettaglio in ottone sul bordo del piano.</p></div>
-                <div class="proc-step"><p class="proc-n">04</p><p class="proc-title" data-i18n="edo.s4t">Salone del Mobile</p><p class="proc-desc" data-i18n="edo.s4d">Il prototipo fisico è stato selezionato per il Salone del Mobile 2022. Il tavolo Edo è attualmente in vendita nel catalogo Cafedesart.</p></div>
+              <div class="tl-wrap" id="tl-edo">
+                <div class="tl-track">
+                  <div class="tl-line-bg"></div>
+                  <div class="tl-line-fill" id="tlf-edo"></div>
+                  <div class="tl-step" onclick="tlSet('edo',0)"><div class="tl-dot">01</div><span class="tl-step-name" data-i18n="edo.s1t">Analisi di mercato</span></div>
+                  <div class="tl-step" onclick="tlSet('edo',1)"><div class="tl-dot">02</div><span class="tl-step-name" data-i18n="edo.s2t">Concept & 3D</span></div>
+                  <div class="tl-step" onclick="tlSet('edo',2)"><div class="tl-dot">03</div><span class="tl-step-name" data-i18n="edo.s3t">CMF Selection</span></div>
+                  <div class="tl-step" onclick="tlSet('edo',3)"><div class="tl-dot">04</div><span class="tl-step-name" data-i18n="edo.s4t">Salone del Mobile</span></div>
+                </div>
+                <div class="tl-panel" id="tlp-edo"></div>
+                <div class="tl-nav">
+                  <button class="tl-btn" id="tlprev-edo" onclick="tlPrev('edo')">← Precedente</button>
+                  <button class="tl-btn tl-primary" id="tlnext-edo" onclick="tlNext('edo')">Successivo →</button>
+                </div>
               </div>
               <div class="proj-gallery" style="margin-top:1.5rem;border-radius:4px;overflow:hidden;">
                 <!-- EDIT: Souffle_Cafedesart_2_front.jpg, Souffle_Cafedesart_3_front.jpg, top_X_scuro.jpg, top_X_chiaro.jpg -->
@@ -760,6 +816,92 @@ function toggleDetail(btn) {
   btn.classList.toggle('open', !open);
 }
 
+/* ── TIMELINE ENGINE ── */
+const TL_DATA = {
+  prisma: {
+    it: [
+      { num:'01', title:'Diagnosi di mercato', badge:'Benchmark competitivo', body:'Uteco aveva già una gamma C&L, ma l\'analisi interna aveva rivelato tre problemi strutturali: scarsa trasversalità dei componenti tra le macchine, un prezzo di listino non competitivo rispetto al mercato, e una tecnologia meno sviluppata rispetto ai principali player europei. Il benchmark su oltre 20 macchine di 3 competitor principali ha permesso di mappare tre segmenti di posizionamento distinti (Laminating SL, Multi-Process, Coating) e di capire come strutturare la nuova piattaforma di prodotto. L\'analisi sul campo ha poi identificato un gap funzionale non coperto da nessun competitor, integrato nella nuova gamma come funzionalità di processo proprietaria.', output:'Mappa dei 3 segmenti di mercato · Gap funzionale non presidiato dai competitor · Struttura della piattaforma di prodotto' },
+      { num:'02', title:'AHP + QFD', badge:'Analisi strutturata', body:'Con 15 bisogni di mercato identificati e nessuna gerarchia oggettiva tra loro, il rischio era di distribuire gli investimenti in modo uniforme invece di concentrarli dove creavano più valore. L\'AHP ha prodotto una ponderazione condivisa dei bisogni, che il QFD ha poi tradotto in 67 requisiti funzionali misurabili con target numerici per ogni design driver. Il risultato più rilevante: gli investimenti si sono concentrati su due moduli critici della macchina e su un driver di produttività trasversale, la riduzione dei tempi di changeover, del downtime e degli scarti di avviamento.', output:'67 requisiti funzionali con target numerici · 8 design driver prioritizzati · Orientamento degli investimenti verso i moduli ad alto impatto' },
+      { num:'03', title:'Design to Cost', badge:'Target costing modulare', body:'Il target cost è stato definito top-down, partendo dal prezzo di mercato obiettivo e non dai costi storici interni. Questo ha imposto un vincolo reale a ogni scelta progettuale. I moduli della nuova gamma sono stati allineati con le altre piattaforme di prodotto Uteco per massimizzare gli acquisti in economia, ridurre la frammentazione della supply chain e rendere più efficienti i processi di montaggio e taratura. Il risultato è una piattaforma configurabile con 15 moduli standard e interfacce unificate: ogni variante si costruisce combinando moduli esistenti invece di riprogettare da zero.', output:'Target cost top-down per modulo · 15 moduli standard · −12% costi materiali · −60% codici unici supply chain · −27% ingombro configurazione triplex' },
+      { num:'04', title:'Sviluppo R&D', badge:'Coordinamento team', body:'Il coordinamento tra Product Innovation, uffici tecnici meccanici ed elettrici e tecnici operatori ha richiesto uno sforzo simultaneo su più fronti, con vincoli e osservazioni che si generavano in parallelo tra dipartimenti con logiche e tempi diversi. Il Gantt multi-livello con milestone strutturate ha gestito la pianificazione macro, mentre in Jira è stato implementato un processo strutturato di avanzamento dei requisiti: ogni requisito transitava dalla valutazione preliminare al testing fino alla verifica della soddisfazione, creando un filo diretto tra i requisiti QFD definiti in fase 02 e la validazione finale.', output:'Team di 12 persone su 5 discipline · Gantt multi-livello · Tracciamento requisiti in Jira dalla valutazione al testing' },
+      { num:'05', title:'Test Plan', badge:'Validazione sistematica', body:'Il test plan è stato redatto immediatamente dopo la definizione dei requisiti QFD, non a valle della prototipazione. Questa scelta ha garantito rigore metodologico: ogni test era progettato per verificare un requisito specifico, non per esplorare il prototipo a posteriori. I criteri di accettazione sono stati definiti in modo differenziato: quelli tecnici dagli esperti interni di ogni disciplina, quelli legati alla percezione di prodotto sondati direttamente con area manager e clienti. La validazione finale ha coperto sia gli aspetti funzionali e di processo che la soddisfazione dei requisiti di mercato identificati in fase 02.', output:'Test plan redatto a valle dei requisiti, non del prototipo · Criteri di accettazione tecnici e di mercato · Tracciabilità requisiti QFD — test — validazione' },
+      { num:'06', title:'Lancio Drupa 2024', badge:'Go-to-market', body:'La scadenza di Drupa 2024 ha funzionato da vincolo di sistema per tutto il progetto: ogni milestone era calibrata a ritroso rispetto alla data della fiera. In parallelo alla gestione del progetto, ho collaborato con il reparto marketing per costruire la value proposition commerciale della nuova gamma, traducendo i risultati tecnici e i target di Design to Cost in messaggi comprensibili per il mercato. Ogni beneficio dichiarato era tracciabile a un requisito validato in fase di test, rendendo la comunicazione commerciale fondata sui dati del progetto.', output:'Prototipo fisico presentato a Drupa 2024 · Value proposition costruita sui dati di validazione · Tracciabilità requisiti — test — comunicazione commerciale' }
+    ],
+    en: [
+      { num:'01', title:'Market diagnosis', badge:'Competitive benchmark', body:'Uteco already had a C&L range, but internal analysis had revealed three structural problems: low component commonality across machines, a non-competitive list price versus the market, and less developed technology compared to the leading European players. A benchmark across over 20 machines from 3 main competitors mapped three distinct positioning segments (Laminating SL, Multi-Process, Coating) and clarified how to structure the new product platform. Field research then identified a functional gap not covered by any competitor, integrated into the new range as a proprietary process feature.', output:'Map of 3 market segments · Functional gap not covered by competitors · Product platform structure' },
+      { num:'02', title:'AHP + QFD', badge:'Structured analysis', body:'With 15 market needs identified and no objective hierarchy between them, the risk was spreading investment evenly rather than concentrating it where it created the most value. AHP produced a shared weighting of needs, which QFD then translated into 67 measurable functional requirements with numerical targets per design driver. The most significant outcome: investment concentrated on two critical machine modules and one cross-cutting productivity driver, reducing changeover time, downtime and start-up waste.', output:'67 functional requirements with numerical targets · 8 prioritised design drivers · Investment directed toward high-impact modules' },
+      { num:'03', title:'Design to Cost', badge:'Modular target costing', body:'Target cost was defined top-down, starting from the market price objective rather than historical internal costs. This imposed a real constraint on every design decision. The modules of the new range were aligned with Uteco\'s other product platforms to maximise volume purchasing, reduce supply chain fragmentation and improve assembly and calibration efficiency. The result is a configurable platform with 15 standard modules and unified interfaces: each variant is built by combining existing modules rather than redesigning from scratch.', output:'Top-down target cost per module · 15 standard modules · −12% material costs · −60% unique supply chain codes · −27% triplex configuration footprint' },
+      { num:'04', title:'R&D Development', badge:'Team coordination', body:'Coordinating Product Innovation, mechanical and electrical engineering offices and technical operators required a simultaneous effort across multiple fronts, with constraints and observations generated in parallel between departments with different logics and timelines. A multi-level Gantt with structured milestones managed macro planning, while Jira was used to implement a structured requirements progression process: each requirement moved from preliminary assessment through testing to satisfaction verification, creating a direct link between the QFD requirements defined in phase 02 and final validation.', output:'Team of 12 people across 5 disciplines · Multi-level Gantt · Requirements tracked in Jira from assessment to testing' },
+      { num:'05', title:'Test Plan', badge:'Systematic validation', body:'The test plan was written immediately after the QFD requirements were defined, not after prototyping. This ensured methodological rigour: each test was designed to verify a specific requirement, not to explore the prototype after the fact. Acceptance criteria were defined in a differentiated way: technical criteria by internal experts in each discipline, product perception criteria gathered directly from area managers and clients. Final validation covered both functional and process aspects and the satisfaction of the market requirements identified in phase 02.', output:'Test plan written after requirements, not the prototype · Technical and market acceptance criteria · Traceability: QFD requirements — tests — validation' },
+      { num:'06', title:'Drupa 2024 Launch', badge:'Go-to-market', body:'The Drupa 2024 deadline functioned as a system-level constraint for the entire project: every milestone was calibrated backward from the trade show date. Alongside project management, I worked with the marketing team to build the commercial value proposition for the new range, translating technical results and Design to Cost targets into messages the market could understand. Every stated benefit was traceable to a requirement validated in testing, grounding commercial communication in project data.', output:'Physical prototype presented at Drupa 2024 · Value proposition built on validation data · Traceability: requirements — tests — commercial communication' }
+    ]
+  },
+  flex: {
+    it: [
+      { num:'01', title:'Analisi dell\'ecosistema', badge:'Mappatura satellite', body:'Attorno alle macchine Uteco esiste un ecosistema di prodotti satellite che i clienti acquistano da terze parti. La mappatura di questo ecosistema per tipologia di macchina (Flexo, Roto, C&L) ha identificato il tavolo di ispezione come punto di ingresso prioritario: era un prodotto già richiesto dai clienti esistenti e richiedeva un investimento di sviluppo contenuto rispetto ad altri prodotti satellite. Un ciclo di sviluppo breve su un bisogno già espresso dal mercato: il rapporto impatto/effort più favorevole dell\'ecosistema analizzato.', output:'Mappa dei prodotti satellite per tipologia di macchina · Tavolo di ispezione identificato come priorità per domanda esistente e investimento contenuto' },
+      { num:'02', title:'AHP + QFD + Requisiti', badge:'Analisi strutturata', body:'Le interviste a operatori e area manager hanno fatto emergere un gap preciso nel mercato: i tavoli di ispezione disponibili erano o prodotti basic con scarso appeal estetico, o soluzioni high-tech ad alto prezzo, senza nulla nel mezzo. L\'obiettivo è diventato sviluppare un prodotto economico ma con un\'estetica curata e un family feeling riconoscibile con le macchine Uteco, per favorire l\'acquisto congiunto. AHP e QFD hanno tradotto questo posizionamento in requisiti funzionali misurabili, con specifiche tecniche mid-high (ISO 3364:2009, microscopio integrato, monitor touch, superficie inclinabile) a un prezzo mid-low.', output:'Posizionamento mid-low con specifiche mid-high · Requisiti funzionali da interviste a operatori e area manager · Family feeling con portfolio Uteco come driver di acquisto congiunto' },
+      { num:'03', title:'Concept & Target Cost', badge:'Target costing', body:'Il concept estetico è stato sviluppato interamente in autonomia, a partire dai requisiti di family feeling con le macchine Uteco e dal posizionamento mid-low con appeal curato. La modellazione 3D ha permesso di iterare rapidamente sulla forma e verificare la coerenza visiva con il portfolio esistente. Il target cost è stato definito per modulo, con lo stesso approccio top-down usato su PRISMA: prima il prezzo obiettivo di mercato, poi i vincoli progettuali per ogni componente.', output:'Concept estetico sviluppato in autonomia · Modellazione 3D · Target cost top-down per modulo · Coerenza visiva con portfolio Uteco verificata in fase di concept' },
+      { num:'04', title:'Sviluppo e prototipazione', badge:'Go-to-market', body:'Lo sviluppo ha seguito un Gantt strutturato con fasi presidiate, coordinando i fornitori esterni e i reparti interni. Il progetto ha raggiunto il primo prototipo fisico, presentato a Drupa 2024. Il prototipo incorpora le specifiche tecniche definite in fase di requisiti e il concept estetico sviluppato in fase 03, verificando la coerenza tra la direzione progettuale e il risultato fisico.', output:'Primo prototipo fisico realizzato · Presentato a Drupa 2024' }
+    ],
+    en: [
+      { num:'01', title:'Ecosystem analysis', badge:'Satellite mapping', body:'Around Uteco\'s machines exists an ecosystem of satellite products that customers source from third parties. Mapping this ecosystem by machine type (Flexo, Roto, C&L) identified the inspection table as the priority entry point: it was a product already requested by existing customers and required a contained development investment compared to other satellite products. A short development cycle on a need already expressed by the market: the most favourable impact/effort ratio in the ecosystem analysed.', output:'Satellite product map by machine type · Inspection table identified as priority due to existing demand and contained investment' },
+      { num:'02', title:'AHP + QFD + Requirements', badge:'Structured analysis', body:'Interviews with operators and area managers revealed a precise gap in the market: available inspection tables were either basic products with poor aesthetic appeal, or high-tech high-price solutions, with nothing in between. The objective became developing an affordable product with refined aesthetics and a recognisable family feeling with Uteco machines, to encourage joint purchase. AHP and QFD translated this positioning into measurable functional requirements, with mid-high technical specifications (ISO 3364:2009, integrated microscope, touch monitor, tiltable surface) at a mid-low price.', output:'Mid-low positioning with mid-high specifications · Functional requirements from operator and area manager interviews · Family feeling with Uteco portfolio as joint purchase driver' },
+      { num:'03', title:'Concept & Target Cost', badge:'Target costing', body:'The aesthetic concept was developed entirely independently, starting from the family feeling requirements with Uteco machines and the mid-low positioning with refined appeal. 3D modelling allowed rapid iteration on the form and verification of visual consistency with the existing portfolio. Target cost was defined per module, using the same top-down approach as PRISMA: market price objective first, then design constraints for each component.', output:'Aesthetic concept developed independently · 3D modelling · Top-down target cost per module · Visual consistency with Uteco portfolio verified at concept stage' },
+      { num:'04', title:'Development & Prototyping', badge:'Go-to-market', body:'Development followed a structured Gantt with supervised phases, coordinating external suppliers and internal departments. The project reached its first physical prototype, presented at Drupa 2024. The prototype incorporates the technical specifications defined during requirements and the aesthetic concept developed in phase 03, verifying the consistency between the design direction and the physical result.', output:'First physical prototype produced · Presented at Drupa 2024' }
+    ]
+  },
+  edo: {
+    it: [
+      { num:'01', title:'Analisi di mercato', badge:'Ricerca competitiva', body:'L\'analisi di mercato è stata condotta in autonomia e supervisionata dallo studio, mappando l\'offerta competitor per dimensioni, forme, materiali e posizionamento di prezzo. L\'analisi ha confermato il gap identificato dallo studio: nel segmento tavoli da pranzo moderni mancava un prodotto con forme organiche, materiali naturali e un\'estetica coerente con il DNA Art Déco e Mid Century di Cafedesart. I risultati hanno fornito la base oggettiva per le scelte progettuali successive.', output:'Mappa competitor per forma, materiali e posizionamento · Conferma del gap di mercato · Base per le scelte progettuali di concept' },
+      { num:'02', title:'Concept & 3D', badge:'Modellazione', body:'Il concept ha sviluppato un piano dalle proporzioni ampie con angoli arrotondati e basi cilindriche asimmetriche, modellato in Rhino e Shapr3D con iterazioni sulla geometria. La scelta delle basi asimmetriche è stata una decisione progettuale precisa: un tavolo in legno è strutturalmente pesante, e la variazione di altezza tra le basi genera una percezione visiva di leggerezza che risponde direttamente a uno dei requisiti chiave del brief. Forma e requisito coincidono nella stessa soluzione.', output:'Modellazione 3D in Rhino e Shapr3D · Soluzione formale derivata da requisito funzionale' },
+      { num:'03', title:'CMF Selection', badge:'Finiture e materiali', body:'La selezione delle finiture è avvenuta a partire da un campionario di piallacciature predefinito, scegliendo le combinazioni più coerenti con il posizionamento del brand e con il concept formale sviluppato in fase 02. Le varianti in legno erano mandatorie nel brief. Il profilo metallico attorno al bordo del piano è stata una proposta personale: un dettaglio che rafforza il riferimento Art Déco del DNA Cafedesart e aggiunge un elemento di rifinitura che distingue il prodotto nella fascia di mercato.', output:'Selezione CMF da campionario · Profilo metallico sul bordo come elemento distintivo' },
+      { num:'04', title:'Salone del Mobile', badge:'Lancio', body:'Il prototipo fisico è stato selezionato per il Salone del Mobile 2022 di Milano, la principale fiera internazionale del settore arredo. Il tavolo Edo è attualmente in vendita nel catalogo Cafedesart.', output:'Selezione per Salone del Mobile 2022 · Prodotto in vendita nel catalogo Cafedesart' }
+    ],
+    en: [
+      { num:'01', title:'Market analysis', badge:'Competitive research', body:'The market analysis was conducted independently and supervised by the studio, mapping competitor offerings across dimensions, forms, materials and price positioning. The analysis confirmed the gap identified by the studio: the modern dining table segment lacked a product with organic forms, natural materials and an aesthetic coherent with Cafedesart\'s Art Déco and Mid Century DNA. The findings provided the objective basis for subsequent design decisions.', output:'Competitor map by form, materials and positioning · Market gap confirmed · Basis for concept design decisions' },
+      { num:'02', title:'Concept & 3D', badge:'Modelling', body:'The concept developed a wide-proportion top with rounded corners and asymmetric cylindrical bases, modelled in Rhino and Shapr3D with iterative geometry refinement. The choice of asymmetric bases was a precise design decision: a wooden table is structurally heavy, and the height variation between bases creates a visual perception of lightness that responds directly to one of the key requirements in the brief. Form and requirement coincide in the same solution.', output:'3D modelling in Rhino and Shapr3D · Formal solution derived from functional requirement' },
+      { num:'03', title:'CMF Selection', badge:'Finishes and materials', body:'Finish selection was made from a predefined veneer sample set, choosing the combinations most coherent with the brand positioning and the formal concept developed in phase 02. Wood variants were mandatory in the brief. The metal profile around the top edge was a personal proposal: a detail that reinforces the Art Déco reference in Cafedesart\'s DNA and adds a finishing element that distinguishes the product in its market tier.', output:'CMF selection from sample set · Metal edge profile as distinctive element' },
+      { num:'04', title:'Salone del Mobile', badge:'Launch', body:'The physical prototype was selected for Salone del Mobile 2022 in Milan, the leading international furniture trade show. The Edo table is currently available in the Cafedesart catalogue.', output:'Selected for Salone del Mobile 2022 · Product available in the Cafedesart catalogue' }
+    ]
+  }
+};
+
+const tlState = { prisma: 0, flex: 0, edo: 0 };
+let tlLang = 'it';
+
+function tlRender(id) {
+  const cur = tlState[id];
+  const data = TL_DATA[id][tlLang];
+  const total = data.length;
+  const s = data[cur];
+
+  document.getElementById('tlp-' + id).innerHTML =
+    '<div class="tl-panel-top"><div><p class="tl-panel-num">Fase ' + s.num + '</p><p class="tl-panel-title">' + s.title + '</p></div><span class="tl-panel-badge">' + s.badge + '</span></div>' +
+    '<p class="tl-panel-body">' + s.body + '</p>' +
+    '<div class="tl-panel-output"><span class="tl-panel-output-label">Output</span><span class="tl-panel-output-val">' + s.output + '</span></div>';
+
+  const steps = document.querySelectorAll('#tl-' + id + ' .tl-step');
+  steps.forEach(function(el, i) {
+    el.classList.remove('tl-active', 'tl-done');
+    if (i < cur) el.classList.add('tl-done');
+    else if (i === cur) el.classList.add('tl-active');
+  });
+
+  const pct = total <= 1 ? 0 : (cur / (total - 1)) * 90;
+  document.getElementById('tlf-' + id).style.width = pct + '%';
+  document.getElementById('tlprev-' + id).disabled = cur === 0;
+  var nextBtn = document.getElementById('tlnext-' + id);
+  nextBtn.disabled = cur === total - 1;
+}
+
+function tlSet(id, i) { tlState[id] = i; tlRender(id); }
+function tlPrev(id) { if (tlState[id] > 0) { tlState[id]--; tlRender(id); } }
+function tlNext(id) { if (tlState[id] < TL_DATA[id][tlLang].length - 1) { tlState[id]++; tlRender(id); } }
+
+function tlInitAll() {
+  ['prisma','flex','edo'].forEach(function(id) { tlRender(id); });
+}
+
 /* i18n */
 const T = {
 it: {
@@ -780,32 +922,23 @@ it: {
   "proj.more":"Approfondisci",
   "prisma.role":"R&D Project Manager · Uteco Converting SpA",
   "prisma.summary":"Nuova gamma di macchine Coating & Laminating per Uteco, dal concept al prototipo fisico presentato a Drupa 2024. Obiettivo: +10% di market share nel segmento C&L in 5 anni.",
-  "prisma.h1":"Il problema di business","prisma.t1":"Uteco deteneva una quota marginale su un mercato da oltre 260 M€, con vendite C&L stagnanti da cinque anni nonostante una crescita sostenuta del settore. L'analisi interna rivelava una gamma frammentata, con bassa condivisione di componenti e alta percentuale di larghezze mai ordinate, e un posizionamento di prezzo non competitivo rispetto ai principali player europei (Bobst, NordMeccanica, Comexi). Obiettivo: ridisegnare l'intera gamma secondo logiche di modularità, Design to Cost e family feeling.",
+  "prisma.h1":"Il problema di business",
+  "prisma.t1":"Uteco deteneva una quota marginale su un mercato da oltre 260 M€, con vendite C&L stagnanti da cinque anni nonostante una crescita sostenuta del settore. L'analisi interna rivelava una gamma frammentata, con bassa condivisione di componenti tra le macchine e alta percentuale di larghezze mai ordinate, e un posizionamento di prezzo non competitivo rispetto ai principali player europei. L'obiettivo: ridisegnare l'intera gamma secondo logiche di modularità, Design to Cost e family feeling con la nuova gamma flessografica.",
   "prisma.h2":"Metodologia e processo",
-  "prisma.s1t":"Diagnosi di mercato","prisma.s1d":"Benchmark competitivo su 4 player principali, analisi portfolio capability e identificazione dei gap non presidiati da Uteco.",
-  "prisma.s2t":"AHP + QFD","prisma.s2d":"Ponderazione di 15 bisogni di mercato via AHP. Traduzione in 67 requisiti funzionali misurabili via QFD con target per design driver.",
-  "prisma.s3t":"Design to Cost","prisma.s3d":"Target cost per modulo, commonality analysis, beachhead strategy e 15 moduli standard con interfacce unificate.",
-  "prisma.s4t":"Sviluppo R&D","prisma.s4d":"Coordinamento di ~12 persone tra progettazione meccanica, elettrica, software, acquisti e marketing.",
-  "prisma.s5t":"Test Plan","prisma.s5d":"Pianificazione e coordinamento test funzionali, di processo e di validazione con tutti gli attori coinvolti.",
-  "prisma.s6t":"Lancio Drupa 2024","prisma.s6d":"Costruzione della value proposition commerciale e coordinamento del progetto per garantire il rispetto della scadenza della fiera internazionale Drupa 2024.",
+  "prisma.s1t":"Diagnosi di mercato","prisma.s2t":"AHP + QFD","prisma.s3t":"Design to Cost","prisma.s4t":"Sviluppo R&D","prisma.s5t":"Test Plan","prisma.s6t":"Lancio Drupa",
   "prisma.h3":"Target progettuali","prisma.k1":"Costi materiali","prisma.k2":"Codici unici supply chain","prisma.k3":"Tempo change over","prisma.k4":"Ingombro triplex",
   "prisma.h4":"Gli 8 design driver","prisma.t2":"Il progetto è strutturato attorno a 8 driver: Design to Cost, Design for Supply Chain, Design for Assembly, Design for Productivity, Design for Compactness, Design for Sustainability, Design for Configurability (15 moduli, interfacce unificate) e Design for Serviceability.",
   "flex.role":"Product Manager · Uteco Converting SpA",
   "flex.summary":"Prodotto satellite per l'ispezione offline della qualità di stampa, sviluppato per completare il portfolio Uteco e aprire un nuovo stream di vendite nel segmento mid-low, non presidiato dai competitor.",
-  "flex.h1":"Contesto strategico","flex.t1":"Attorno alle macchine Uteco gravita un ecosistema di prodotti satellite che i clienti acquistano da terze parti. L'analisi ha identificato il tavolo di ispezione come punto di ingresso strategico: ciclo di sviluppo breve e un gap preciso nel posizionamento mid-low. I competitor si dividevano tra prodotti basic e soluzioni high-tech ad alto prezzo, senza nulla nel mezzo.",
+  "flex.h1":"Contesto strategico",
+  "flex.t1":"Attorno alle macchine Uteco gravita un ecosistema di prodotti satellite che i clienti acquistano da terze parti. L'analisi ha identificato il tavolo di ispezione come punto di ingresso strategico: ciclo di sviluppo breve e un gap preciso nel posizionamento mid-low. I competitor si dividevano tra prodotti basic e soluzioni high-tech ad alto prezzo, senza nulla nel mezzo.",
   "flex.h2":"Processo",
-  "flex.s1t":"Analisi ecosistema","flex.s1d":"Mappatura dei prodotti satellite per tipologia di macchina (Flexo, Roto, C&L) e identificazione del prodotto col miglior rapporto impatto/effort.",
-  "flex.s2t":"AHP + QFD + Requisiti","flex.s2d":"Interviste agli utenti interni, definizione bisogni chiave, AHP e QFD per tradurli in requisiti funzionali e specifiche tecniche.",
-  "flex.s3t":"Concept & Target Cost","flex.s3d":"Concept con modellazione 3D. Target cost per module-level. Specifiche: ISO 3364:2009, Dino-Lite integrato, monitor touch, superficie inclinabile.",
-  "flex.s4t":"Sviluppo & Prototipazione","flex.s4d":"Gantt bisettimanale con 7 fasi. Il progetto ha raggiunto il secondo prototipo fisico, in fase di validazione.",
-  "flex.brand":"Il prodotto è denominato Flexlight, brandizzato Dimotion per coerenza visiva con le macchine Uteco.",
+  "flex.s1t":"Analisi ecosistema","flex.s2t":"AHP + QFD","flex.s3t":"Concept & Cost","flex.s4t":"Prototipazione",
   "edo.role":"Product Designer · Henry & Co. / Cafedesart",
   "edo.summary":"Tavolo da pranzo per Cafedesart, brand italiano di arredo di lusso Art Déco e Mid Century. Selezionato per il Salone del Mobile 2022 di Milano.",
-  "edo.h1":"Il contesto","edo.t1":"Henry & Co. applica il Circular Design Thinking, metodologia in quattro fasi non lineari (Comprensione, Definizione, Sviluppo e Pubblicazione) che integra economia circolare nel processo progettuale. Il brief richiedeva un tavolo moderno, leggero nelle forme, coerente con il DNA del brand.",
-  "edo.s1t":"Analisi di mercato","edo.s1d":"Studio competitor per dimensioni, forme, materiali e posizionamento. Gap: tavolo moderno con forme organiche e materiali naturali.",
-  "edo.s2t":"Concept & 3D","edo.s2d":"Piano con angoli arrotondati, basi cilindriche asimmetriche. Modellazione in Rhino e Shapr3D con iterazioni sulla geometria.",
-  "edo.s3t":"CMF Selection","edo.s3d":"Piallacciature con pattern intarsiati (X e Diamond) in varianti chiare e scure. Dettaglio in ottone sul bordo del piano.",
-  "edo.s4t":"Salone del Mobile","edo.s4d":"Prototipo selezionato per il Salone del Mobile 2022. Il tavolo Edo è attualmente in vendita nel catalogo Cafedesart.",
+  "edo.h1":"Il contesto",
+  "edo.t1":"Henry & Co. applica il Circular Design Thinking, metodologia in quattro fasi non lineari (Comprensione, Definizione, Sviluppo e Pubblicazione) che integra economia circolare nel processo progettuale. Il brief richiedeva un tavolo moderno, leggero nelle forme, coerente con il DNA del brand.",
+  "edo.s1t":"Analisi di mercato","edo.s2t":"Concept & 3D","edo.s3t":"CMF Selection","edo.s4t":"Salone del Mobile",
   "edu.label":"Formazione","cert.label":"Certificazioni",
   "edu1.deg":"Economia Aziendale e Management","edu1.note":"Part-time in parallelo al lavoro, per integrare le competenze tecniche con una base strategica e di business.",
   "edu2.deg":"Product & Design Management","edu2.note":"Diploma con 98/100. Competenze in product management, project management e product design.",
@@ -833,32 +966,23 @@ en: {
   "proj.more":"Explore",
   "prisma.role":"R&D Project Manager · Uteco Converting SpA",
   "prisma.summary":"New Coating & Laminating machine range for Uteco, from concept to physical prototype presented at Drupa 2024. Target: +10% market share in the C&L segment in 5 years.",
-  "prisma.h1":"The business problem","prisma.t1":"Uteco held a marginal share of a market worth over 260 M€, with stagnant C&L sales for five years despite sustained growth. Internal analysis revealed a fragmented range, with low component sharing and a high percentage of widths never ordered, and non-competitive pricing versus leading European players (Bobst, NordMeccanica, Comexi). Objective: redesign the entire range around modularity, Design to Cost and visual family feeling.",
+  "prisma.h1":"The business problem",
+  "prisma.t1":"Uteco held a marginal share of a market worth over 260 M€, with stagnant C&L sales for five years despite sustained sector growth. Internal analysis revealed a fragmented range with low component commonality and non-competitive pricing versus leading European players. Objective: redesign the entire range around modularity, Design to Cost and visual family feeling.",
   "prisma.h2":"Methodology & process",
-  "prisma.s1t":"Market diagnosis","prisma.s1d":"Competitive benchmark across 4 major players, portfolio capability analysis and identification of market gaps not covered by Uteco.",
-  "prisma.s2t":"AHP + QFD","prisma.s2d":"Weighting of 15 market needs via AHP. Translation into 67 measurable functional requirements via QFD with targets per design driver.",
-  "prisma.s3t":"Design to Cost","prisma.s3d":"Module-level target costs, commonality analysis, beachhead strategy and 15 standard modules with unified interfaces.",
-  "prisma.s4t":"R&D Development","prisma.s4d":"Coordination of ~12 people across mechanical, electrical, software design, procurement and marketing.",
-  "prisma.s5t":"Test Plan","prisma.s5d":"Planning and coordination of functional, process and validation tests with all stakeholders involved.",
-  "prisma.s6t":"Drupa 2024 Launch","prisma.s6d":"Built the commercial value proposition and coordinated the project to meet the deadline of Drupa 2024.",
+  "prisma.s1t":"Market diagnosis","prisma.s2t":"AHP + QFD","prisma.s3t":"Design to Cost","prisma.s4t":"R&D Development","prisma.s5t":"Test Plan","prisma.s6t":"Drupa Launch",
   "prisma.h3":"Design targets","prisma.k1":"Material costs","prisma.k2":"Unique codes supply chain","prisma.k3":"Change over time","prisma.k4":"Triplex footprint",
   "prisma.h4":"The 8 design drivers","prisma.t2":"The project is structured around 8 drivers: Design to Cost, Design for Supply Chain, Design for Assembly, Design for Productivity, Design for Compactness, Design for Sustainability, Design for Configurability (15 modules, unified interfaces) and Design for Serviceability.",
   "flex.role":"Product Manager · Uteco Converting SpA",
   "flex.summary":"Satellite product for offline print quality inspection, developed to complete Uteco's portfolio and open a new sales stream in the mid-low segment, unoccupied by competitors at the time of analysis.",
-  "flex.h1":"Strategic context","flex.t1":"Around Uteco's machines exists an ecosystem of satellite products that customers source from third parties. Analysis identified the inspection table as the strategic entry point: short development cycle and a gap in the mid-low positioning. Competitors divided between basic products and high-tech high-price solutions, with nothing in between.",
+  "flex.h1":"Strategic context",
+  "flex.t1":"Around Uteco's machines exists an ecosystem of satellite products that customers source from third parties. Analysis identified the inspection table as the strategic entry point: short development cycle and a precise gap in the mid-low positioning. Competitors divided between basic products and high-tech high-price solutions, with nothing in between.",
   "flex.h2":"Process",
-  "flex.s1t":"Ecosystem analysis","flex.s1d":"Mapping of satellite products by machine type (Flexo, Roto, C&L) and identification of the best impact/effort product.",
-  "flex.s2t":"AHP + QFD + Requirements","flex.s2d":"Internal user interviews, key needs definition, AHP and QFD to translate them into prioritised functional requirements and specifications.",
-  "flex.s3t":"Concept & Target Cost","flex.s3d":"Concept with 3D modelling. Module-level target costs. Specs: ISO 3364:2009, integrated Dino-Lite, touch monitor, tiltable surface.",
-  "flex.s4t":"Development & Prototyping","flex.s4d":"Bi-weekly Gantt across 7 tracked phases. The project reached its second physical prototype, currently in validation.",
-  "flex.brand":"The product is named Flexlight, branded Dimotion for visual consistency with Uteco machines.",
+  "flex.s1t":"Ecosystem analysis","flex.s2t":"AHP + QFD","flex.s3t":"Concept & Cost","flex.s4t":"Prototyping",
   "edo.role":"Product Designer · Henry & Co. / Cafedesart",
   "edo.summary":"Dining table for Cafedesart, Italian luxury furniture brand inspired by Art Déco and Mid Century. Selected for Salone del Mobile 2022 in Milan.",
-  "edo.h1":"Context","edo.t1":"Henry & Co. applies Circular Design Thinking, a methodology in four non-linear phases (Understanding, Definition, Development and Publication) integrating circular economy into the design process. The brief called for a modern dining table, light in form, coherent with the brand's DNA.",
-  "edo.s1t":"Market analysis","edo.s1d":"Competitor study across dimensions, forms, materials and positioning. Gap: modern dining table with organic forms and natural materials.",
-  "edo.s2t":"Concept & 3D","edo.s2d":"Rounded-corner top, asymmetric cylindrical bases. 3D modelling in Rhino and Shapr3D with iterative refinement.",
-  "edo.s3t":"CMF Selection","edo.s3d":"Wood veneers with inlaid geometric patterns (X and Diamond) in light and dark variants. Brass detail on the top edge.",
-  "edo.s4t":"Salone del Mobile","edo.s4d":"Prototype selected for Salone del Mobile 2022. The Edo table is currently available in the Cafedesart catalogue.",
+  "edo.h1":"Context",
+  "edo.t1":"Henry & Co. applies Circular Design Thinking, a methodology in four non-linear phases (Understanding, Definition, Development and Publication) integrating circular economy into the design process. The brief called for a modern dining table, light in form, coherent with the brand's DNA.",
+  "edo.s1t":"Market analysis","edo.s2t":"Concept & 3D","edo.s3t":"CMF Selection","edo.s4t":"Salone del Mobile",
   "edu.label":"Education","cert.label":"Certifications",
   "edu1.deg":"Business Administration & Management","edu1.note":"Part-time alongside full-time work, integrating technical expertise with strategic and business foundations.",
   "edu2.deg":"Product & Design Management","edu2.note":"Graduated 98/100. Competencies in product management, project management and product design.",
@@ -871,6 +995,7 @@ en: {
 };
 
 function setLang(lang) {
+  tlLang = lang;
   document.getElementById('btn-it').classList.toggle('active', lang === 'it');
   document.getElementById('btn-en').classList.toggle('active', lang === 'en');
   document.documentElement.lang = lang;
@@ -883,7 +1008,11 @@ function setLang(lang) {
     : 'CV_Diego_Zorzi_ITA.pdf';
   document.getElementById('cv-link').href = cvFile;
   document.getElementById('cv-footer').href = cvFile;
+  tlInitAll();
 }
+
+/* Init on load */
+tlInitAll();
 </script>
 </body>
 </html>
