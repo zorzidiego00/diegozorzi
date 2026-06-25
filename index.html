@@ -1041,7 +1041,7 @@ function setLang(lang) {
 
 /* ── DURATA ESPERIENZA ── */
 function calcDur(startYear, startMonth, endYear, endMonth) {
-  var totalMonths = (endYear - startYear) * 12 + (endMonth - startMonth);
+  var totalMonths = (endYear - startYear) * 12 + (endMonth - startMonth) + 1;
   var years = Math.floor(totalMonths / 12);
   var months = totalMonths % 12;
   var lang = tlLang;
