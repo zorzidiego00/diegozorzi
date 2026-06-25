@@ -404,6 +404,15 @@ footer {
 .fl a { font-size: 0.75rem; color: var(--mid); transition: color 0.15s; }
 .fl a:hover { color: var(--blue); }
 
+/* ── ROLE TIMELINE ── */
+.role-tl { display: flex; flex-direction: column; border-left: 2px solid var(--faint); padding-left: 1.2rem; margin-bottom: 1.2rem; }
+.role-tl-item { position: relative; padding: 0.55rem 0; }
+.role-tl-item::before { content: ''; position: absolute; left: -1.55rem; top: 50%; transform: translateY(-50%); width: 8px; height: 8px; border-radius: 50%; background: var(--faint); border: 2px solid var(--faint); }
+.role-tl-item.current::before { background: var(--blue); border-color: var(--blue); }
+.role-tl-name { font-size: 0.92rem; font-weight: 600; color: var(--mid); margin-bottom: 0.1rem; letter-spacing: -0.01em; }
+.role-tl-item.current .role-tl-name { color: var(--ink); }
+.role-tl-period { font-size: 0.75rem; color: var(--mid); }
+
 /* ── RESPONSIVE ── */
 @media(max-width:700px) {
   .hero-top { grid-template-columns: 1fr; }
@@ -526,7 +535,20 @@ footer {
         <p class="exp-loc">Verona, Italia</p>
       </div>
       <div>
-        <p class="exp-role" data-i18n="uteco.role">Product & Project Manager<span> — R&D Product Innovation</span></p>
+        <div class="role-tl">
+          <div class="role-tl-item current">
+            <p class="role-tl-name" data-i18n="uteco.role1">Product &amp; R&amp;D Project Manager</p>
+            <p class="role-tl-period">09/2025 — presente</p>
+          </div>
+          <div class="role-tl-item">
+            <p class="role-tl-name" data-i18n="uteco.role2">Junior Product &amp; R&amp;D Project Manager</p>
+            <p class="role-tl-period">09/2022 — 09/2025</p>
+          </div>
+          <div class="role-tl-item">
+            <p class="role-tl-name" data-i18n="uteco.role3">Product Innovation Intern</p>
+            <p class="role-tl-period">03/2022 — 09/2022</p>
+          </div>
+        </div>
         <p class="exp-desc" data-i18n="uteco.desc">Sviluppo di nuove famiglie di prodotto nel segmento delle macchine da stampa flessografica e converting per il packaging flessibile. Ho seguito l'intero processo, dalla diagnosi di mercato alla validazione del prototipo fisico, coordinando team cross-funzionali di circa 12 persone tra progettazione meccanica, elettrica, software, acquisti e marketing. Gestione simultanea di fino a 5 progetti R&D con metodologie strutturate: QFD, AHP, Design to Cost, Stage-Gate e Gantt multi-livello.</p>
       </div>
     </div>
@@ -915,7 +937,7 @@ it: {
   "about.pm":"Product Management","about.pm.text":"Analisi di mercato e competitive intelligence, definizione dei requisiti di prodotto con metodologie strutturate come QFD (Quality Function Deployment) e AHP (Analytic Hierarchy Process), business planning, roadmap e gestione del ciclo di vita dal concept al lancio.",
   "about.rd":"R&D Project Management","about.rd.text":"Coordinamento di team cross-funzionali, gestione multi-progetto con Gantt e milestone monitorate, monitoraggio di tempi, budget e obiettivi tecnici fino alla validazione del prototipo.",
   "exp.label":"Esperienze professionali",
-  "uteco.role":"Product & Project Manager","henry.role":"Product Design Intern",
+  "uteco.role1":"Product & R&D Project Manager","uteco.role2":"Junior Product & R&D Project Manager","uteco.role3":"Product Innovation Intern","henry.role":"Product Design Intern",
   "uteco.desc":"Sviluppo di nuove famiglie di prodotto nel segmento delle macchine da stampa flessografica e converting per il packaging flessibile. Ho seguito l'intero processo, dalla diagnosi di mercato alla validazione del prototipo fisico, coordinando team cross-funzionali di circa 12 persone. Gestione simultanea di fino a 5 progetti R&D: QFD, AHP, Design to Cost, Stage-Gate, Gantt multi-livello.",
   "henry.desc":"Sviluppo di concept di prodotto applicando il Circular Design Thinking. Analisi di mercato, definizione requisiti, concept design e modellazione 3D. Progettazione del tavolo Edo per Cafedesart, selezionato per il Salone del Mobile 2022 di Milano.",
   "proj.label":"Progetti selezionati","proj.intro":"Tre progetti che mostrano approcci diversi: dalla gestione di un programma R&D complesso, al lancio di un prodotto satellite in un segmento nuovo, al product design per il mercato del lusso.",
@@ -959,7 +981,7 @@ en: {
   "about.pm":"Product Management","about.pm.text":"Market analysis and competitive intelligence, product requirements definition using structured methodologies such as QFD (Quality Function Deployment) and AHP (Analytic Hierarchy Process), business planning, roadmap and lifecycle management from concept to launch.",
   "about.rd":"R&D Project Management","about.rd.text":"Cross-functional team coordination, multi-project management with Gantt and monitored milestones, tracking time, budget and technical objectives through prototype validation.",
   "exp.label":"Professional Experience",
-  "uteco.role":"Product & Project Manager","henry.role":"Product Design Intern",
+  "uteco.role1":"Product & R&D Project Manager","uteco.role2":"Junior Product & R&D Project Manager","uteco.role3":"Product Innovation Intern","henry.role":"Product Design Intern",
   "uteco.desc":"Development of new product families in the flexographic printing and converting machinery segment for flexible packaging. I oversaw the entire process, from market analysis to physical prototype validation, coordinating cross-functional teams of ~12 people. Simultaneous management of up to 5 R&D projects: QFD, AHP, Design to Cost, Stage-Gate, multi-level Gantt.",
   "henry.desc":"Product concept development applying Circular Design Thinking. Market analysis, requirements definition, concept design and 3D modelling. Design of the Edo dining table for Cafedesart, selected for Salone del Mobile 2022.",
   "proj.label":"Selected Projects","proj.intro":"Three projects illustrating different approaches: managing a complex R&D programme, launching a satellite product in a new segment, and industrial product design for the luxury market.",
