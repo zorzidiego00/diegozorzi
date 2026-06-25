@@ -111,11 +111,16 @@ nav {
 .btn-outline { border-color: var(--faint); color: var(--ink); background: var(--white); }
 .btn-outline:hover { border-color: var(--ink); }
 .hero-photo {
-  width: 140px; height: 140px; border-radius: 50%;
-  overflow: hidden; flex-shrink: 0;
-  outline: 3px solid var(--blue-light); outline-offset: 3px;
+  width: 96px; flex-shrink: 0;
+  display: flex; flex-direction: column;
 }
-.hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+.hero-photo img {
+  width: 96px; height: 116px; object-fit: cover; object-position: center top;
+  border-radius: 4px 4px 0 0; display: block;
+}
+.hero-photo-bar {
+  width: 96px; height: 3px; background: var(--blue); flex-shrink: 0;
+}
 
 /* Hero bottom strip — numeri */
 .hero-strip {
@@ -124,7 +129,7 @@ nav {
 }
 .hero-strip-inner {
   max-width: var(--max); margin: 0 auto; padding: 0 2rem;
-  display: grid; grid-template-columns: repeat(3, 1fr);
+  display: grid; grid-template-columns: repeat(4, 1fr);
 }
 .strip-item {
   padding: 1.5rem 0; border-right: 1px solid var(--faint);
@@ -132,6 +137,7 @@ nav {
 }
 .strip-item:last-child { border-right: none; padding-left: 2rem; }
 .strip-item:nth-child(2) { padding-left: 2rem; }
+.strip-item:nth-child(3) { padding-left: 2rem; }
 .strip-n {
   font-size: 2rem; font-weight: 700; letter-spacing: -0.04em;
   color: var(--blue); line-height: 1;
@@ -355,7 +361,8 @@ footer {
 /* ── RESPONSIVE ── */
 @media(max-width:700px) {
   .hero-top { grid-template-columns: 1fr; }
-  .hero-photo { order: -1; width: 100px; height: 100px; }
+  .hero-photo { order: -1; width: 80px; }
+  .hero-photo img { width: 80px; height: 96px; }
   .hero-strip-inner { grid-template-columns: 1fr; }
   .strip-item { border-right: none; border-bottom: 1px solid var(--faint); padding-left: 0 !important; }
   .strip-item:last-child { border-bottom: none; }
@@ -403,14 +410,14 @@ footer {
       <h1 class="hero-name">Diego<br><span>Zorzi</span></h1>
       <p class="hero-desc" data-i18n="hero.desc">Gestisco l'intero ciclo di vita di prodotti industriali complessi — dalla diagnosi di mercato al prototipo fisico — coordinando team R&D cross-funzionali con metodologie strutturate.</p>
       <div class="hero-actions">
-        <a href="CV_Diego_Zorzi_ITA.pdf" class="btn btn-blue" data-i18n="hero.cv">Scarica CV</a>
+        <a href="CV_Diego_Zorzi_ITA.pdf" id="cv-link" class="btn btn-blue" data-i18n="hero.cv">Scarica CV</a>
         <a href="#projects" class="btn btn-outline" data-i18n="hero.proj">Vedi progetti</a>
         <a href="https://www.linkedin.com/in/diegozorzi/" target="_blank" rel="noopener" class="btn btn-outline">LinkedIn ↗</a>
       </div>
     </div>
     <div class="hero-photo">
-      <!-- EDIT: file IMG_6986.png nella stessa cartella -->
       <img src="IMG_6986.png" alt="Diego Zorzi" loading="eager">
+      <div class="hero-photo-bar"></div>
     </div>
   </div>
   <div class="hero-strip">
@@ -426,6 +433,10 @@ footer {
       <div class="strip-item">
         <span class="strip-n">3</span>
         <span class="strip-label" data-i18n="strip.3">Prodotti sviluppati<br>dal concept al prototipo</span>
+      </div>
+      <div class="strip-item">
+        <span class="strip-n">~2M€</span>
+        <span class="strip-label" data-i18n="strip.4">Budget R&D<br>cumulativo gestito</span>
       </div>
     </div>
   </div>
@@ -687,7 +698,7 @@ footer {
     <div class="fl">
       <a href="mailto:zorzi.diego.00@gmail.com">Email</a>
       <a href="https://www.linkedin.com/in/diegozorzi/" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="CV_Diego_Zorzi_ITA.pdf" data-i18n="footer.cv">Curriculum</a>
+      <a href="CV_Diego_Zorzi_ITA.pdf" id="cv-footer" data-i18n="footer.cv">Curriculum</a>
     </div>
   </div>
 </footer>
@@ -716,7 +727,7 @@ it: {
   "hero.label":"Product & R&D Project Manager · Verona, Italia",
   "hero.desc":"Gestisco l'intero ciclo di vita di prodotti industriali complessi — dalla diagnosi di mercato al prototipo fisico — coordinando team R&D cross-funzionali con metodologie strutturate.",
   "hero.cv":"Scarica CV","hero.proj":"Vedi progetti",
-  "strip.1":"Anni in R&D\nproduct management","strip.2":"Progetti R&D\ngestiti in parallelo","strip.3":"Prodotti sviluppati\ndal concept al prototipo",
+  "strip.1":"Anni in R&D\nproduct management","strip.2":"Progetti R&D\ngestiti in parallelo","strip.3":"Prodotti sviluppati\ndal concept al prototipo","strip.4":"Budget R&D\ncumulativo gestito",
   "about.label":"Chi sono","about.title":"Ingegneria di prodotto e visione strategica",
   "about.intro":"Ho iniziato come Product Design Intern e in quattro anni sono diventato Product & Project Manager R&D, seguendo in prima persona lo sviluppo di macchine da stampa e converting di livello internazionale. Parallelamente al lavoro a tempo pieno, sto conseguendo una laurea in Economia Aziendale e Management.",
   "about.pm":"Product Management","about.pm.text":"Analisi di mercato e competitive intelligence, definizione dei requisiti di prodotto, business planning, roadmap e gestione del ciclo di vita dal concept al lancio.",
@@ -768,7 +779,7 @@ en: {
   "hero.label":"Product & R&D Project Manager · Verona, Italy",
   "hero.desc":"I manage the full lifecycle of complex industrial products — from market diagnosis to physical prototype — coordinating cross-functional R&D teams with structured methodologies.",
   "hero.cv":"Download CV","hero.proj":"See projects",
-  "strip.1":"Years in R&D\nproduct management","strip.2":"R&D projects\nmanaged in parallel","strip.3":"Products developed\nfrom concept to prototype",
+  "strip.1":"Years in R&D\nproduct management","strip.2":"R&D projects\nmanaged in parallel","strip.3":"Products developed\nfrom concept to prototype","strip.4":"Cumulative R&D\nbudget managed",
   "about.label":"About","about.title":"Product engineering and strategic vision",
   "about.intro":"I started as a Product Design Intern and in four years became Product & R&D Project Manager, personally overseeing the development of international-level printing and converting machinery. Alongside full-time work, I am completing a degree in Business Administration and Management.",
   "about.pm":"Product Management","about.pm.text":"Market analysis and competitive intelligence, product requirements definition, business planning, roadmap and lifecycle management from concept to launch.",
@@ -825,6 +836,11 @@ function setLang(lang) {
     const k = el.getAttribute('data-i18n');
     if (T[lang][k] !== undefined) el.textContent = T[lang][k];
   });
+  const cvFile = lang === 'en'
+    ? 'CV_Diego_Zorzi_-_Product___Project_Manager_-_eng.pdf'
+    : 'CV_Diego_Zorzi_ITA.pdf';
+  document.getElementById('cv-link').href = cvFile;
+  document.getElementById('cv-footer').href = cvFile;
 }
 </script>
 </body>
