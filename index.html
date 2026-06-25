@@ -111,15 +111,15 @@ nav {
 .btn-outline { border-color: var(--faint); color: var(--ink); background: var(--white); }
 .btn-outline:hover { border-color: var(--ink); }
 .hero-photo {
-  width: 96px; flex-shrink: 0;
+  width: 160px; flex-shrink: 0;
   display: flex; flex-direction: column;
 }
 .hero-photo img {
-  width: 96px; height: 116px; object-fit: cover; object-position: center top;
+  width: 160px; height: 194px; object-fit: cover; object-position: center top;
   border-radius: 4px 4px 0 0; display: block;
 }
 .hero-photo-bar {
-  width: 96px; height: 3px; background: var(--blue); flex-shrink: 0;
+  width: 160px; height: 3px; background: var(--blue); flex-shrink: 0;
 }
 
 /* Hero bottom strip — numeri */
@@ -301,7 +301,7 @@ section { border-top: 1px solid var(--faint); padding: clamp(3.5rem, 7vw, 6rem) 
 .ext-link:hover { text-decoration: underline; }
 
 /* ── EDU ── */
-.edu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.edu-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
 .edu-card {
   padding: 1.8rem; border-radius: 6px; border: 1px solid var(--faint);
   position: relative; overflow: hidden;
@@ -361,8 +361,8 @@ footer {
 /* ── RESPONSIVE ── */
 @media(max-width:700px) {
   .hero-top { grid-template-columns: 1fr; }
-  .hero-photo { order: -1; width: 80px; }
-  .hero-photo img { width: 80px; height: 96px; }
+  .hero-photo { order: -1; width: 100px; }
+  .hero-photo img { width: 100px; height: 120px; }
   .hero-strip-inner { grid-template-columns: 1fr; }
   .strip-item { border-right: none; border-bottom: 1px solid var(--faint); padding-left: 0 !important; }
   .strip-item:last-child { border-bottom: none; }
@@ -408,7 +408,7 @@ footer {
     <div>
       <p class="hero-label" data-i18n="hero.label">Product & R&D Project Manager</p>
       <h1 class="hero-name">Diego<br><span>Zorzi</span></h1>
-      <p class="hero-desc" data-i18n="hero.desc">Gestisco l'intero ciclo di vita di prodotti industriali complessi — dalla diagnosi di mercato al prototipo fisico — coordinando team R&D cross-funzionali con metodologie strutturate.</p>
+      <p class="hero-desc" data-i18n="hero.desc">Gestisco l'intero ciclo di vita di prodotti industriali complessi — dall'analisi di mercato al prototipo fisico — coordinando team R&D cross-funzionali dal brief alla validazione.</p>
       <div class="hero-actions">
         <a href="CV_Diego_Zorzi_ITA.pdf" id="cv-link" class="btn btn-blue" data-i18n="hero.cv">Scarica CV</a>
         <a href="#projects" class="btn btn-outline" data-i18n="hero.proj">Vedi progetti</a>
@@ -446,8 +446,8 @@ footer {
 <section id="about">
   <div class="container">
     <p class="sec-label" data-i18n="about.label">Chi sono</p>
-    <h2 class="sec-title col" data-i18n="about.title">Ingegneria di prodotto e visione strategica</h2>
-    <p class="sec-intro" data-i18n="about.intro">Ho iniziato come Product Design Intern e in quattro anni sono diventato Product & Project Manager R&D, seguendo in prima persona lo sviluppo di macchine da stampa e converting di livello internazionale. Parallelamente al lavoro a tempo pieno, sto conseguendo una laurea in Economia Aziendale e Management.</p>
+    <h2 class="sec-title col" data-i18n="about.title">Gestione del prodotto dalla strategia al prototipo</h2>
+    <p class="sec-intro" data-i18n="about.intro">Ho costruito una base completa in product & design management — ideazione di prodotto, analisi di mercato, definizione dei requisiti e gestione del progetto — e in quattro anni di lavoro sono diventato Product & Project Manager R&D, seguendo in prima persona lo sviluppo di macchine da stampa e converting di livello internazionale. Parallelamente al lavoro a tempo pieno, sto conseguendo una laurea in Economia Aziendale e Management.</p>
     <div class="about-grid">
       <div class="about-card">
         <p class="about-card-label" data-i18n="about.pm">Product Management</p>
@@ -458,7 +458,7 @@ footer {
       </div>
       <div class="about-card">
         <p class="about-card-label" data-i18n="about.rd">R&D Project Management</p>
-        <p data-i18n="about.rd.text">Coordinamento di team cross-funzionali, gestione multi-progetto con Gantt e milestone presidiate, monitoraggio di tempi, budget e obiettivi tecnici fino alla validazione del prototipo.</p>
+        <p data-i18n="about.rd.text">Coordinamento di team cross-funzionali, gestione multi-progetto con Gantt e milestone monitorate, monitoraggio di tempi, budget e obiettivi tecnici fino alla validazione del prototipo.</p>
         <div class="tags">
           <span class="tag">Stage-Gate</span><span class="tag">Gantt Planning</span><span class="tag">Jira</span><span class="tag">Design to Cost</span><span class="tag">Test Planning</span><span class="tag">BOM Management</span>
         </div>
@@ -473,17 +473,19 @@ footer {
     <p class="sec-label" data-i18n="exp.label">Esperienze professionali</p>
     <div class="exp-item">
       <div>
+        <img src="Logo_Uteco_BaffoRosso.png" alt="Uteco" style="height:32px;width:auto;margin-bottom:0.8rem;object-fit:contain;">
         <p class="exp-co">Uteco Converting SpA</p>
         <p class="exp-period">03/2022 — presente</p>
         <p class="exp-loc">Verona, Italia</p>
       </div>
       <div>
         <p class="exp-role" data-i18n="uteco.role">Product & Project Manager<span> — R&D Product Innovation</span></p>
-        <p class="exp-desc" data-i18n="uteco.desc">Responsabile dello sviluppo di nuove famiglie di prodotto nel segmento delle macchine da stampa flessografica e converting per il packaging flessibile. Ho seguito l'intero processo — dalla diagnosi di mercato alla validazione del prototipo fisico — coordinando team cross-funzionali di circa 12 persone tra progettazione meccanica, elettrica, software, acquisti e marketing. Gestione simultanea di fino a 5 progetti R&D con metodologie strutturate: QFD, AHP, Design to Cost, Stage-Gate e Gantt multi-livello.</p>
+        <p class="exp-desc" data-i18n="uteco.desc">Sviluppo di nuove famiglie di prodotto nel segmento delle macchine da stampa flessografica e converting per il packaging flessibile. Ho seguito l'intero processo — dalla diagnosi di mercato alla validazione del prototipo fisico — coordinando team cross-funzionali di circa 12 persone tra progettazione meccanica, elettrica, software, acquisti e marketing. Gestione simultanea di fino a 5 progetti R&D con metodologie strutturate: QFD, AHP, Design to Cost, Stage-Gate e Gantt multi-livello.</p>
       </div>
     </div>
     <div class="exp-item">
       <div>
+        <img src="Logo_Henry___Co.png" alt="Henry & Co." style="height:40px;width:auto;margin-bottom:0.8rem;object-fit:contain;">
         <p class="exp-co">Henry & Co. Design Studio</p>
         <p class="exp-period">02/2021 — 07/2021</p>
         <p class="exp-loc">Verona, Italia</p>
@@ -520,7 +522,7 @@ footer {
             <img src="Frontale_PRISMA_CLG_4k.23.png" alt="Uteco PRISMA CLG" loading="lazy">
           </div>
           <div class="proj-content">
-            <p class="proj-summary" data-i18n="prisma.summary">Nuova gamma di macchine Coating & Laminating per Uteco — dal concept al prototipo fisico presentato a Drupa 2024. Obiettivo: +10% di market share in 5 anni su un mercato di riferimento da oltre 260 M€.</p>
+            <p class="proj-summary" data-i18n="prisma.summary">Nuova gamma di macchine Coating & Laminating per Uteco — dal concept al prototipo fisico presentato a Drupa 2024. Obiettivo: +10% di market share nel segmento C&L in 5 anni.</p>
             <button class="proj-detail-toggle" onclick="toggleDetail(this)">
               <span data-i18n="proj.more">Approfondisci</span> <span class="arr">↓</span>
             </button>
@@ -585,7 +587,6 @@ footer {
                 <div class="proc-step"><p class="proc-n">03</p><p class="proc-title" data-i18n="flex.s3t">Concept & Target Cost</p><p class="proc-desc" data-i18n="flex.s3d">Concept sviluppato con modellazione 3D. Target cost per module-level. Posizionamento mid-low con specifiche mid-high: ISO 3364:2009, microscopio Dino-Lite integrato, monitor touch, superficie inclinabile.</p></div>
                 <div class="proc-step"><p class="proc-n">04</p><p class="proc-title" data-i18n="flex.s4t">Sviluppo & Prototipazione</p><p class="proc-desc" data-i18n="flex.s4d">Gestione del Gantt bisettimanale con 7 fasi presidiate. Il progetto ha raggiunto il secondo prototipo fisico, attualmente in fase di validazione.</p></div>
               </div>
-              <p class="dt" data-i18n="flex.brand">Il prodotto è stato denominato <strong>Flexlight</strong> e brandizzato con il marchio <strong>Dimotion</strong>, creando coerenza visiva con le macchine Uteco.</p>
               <a href="https://www.uteco.com/it/i-nostri-prodotti/accessori-ed-equipaggiamento-add/flexlight-tavolo-di-controllo-qualita-la-stampa" target="_blank" rel="noopener" class="ext-link">Flexlight su uteco.com ↗</a>
             </div>
           </div>
@@ -663,6 +664,15 @@ footer {
         <p class="edu-year">2014 — 2019</p>
         <p class="edu-note" data-i18n="edu3.note">Conoscenze di base di sistemi elettronici e informatici, utili per la comprensione tecnica dei prodotti industriali gestiti.</p>
       </div>
+      <div class="edu-card">
+        <p class="edu-deg" data-i18n="edu4.deg">AI Fluency Framework & Foundations</p>
+        <p class="edu-school" style="display:flex;align-items:center;gap:0.4rem;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;"><path d="M17.0943 13.8538C17.5883 12.8994 17.8337 11.8219 17.8088 10.7338C17.7697 9.09038 17.1048 7.52408 15.9487 6.35498C14.7926 5.18588 13.2346 4.50278 11.5915 4.44678C10.6549 4.41518 9.72443 4.60608 8.87363 5.00338C8.02283 5.40068 7.27563 5.99348 6.69323 6.73448L5.00033 8.91498L7.74423 10.9778L9.43713 8.79728C9.71943 8.43438 10.0839 8.14598 10.5013 7.95748C10.9187 7.76898 11.3764 7.68638 11.8347 7.71698C12.6174 7.76988 13.3516 8.12198 13.8848 8.70108C14.418 9.28018 14.7096 10.0427 14.7007 10.8271C14.6975 11.3279 14.5686 11.8199 14.326 12.2583C14.0834 12.6967 13.7347 13.0678 13.3124 13.3374L11.0304 14.7754C10.4857 15.1147 10.0405 15.5961 9.74033 16.1676C9.44013 16.739 9.29573 17.3797 9.32183 18.0252V18.6452H12.4218V18.0252C12.4091 17.8131 12.4574 17.6018 12.5612 17.4162C12.665 17.2306 12.8201 17.0784 13.0081 16.9779L15.2901 15.5399C15.9757 15.1143 16.5698 14.5384 17.0251 13.857L17.0943 13.8538Z" fill="currentColor"/><path d="M11.8721 19.5908C11.3257 19.5908 10.7909 19.7529 10.3361 20.0567C9.88135 20.3605 9.52693 20.7921 9.31768 21.2974C9.10842 21.8026 9.05368 22.3588 9.16051 22.8954C9.26735 23.432 9.53097 23.9249 9.91834 24.3123C10.3057 24.6997 10.7986 24.9633 11.3352 25.0701C11.8718 25.1769 12.428 25.1222 12.9332 24.9129C13.4385 24.7037 13.8701 24.3493 14.1739 23.8945C14.4777 23.4397 14.6398 22.9049 14.6398 22.3585C14.6398 21.6244 14.3485 20.9203 13.8259 20.3977C13.3033 19.8751 12.5992 19.5838 11.8651 19.5838L11.8721 19.5908Z" fill="currentColor"/></svg>
+          Anthropic
+        </p>
+        <p class="edu-year">Giugno 2026</p>
+        <p class="edu-note" data-i18n="edu4.note">Certificazione sull'utilizzo strategico dell'intelligenza artificiale e dei modelli linguistici applicati al lavoro professionale.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -675,7 +685,7 @@ footer {
     <div class="contact-grid">
       <div class="ci">
         <h3 data-i18n="contact.h">Posizione aperta o collaborazione?</h3>
-        <p data-i18n="contact.p">Sono sempre disponibile per una conversazione — product management, R&D project management o un progetto interessante nel settore manifatturiero.</p>
+        <p data-i18n="contact.p">Sono sempre disponibile per una conversazione — product management, R&D project management o un progetto interessante.</p>
         <a href="mailto:zorzi.diego.00@gmail.com" class="ci-link">zorzi.diego.00@gmail.com</a>
         <a href="https://www.linkedin.com/in/diegozorzi/" target="_blank" rel="noopener" class="ci-link">LinkedIn — Diego Zorzi</a>
       </div>
@@ -725,21 +735,21 @@ const T = {
 it: {
   "nav.about":"Chi sono","nav.exp":"Esperienze","nav.proj":"Progetti","nav.edu":"Formazione","nav.contact":"Contatti",
   "hero.label":"Product & R&D Project Manager · Verona, Italia",
-  "hero.desc":"Gestisco l'intero ciclo di vita di prodotti industriali complessi — dalla diagnosi di mercato al prototipo fisico — coordinando team R&D cross-funzionali con metodologie strutturate.",
+  "hero.desc":"Gestisco l'intero ciclo di vita di prodotti industriali complessi — dall'analisi di mercato al prototipo fisico — coordinando team R&D cross-funzionali dal brief alla validazione.",
   "hero.cv":"Scarica CV","hero.proj":"Vedi progetti",
   "strip.1":"Anni in R&D\nproduct management","strip.2":"Progetti R&D\ngestiti in parallelo","strip.3":"Prodotti sviluppati\ndal concept al prototipo","strip.4":"Budget R&D\ncumulativo gestito",
-  "about.label":"Chi sono","about.title":"Ingegneria di prodotto e visione strategica",
-  "about.intro":"Ho iniziato come Product Design Intern e in quattro anni sono diventato Product & Project Manager R&D, seguendo in prima persona lo sviluppo di macchine da stampa e converting di livello internazionale. Parallelamente al lavoro a tempo pieno, sto conseguendo una laurea in Economia Aziendale e Management.",
+  "about.label":"Chi sono","about.title":"Gestione del prodotto dalla strategia al prototipo",
+  "about.intro":"Ho costruito una base completa in product & design management — ideazione di prodotto, analisi di mercato, definizione dei requisiti e gestione del progetto — e in quattro anni di lavoro sono diventato Product & Project Manager R&D, seguendo in prima persona lo sviluppo di macchine da stampa e converting di livello internazionale. Parallelamente al lavoro a tempo pieno, sto conseguendo una laurea in Economia Aziendale e Management.",
   "about.pm":"Product Management","about.pm.text":"Analisi di mercato e competitive intelligence, definizione dei requisiti di prodotto, business planning, roadmap e gestione del ciclo di vita dal concept al lancio.",
-  "about.rd":"R&D Project Management","about.rd.text":"Coordinamento di team cross-funzionali, gestione multi-progetto con Gantt e milestone presidiate, monitoraggio di tempi, budget e obiettivi tecnici fino alla validazione del prototipo.",
+  "about.rd":"R&D Project Management","about.rd.text":"Coordinamento di team cross-funzionali, gestione multi-progetto con Gantt e milestone monitorate, monitoraggio di tempi, budget e obiettivi tecnici fino alla validazione del prototipo.",
   "exp.label":"Esperienze professionali",
   "uteco.role":"Product & Project Manager","henry.role":"Product Design Intern",
-  "uteco.desc":"Responsabile dello sviluppo di nuove famiglie di prodotto nel segmento delle macchine da stampa flessografica e converting per il packaging flessibile. Ho seguito l'intero processo — dalla diagnosi di mercato alla validazione del prototipo fisico — coordinando team cross-funzionali di circa 12 persone. Gestione simultanea di fino a 5 progetti R&D: QFD, AHP, Design to Cost, Stage-Gate, Gantt multi-livello.",
+  "uteco.desc":"Sviluppo di nuove famiglie di prodotto nel segmento delle macchine da stampa flessografica e converting per il packaging flessibile. Ho seguito l'intero processo — dalla diagnosi di mercato alla validazione del prototipo fisico — coordinando team cross-funzionali di circa 12 persone. Gestione simultanea di fino a 5 progetti R&D: QFD, AHP, Design to Cost, Stage-Gate, Gantt multi-livello.",
   "henry.desc":"Sviluppo di concept di prodotto applicando il Circular Design Thinking. Analisi di mercato, definizione requisiti, concept design e modellazione 3D. Progettazione del tavolo Edo per Cafedesart, selezionato per il Salone del Mobile 2022 di Milano.",
   "proj.label":"Progetti selezionati","proj.intro":"Tre progetti che mostrano approcci diversi: dalla gestione di un programma R&D complesso, al lancio di un prodotto satellite in un segmento nuovo, al product design per il mercato del lusso.",
   "proj.more":"Approfondisci",
   "prisma.role":"R&D Project Manager · Uteco Converting SpA",
-  "prisma.summary":"Nuova gamma di macchine Coating & Laminating per Uteco — dal concept al prototipo fisico presentato a Drupa 2024. Obiettivo: +10% di market share in 5 anni su un mercato da oltre 260 M€.",
+  "prisma.summary":"Nuova gamma di macchine Coating & Laminating per Uteco — dal concept al prototipo fisico presentato a Drupa 2024. Obiettivo: +10% di market share nel segmento C&L in 5 anni.",
   "prisma.h1":"Il problema di business","prisma.t1":"Uteco deteneva una quota marginale su un mercato da oltre 260 M€, con vendite C&L stagnanti da cinque anni nonostante una crescita sostenuta del settore. L'analisi interna rivelava una gamma frammentata — bassa condivisione di componenti, alta percentuale di larghezze mai ordinate — e un posizionamento di prezzo non competitivo rispetto ai principali player europei (Bobst, NordMeccanica, Comexi). Obiettivo: ridisegnare l'intera gamma secondo logiche di modularità, Design to Cost e family feeling.",
   "prisma.h2":"Metodologia e processo",
   "prisma.s1t":"Diagnosi di mercato","prisma.s1d":"Benchmark competitivo su 4 player principali, analisi portfolio capability e identificazione dei gap non presidiati da Uteco.",
@@ -771,27 +781,28 @@ it: {
   "edu2.deg":"Product & Design Management","edu2.note":"Diploma con 98/100. Competenze in product management, project management e product design.",
   "edu3.deg":"Elettronica ed Elettrotecnica","edu3.note":"Conoscenze di base di sistemi elettronici e informatici.",
   "contact.label":"Contatti","contact.title":"Parliamo.","contact.h":"Posizione aperta o collaborazione?",
-  "contact.p":"Sono sempre disponibile per una conversazione — product management, R&D project management o un progetto nel settore manifatturiero.",
-  "form.name":"Nome","form.email":"Email","form.msg":"Messaggio","form.send":"Invia messaggio","footer.cv":"Curriculum"
+  "contact.p":"Sono sempre disponibile per una conversazione — product management, R&D project management o un progetto interessante.",
+  "form.name":"Nome","form.email":"Email","form.msg":"Messaggio","form.send":"Invia messaggio","footer.cv":"Curriculum",
+  "edu4.deg":"AI Fluency Framework & Foundations","edu4.note":"Certificazione sull'utilizzo strategico dell'intelligenza artificiale e dei modelli linguistici applicati al lavoro professionale."
 },
 en: {
   "nav.about":"About","nav.exp":"Experience","nav.proj":"Projects","nav.edu":"Education","nav.contact":"Contact",
   "hero.label":"Product & R&D Project Manager · Verona, Italy",
-  "hero.desc":"I manage the full lifecycle of complex industrial products — from market diagnosis to physical prototype — coordinating cross-functional R&D teams with structured methodologies.",
+  "hero.desc":"I manage the full lifecycle of complex industrial products — from market analysis to physical prototype — coordinating cross-functional R&D teams from brief to validation.",
   "hero.cv":"Download CV","hero.proj":"See projects",
   "strip.1":"Years in R&D\nproduct management","strip.2":"R&D projects\nmanaged in parallel","strip.3":"Products developed\nfrom concept to prototype","strip.4":"Cumulative R&D\nbudget managed",
-  "about.label":"About","about.title":"Product engineering and strategic vision",
-  "about.intro":"I started as a Product Design Intern and in four years became Product & R&D Project Manager, personally overseeing the development of international-level printing and converting machinery. Alongside full-time work, I am completing a degree in Business Administration and Management.",
+  "about.label":"About","about.title":"Product management from strategy to prototype",
+  "about.intro":"I built a solid foundation in product & design management — product ideation, market analysis, requirements definition and project management — and in four years became Product & R&D Project Manager, personally overseeing the development of international-level printing and converting machinery. Alongside full-time work, I am completing a degree in Business Administration and Management.",
   "about.pm":"Product Management","about.pm.text":"Market analysis and competitive intelligence, product requirements definition, business planning, roadmap and lifecycle management from concept to launch.",
-  "about.rd":"R&D Project Management","about.rd.text":"Cross-functional team coordination, multi-project management with Gantt and milestone tracking, monitoring time, budget and technical objectives through prototype validation.",
+  "about.rd":"R&D Project Management","about.rd.text":"Cross-functional team coordination, multi-project management with Gantt and monitored milestones, tracking time, budget and technical objectives through prototype validation.",
   "exp.label":"Professional Experience",
   "uteco.role":"Product & Project Manager","henry.role":"Product Design Intern",
-  "uteco.desc":"Responsible for the development of new product families in the flexographic printing and converting machinery segment. I oversaw the entire process — from market diagnosis to physical prototype validation — coordinating cross-functional teams of ~12 people. Simultaneous management of up to 5 R&D projects: QFD, AHP, Design to Cost, Stage-Gate, multi-level Gantt.",
+  "uteco.desc":"Development of new product families in the flexographic printing and converting machinery segment for flexible packaging. I oversaw the entire process — from market analysis to physical prototype validation — coordinating cross-functional teams of ~12 people. Simultaneous management of up to 5 R&D projects: QFD, AHP, Design to Cost, Stage-Gate, multi-level Gantt.",
   "henry.desc":"Product concept development applying Circular Design Thinking. Market analysis, requirements definition, concept design and 3D modelling. Design of the Edo dining table for Cafedesart, selected for Salone del Mobile 2022.",
   "proj.label":"Selected Projects","proj.intro":"Three projects illustrating different approaches: managing a complex R&D programme, launching a satellite product in a new segment, and industrial product design for the luxury market.",
   "proj.more":"Explore",
   "prisma.role":"R&D Project Manager · Uteco Converting SpA",
-  "prisma.summary":"New Coating & Laminating machine range for Uteco — from concept to physical prototype presented at Drupa 2024. Target: +10% market share in 5 years on a reference market of over 260 M€.",
+  "prisma.summary":"New Coating & Laminating machine range for Uteco — from concept to physical prototype presented at Drupa 2024. Target: +10% market share in the C&L segment in 5 years.",
   "prisma.h1":"The business problem","prisma.t1":"Uteco held a marginal share of a market worth over 260 M€, with stagnant C&L sales for five years despite sustained growth. Internal analysis revealed a fragmented range — low component sharing, high percentage of widths never ordered — and non-competitive pricing versus leading European players (Bobst, NordMeccanica, Comexi). Objective: redesign the entire range around modularity, Design to Cost and visual family feeling.",
   "prisma.h2":"Methodology & process",
   "prisma.s1t":"Market diagnosis","prisma.s1d":"Competitive benchmark across 4 major players, portfolio capability analysis and identification of market gaps not covered by Uteco.",
@@ -823,8 +834,9 @@ en: {
   "edu2.deg":"Product & Design Management","edu2.note":"Graduated 98/100. Competencies in product management, project management and product design.",
   "edu3.deg":"Electronics & Electrical Engineering","edu3.note":"Foundation knowledge in electronic and computer systems.",
   "contact.label":"Contact","contact.title":"Let's talk.","contact.h":"Open role or collaboration?",
-  "contact.p":"I am always available for a conversation — product management, R&D project management or an interesting project in the manufacturing sector.",
-  "form.name":"Name","form.email":"Email","form.msg":"Message","form.send":"Send message","footer.cv":"Curriculum Vitae"
+  "contact.p":"I am always available for a conversation — product management, R&D project management or an interesting project.",
+  "form.name":"Name","form.email":"Email","form.msg":"Message","form.send":"Send message","footer.cv":"Curriculum Vitae",
+  "edu4.deg":"AI Fluency Framework & Foundations","edu4.note":"Certification on the strategic use of artificial intelligence and language models applied to professional work."
 }
 };
 
