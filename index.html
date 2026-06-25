@@ -545,11 +545,11 @@ footer {
           </div>
           <div class="role-tl-item">
             <p class="role-tl-name" data-i18n="uteco.role2">Junior Product &amp; R&amp;D Project Manager</p>
-            <p class="role-tl-period">09/2022 — 09/2025 <span class="role-tl-dur">· 3 anni</span></p>
+            <p class="role-tl-period">09/2022 — 09/2025 <span class="role-tl-dur" id="dur-uteco-r2">· 3 anni</span></p>
           </div>
           <div class="role-tl-item">
             <p class="role-tl-name" data-i18n="uteco.role3">Product Innovation Intern</p>
-            <p class="role-tl-period">03/2022 — 09/2022 <span class="role-tl-dur">· 6 mesi</span></p>
+            <p class="role-tl-period">03/2022 — 09/2022 <span class="role-tl-dur" id="dur-uteco-r3">· 6 mesi</span></p>
           </div>
         </div>
         <p class="exp-desc" data-i18n="uteco.desc">Sviluppo di nuove famiglie di prodotto nel segmento delle macchine da stampa flessografica e converting per il packaging flessibile. Ho seguito l'intero processo, dalla diagnosi di mercato alla validazione del prototipo fisico, coordinando team cross-funzionali di circa 12 persone tra progettazione meccanica, elettrica, software, acquisti e marketing. Gestione simultanea di fino a 5 progetti R&D con metodologie strutturate: QFD, AHP, Design to Cost, Stage-Gate e Gantt multi-livello.</p>
@@ -560,7 +560,7 @@ footer {
         <img src="Logo_Henry___Co.png" alt="Henry & Co." style="height:40px;width:auto;margin-bottom:0.8rem;object-fit:contain;">
         <p class="exp-co">Henry & Co. Design Studio</p>
         <p class="exp-period">02/2021 — 07/2021</p>
-        <p class="exp-dur">6 mesi</p>
+        <p class="exp-dur" id="dur-henry-total">6 mesi</p>
         <p class="exp-loc">Verona, Italia</p>
       </div>
       <div>
@@ -1055,28 +1055,27 @@ function renderDur() {
   var now = new Date();
   var ny = now.getFullYear();
   var nm = now.getMonth() + 1;
-  var totalDur = calcDur(2022, 3, ny, nm);
-  var r1Dur = calcDur(2025, 9, ny, nm);
+  var it = tlLang === 'it';
+
+  // Uteco totale (dinamico)
   var elTotal = document.getElementById('dur-uteco-total');
+  if (elTotal) elTotal.textContent = calcDur(2022, 3, ny, nm);
+
+  // Ruolo 1: Product & R&D PM (dinamico, da 09/2025 a oggi)
   var elR1 = document.getElementById('dur-uteco-r1');
-  if (elTotal) elTotal.textContent = totalDur;
-  if (elR1) elR1.textContent = '· ' + r1Dur;
-  // Henry fisso: aggiorna testo in base alla lingua
-  document.querySelectorAll('.exp-dur').forEach(function(el) {
-    if (!el.id) {
-      el.textContent = tlLang === 'it' ? '6 mesi' : '6 months';
-    }
-  });
-  // Durate fisse ruoli Uteco in base alla lingua
-  var r2Els = document.querySelectorAll('.role-tl-dur');
-  r2Els.forEach(function(el) {
-    if (el.textContent.indexOf('anni') !== -1 || el.textContent.indexOf('year') !== -1) {
-      el.textContent = tlLang === 'it' ? '· 3 anni' : '· 3 years';
-    }
-    if (el.textContent.indexOf('mesi') !== -1 || el.textContent.indexOf('month') !== -1) {
-      el.textContent = tlLang === 'it' ? '· 6 mesi' : '· 6 months';
-    }
-  });
+  if (elR1) elR1.textContent = '· ' + calcDur(2025, 9, ny, nm);
+
+  // Ruolo 2: Junior PM (fisso: 09/2022 - 09/2025 = 3 anni)
+  var elR2 = document.getElementById('dur-uteco-r2');
+  if (elR2) elR2.textContent = '· ' + (it ? '3 anni' : '3 years');
+
+  // Ruolo 3: Intern (fisso: 03/2022 - 09/2022 = 6 mesi)
+  var elR3 = document.getElementById('dur-uteco-r3');
+  if (elR3) elR3.textContent = '· ' + (it ? '6 mesi' : '6 months');
+
+  // Henry fisso: 02/2021 - 07/2021 = 6 mesi
+  var elHenry = document.getElementById('dur-henry-total');
+  if (elHenry) elHenry.textContent = it ? '6 mesi' : '6 months';
 }
 
 /* Init on load */
