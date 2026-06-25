@@ -301,7 +301,7 @@ section { border-top: 1px solid var(--faint); padding: clamp(3.5rem, 7vw, 6rem) 
 .ext-link:hover { text-decoration: underline; }
 
 /* ── EDU ── */
-.edu-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+.edu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
 .edu-card {
   padding: 1.8rem; border-radius: 6px; border: 1px solid var(--faint);
   position: relative; overflow: hidden;
@@ -315,7 +315,24 @@ section { border-top: 1px solid var(--faint); padding: clamp(3.5rem, 7vw, 6rem) 
 .edu-year { font-size: 0.75rem; color: var(--blue); font-weight: 500; margin-bottom: 0.8rem; }
 .edu-note { font-size: 0.8rem; color: var(--mid); line-height: 1.65; }
 
-/* ── CONTACT ── */
+/* ── CERTIFICATIONS ── */
+.cert-card {
+  display: flex; gap: 2rem; align-items: flex-start;
+  padding: 2rem; border-radius: 6px; border: 1px solid var(--faint);
+  background: var(--white); max-width: 600px;
+}
+.cert-logo {
+  width: 48px; height: 48px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg); border-radius: 6px; padding: 10px;
+}
+.cert-logo img { width: 100%; height: 100%; object-fit: contain; }
+.cert-name { font-size: 0.92rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 0.2rem; }
+.cert-issuer { font-size: 0.8rem; color: var(--mid); margin-bottom: 0.2rem; }
+.cert-date { font-size: 0.75rem; color: var(--blue); font-weight: 500; margin-bottom: 0.6rem; }
+.cert-note { font-size: 0.8rem; color: var(--mid); line-height: 1.65; }
+
+
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
 .ci h3 { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 0.7rem; }
 .ci p { font-size: 0.88rem; color: var(--mid); line-height: 1.75; margin-bottom: 1.5rem; }
@@ -392,6 +409,7 @@ footer {
         <li><a href="#experience" data-i18n="nav.exp">Esperienze</a></li>
         <li><a href="#projects" data-i18n="nav.proj">Progetti</a></li>
         <li><a href="#education" data-i18n="nav.edu">Formazione</a></li>
+        <li><a href="#certifications" data-i18n="nav.cert">Certificazioni</a></li>
         <li><a href="#contact" data-i18n="nav.contact">Contatti</a></li>
       </ul>
       <div class="lang-toggle">
@@ -664,14 +682,24 @@ footer {
         <p class="edu-year">2014 — 2019</p>
         <p class="edu-note" data-i18n="edu3.note">Conoscenze di base di sistemi elettronici e informatici, utili per la comprensione tecnica dei prodotti industriali gestiti.</p>
       </div>
-      <div class="edu-card">
-        <p class="edu-deg" data-i18n="edu4.deg">AI Fluency Framework & Foundations</p>
-        <p class="edu-school" style="display:flex;align-items:center;gap:0.4rem;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;"><path d="M17.0943 13.8538C17.5883 12.8994 17.8337 11.8219 17.8088 10.7338C17.7697 9.09038 17.1048 7.52408 15.9487 6.35498C14.7926 5.18588 13.2346 4.50278 11.5915 4.44678C10.6549 4.41518 9.72443 4.60608 8.87363 5.00338C8.02283 5.40068 7.27563 5.99348 6.69323 6.73448L5.00033 8.91498L7.74423 10.9778L9.43713 8.79728C9.71943 8.43438 10.0839 8.14598 10.5013 7.95748C10.9187 7.76898 11.3764 7.68638 11.8347 7.71698C12.6174 7.76988 13.3516 8.12198 13.8848 8.70108C14.418 9.28018 14.7096 10.0427 14.7007 10.8271C14.6975 11.3279 14.5686 11.8199 14.326 12.2583C14.0834 12.6967 13.7347 13.0678 13.3124 13.3374L11.0304 14.7754C10.4857 15.1147 10.0405 15.5961 9.74033 16.1676C9.44013 16.739 9.29573 17.3797 9.32183 18.0252V18.6452H12.4218V18.0252C12.4091 17.8131 12.4574 17.6018 12.5612 17.4162C12.665 17.2306 12.8201 17.0784 13.0081 16.9779L15.2901 15.5399C15.9757 15.1143 16.5698 14.5384 17.0251 13.857L17.0943 13.8538Z" fill="currentColor"/><path d="M11.8721 19.5908C11.3257 19.5908 10.7909 19.7529 10.3361 20.0567C9.88135 20.3605 9.52693 20.7921 9.31768 21.2974C9.10842 21.8026 9.05368 22.3588 9.16051 22.8954C9.26735 23.432 9.53097 23.9249 9.91834 24.3123C10.3057 24.6997 10.7986 24.9633 11.3352 25.0701C11.8718 25.1769 12.428 25.1222 12.9332 24.9129C13.4385 24.7037 13.8701 24.3493 14.1739 23.8945C14.4777 23.4397 14.6398 22.9049 14.6398 22.3585C14.6398 21.6244 14.3485 20.9203 13.8259 20.3977C13.3033 19.8751 12.5992 19.5838 11.8651 19.5838L11.8721 19.5908Z" fill="currentColor"/></svg>
-          Anthropic
-        </p>
-        <p class="edu-year">Giugno 2026</p>
-        <p class="edu-note" data-i18n="edu4.note">Certificazione sull'utilizzo strategico dell'intelligenza artificiale e dei modelli linguistici applicati al lavoro professionale.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICAZIONI -->
+<section id="certifications">
+  <div class="container">
+    <p class="sec-label" data-i18n="cert.label">Certificazioni</p>
+    <div class="cert-card">
+      <div class="cert-logo">
+        <img src="logo-anthropic.webp" alt="Anthropic">
+      </div>
+      <div class="cert-body">
+        <p class="cert-name" data-i18n="edu4.deg">AI Fluency Framework & Foundations</p>
+        <p class="cert-issuer">Anthropic</p>
+        <p class="cert-date">Giugno 2026</p>
+        <p class="cert-note" data-i18n="edu4.note">Certificazione sull'utilizzo strategico dell'intelligenza artificiale e dei modelli linguistici applicati al lavoro professionale.</p>
       </div>
     </div>
   </div>
@@ -733,7 +761,7 @@ function toggleDetail(btn) {
 /* i18n */
 const T = {
 it: {
-  "nav.about":"Chi sono","nav.exp":"Esperienze","nav.proj":"Progetti","nav.edu":"Formazione","nav.contact":"Contatti",
+  "nav.about":"Chi sono","nav.exp":"Esperienze","nav.proj":"Progetti","nav.edu":"Formazione","nav.cert":"Certificazioni","nav.contact":"Contatti",
   "hero.label":"Product & R&D Project Manager · Verona, Italia",
   "hero.desc":"Gestisco l'intero ciclo di vita di prodotti industriali complessi — dall'analisi di mercato al prototipo fisico — coordinando team R&D cross-funzionali dal brief alla validazione.",
   "hero.cv":"Scarica CV","hero.proj":"Vedi progetti",
@@ -776,7 +804,7 @@ it: {
   "edo.s2t":"Concept & 3D","edo.s2d":"Piano con angoli arrotondati, basi cilindriche asimmetriche. Modellazione in Rhino e Shapr3D con iterazioni sulla geometria.",
   "edo.s3t":"CMF Selection","edo.s3d":"Piallacciature con pattern intarsiati (X e Diamond) in varianti chiare e scure. Dettaglio in ottone sul bordo del piano.",
   "edo.s4t":"Salone del Mobile","edo.s4d":"Prototipo selezionato per il Salone del Mobile 2022. Il tavolo Edo è attualmente in vendita nel catalogo Cafedesart.",
-  "edu.label":"Formazione",
+  "edu.label":"Formazione","cert.label":"Certificazioni",
   "edu1.deg":"Economia Aziendale e Management","edu1.note":"Part-time in parallelo al lavoro, per integrare le competenze tecniche con una base strategica e di business.",
   "edu2.deg":"Product & Design Management","edu2.note":"Diploma con 98/100. Competenze in product management, project management e product design.",
   "edu3.deg":"Elettronica ed Elettrotecnica","edu3.note":"Conoscenze di base di sistemi elettronici e informatici.",
@@ -786,7 +814,7 @@ it: {
   "edu4.deg":"AI Fluency Framework & Foundations","edu4.note":"Certificazione sull'utilizzo strategico dell'intelligenza artificiale e dei modelli linguistici applicati al lavoro professionale."
 },
 en: {
-  "nav.about":"About","nav.exp":"Experience","nav.proj":"Projects","nav.edu":"Education","nav.contact":"Contact",
+  "nav.about":"About","nav.exp":"Experience","nav.proj":"Projects","nav.edu":"Education","nav.cert":"Certifications","nav.contact":"Contact",
   "hero.label":"Product & R&D Project Manager · Verona, Italy",
   "hero.desc":"I manage the full lifecycle of complex industrial products — from market analysis to physical prototype — coordinating cross-functional R&D teams from brief to validation.",
   "hero.cv":"Download CV","hero.proj":"See projects",
@@ -829,7 +857,7 @@ en: {
   "edo.s2t":"Concept & 3D","edo.s2d":"Rounded-corner top, asymmetric cylindrical bases. 3D modelling in Rhino and Shapr3D with iterative refinement.",
   "edo.s3t":"CMF Selection","edo.s3d":"Wood veneers with inlaid geometric patterns (X and Diamond) in light and dark variants. Brass detail on the top edge.",
   "edo.s4t":"Salone del Mobile","edo.s4d":"Prototype selected for Salone del Mobile 2022. The Edo table is currently available in the Cafedesart catalogue.",
-  "edu.label":"Education",
+  "edu.label":"Education","cert.label":"Certifications",
   "edu1.deg":"Business Administration & Management","edu1.note":"Part-time alongside full-time work, integrating technical expertise with strategic and business foundations.",
   "edu2.deg":"Product & Design Management","edu2.note":"Graduated 98/100. Competencies in product management, project management and product design.",
   "edu3.deg":"Electronics & Electrical Engineering","edu3.note":"Foundation knowledge in electronic and computer systems.",
