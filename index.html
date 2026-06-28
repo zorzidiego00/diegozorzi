@@ -360,7 +360,7 @@ section { border-top: 1px solid var(--faint); padding: clamp(3.5rem, 7vw, 6rem) 
 .cert-issuer { font-size: 0.8rem; color: var(--mid); margin-bottom: 0.2rem; }
 .cert-date { font-size: 0.75rem; color: var(--blue); font-weight: 500; margin-bottom: 0.6rem; }
 .cert-note { font-size: 0.8rem; color: var(--mid); line-height: 1.65; }
-
+.cert-list { display: flex; flex-direction: column; gap: 1rem; }
 
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
 .ci h3 { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 0.7rem; }
@@ -403,17 +403,6 @@ footer {
 .fl { display: flex; gap: 1.5rem; }
 .fl a { font-size: 0.75rem; color: var(--mid); transition: color 0.15s; }
 .fl a:hover { color: var(--blue); }
-
-/* ── ROLE TIMELINE ── */
-.role-tl { display: flex; flex-direction: column; border-left: 2px solid var(--faint); padding-left: 1.2rem; margin-bottom: 1.2rem; }
-.role-tl-item { position: relative; padding: 0.55rem 0; }
-.role-tl-item::before { content: ''; position: absolute; left: -1.55rem; top: 50%; transform: translateY(-50%); width: 8px; height: 8px; border-radius: 50%; background: var(--faint); border: 2px solid var(--faint); }
-.role-tl-item.current::before { background: var(--blue); border-color: var(--blue); }
-.role-tl-name { font-size: 0.92rem; font-weight: 600; color: var(--mid); margin-bottom: 0.1rem; letter-spacing: -0.01em; }
-.role-tl-item.current .role-tl-name { color: var(--ink); }
-.role-tl-period { font-size: 0.75rem; color: var(--mid); }
-.role-tl-dur { color: var(--mid); opacity: 0.7; }
-.exp-dur { font-size: 0.75rem; color: var(--mid); margin-top: 0.1rem; }
 
 /* ── RESPONSIVE ── */
 @media(max-width:700px) {
@@ -509,7 +498,7 @@ footer {
     <div class="about-grid">
       <div class="about-card">
         <p class="about-card-label" data-i18n="about.pm">Product Management</p>
-        <p data-i18n="about.pm.text">Analisi di mercato e competitive intelligence, definizione dei requisiti di prodotto con metodologie strutturate come QFD (Quality Function Deployment) e AHP (Analytic Hierarchy Process), business planning, roadmap e gestione del ciclo di vita dal concept al lancio.</p>
+        <p data-i18n="about.pm.text">Analisi di mercato e competitive intelligence, definizione dei requisiti di prodotto, business planning, roadmap e gestione del ciclo di vita dal concept al lancio.</p>
         <div class="tags">
           <span class="tag">QFD</span><span class="tag">AHP</span><span class="tag">Modello Kano</span><span class="tag">Target Cost</span><span class="tag">Value Analysis</span><span class="tag">Market Intelligence</span>
         </div>
@@ -534,24 +523,10 @@ footer {
         <img src="Logo_Uteco_BaffoRosso.png" alt="Uteco" style="height:32px;width:auto;margin-bottom:0.8rem;object-fit:contain;">
         <p class="exp-co">Uteco Converting SpA</p>
         <p class="exp-period">03/2022 — presente</p>
-        <p class="exp-dur" id="dur-uteco-total"></p>
         <p class="exp-loc">Verona, Italia</p>
       </div>
       <div>
-        <div class="role-tl">
-          <div class="role-tl-item current">
-            <p class="role-tl-name" data-i18n="uteco.role1">Product &amp; R&amp;D Project Manager</p>
-            <p class="role-tl-period">09/2025 — presente <span class="role-tl-dur" id="dur-uteco-r1"></span></p>
-          </div>
-          <div class="role-tl-item">
-            <p class="role-tl-name" data-i18n="uteco.role2">Junior Product &amp; R&amp;D Project Manager</p>
-            <p class="role-tl-period">09/2022 — 09/2025 <span class="role-tl-dur" id="dur-uteco-r2">· 3 anni</span></p>
-          </div>
-          <div class="role-tl-item">
-            <p class="role-tl-name" data-i18n="uteco.role3">Product Innovation Intern</p>
-            <p class="role-tl-period">03/2022 — 09/2022 <span class="role-tl-dur" id="dur-uteco-r3">· 6 mesi</span></p>
-          </div>
-        </div>
+        <p class="exp-role" data-i18n="uteco.role">Product & Project Manager<span> — R&D Product Innovation</span></p>
         <p class="exp-desc" data-i18n="uteco.desc">Sviluppo di nuove famiglie di prodotto nel segmento delle macchine da stampa flessografica e converting per il packaging flessibile. Ho seguito l'intero processo, dalla diagnosi di mercato alla validazione del prototipo fisico, coordinando team cross-funzionali di circa 12 persone tra progettazione meccanica, elettrica, software, acquisti e marketing. Gestione simultanea di fino a 5 progetti R&D con metodologie strutturate: QFD, AHP, Design to Cost, Stage-Gate e Gantt multi-livello.</p>
       </div>
     </div>
@@ -560,7 +535,6 @@ footer {
         <img src="Logo_Henry___Co.png" alt="Henry & Co." style="height:40px;width:auto;margin-bottom:0.8rem;object-fit:contain;">
         <p class="exp-co">Henry & Co. Design Studio</p>
         <p class="exp-period">02/2021 — 07/2021</p>
-        <p class="exp-dur" id="dur-henry-total">6 mesi</p>
         <p class="exp-loc">Verona, Italia</p>
       </div>
       <div>
@@ -607,7 +581,7 @@ footer {
                 <div class="tl-track">
                   <div class="tl-line-bg"></div>
                   <div class="tl-line-fill" id="tlf-prisma"></div>
-                  <div class="tl-step" onclick="tlSet('prisma',0)"><div class="tl-dot">01</div><span class="tl-step-name" data-i18n="prisma.s1t">Analisi di mercato</span></div>
+                  <div class="tl-step" onclick="tlSet('prisma',0)"><div class="tl-dot">01</div><span class="tl-step-name" data-i18n="prisma.s1t">Diagnosi di mercato</span></div>
                   <div class="tl-step" onclick="tlSet('prisma',1)"><div class="tl-dot">02</div><span class="tl-step-name" data-i18n="prisma.s2t">AHP + QFD</span></div>
                   <div class="tl-step" onclick="tlSet('prisma',2)"><div class="tl-dot">03</div><span class="tl-step-name" data-i18n="prisma.s3t">Design to Cost</span></div>
                   <div class="tl-step" onclick="tlSet('prisma',3)"><div class="tl-dot">04</div><span class="tl-step-name" data-i18n="prisma.s4t">Sviluppo R&D</span></div>
@@ -775,15 +749,28 @@ footer {
 <section id="certifications">
   <div class="container">
     <p class="sec-label" data-i18n="cert.label">Certificazioni</p>
-    <div class="cert-card">
-      <div class="cert-logo">
-        <img src="logo-anthropic.webp" alt="Anthropic">
+    <div class="cert-list">
+      <div class="cert-card">
+        <div class="cert-logo">
+          <img src="logo-anthropic.webp" alt="Anthropic">
+        </div>
+        <div class="cert-body">
+          <p class="cert-name" data-i18n="edu4.deg">AI Fluency Framework & Foundations</p>
+          <p class="cert-issuer">Anthropic</p>
+          <p class="cert-date">Giugno 2026</p>
+          <p class="cert-note" data-i18n="edu4.note">Collaborare con sistemi di intelligenza artificiale in modo efficace, efficiente, etico e sicuro. Approccio strutturato all'interazione uomo-AI, con focus sulle capacità e i limiti delle tecnologie AI attuali. Fornisce le basi concettuali per utilizzare gli strumenti AI in modo strategico anziché reattivo.</p>
+        </div>
       </div>
-      <div class="cert-body">
-        <p class="cert-name" data-i18n="edu4.deg">AI Fluency Framework & Foundations</p>
-        <p class="cert-issuer">Anthropic</p>
-        <p class="cert-date">Giugno 2026</p>
-        <p class="cert-note" data-i18n="edu4.note">Collaborare con sistemi di intelligenza artificiale in modo efficace, efficiente, etico e sicuro. Approccio strutturato all'interazione uomo-AI, con focus sulle capacità e i limiti delle tecnologie AI attuali. Fornisce le basi concettuali per utilizzare gli strumenti AI in modo strategico anziché reattivo.</p>
+      <div class="cert-card">
+        <div class="cert-logo">
+          <img src="hubspot_academy_logo.jpeg" alt="HubSpot Academy">
+        </div>
+        <div class="cert-body">
+          <p class="cert-name" data-i18n="cert2.deg">Inbound Marketing Certified</p>
+          <p class="cert-issuer">HubSpot Academy</p>
+          <p class="cert-date">Giugno 2026</p>
+          <p class="cert-note" data-i18n="cert2.note">Metodologia inbound: come attrarre, coinvolgere e fidelizzare i clienti attraverso contenuti di valore, SEO, lead nurturing e automazione del marketing. Fornisce un framework strategico per allineare le attività di marketing agli obiettivi di business.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -846,7 +833,7 @@ function toggleDetail(btn) {
 const TL_DATA = {
   prisma: {
     it: [
-      { num:'01', title:'Analisi di mercato', badge:'Benchmark competitivo', body:'Uteco aveva già una gamma C&L, ma l\'analisi interna aveva rivelato tre problemi strutturali: scarsa trasversalità dei componenti tra le macchine, un prezzo di listino non competitivo rispetto al mercato, e una tecnologia meno sviluppata rispetto ai principali player europei. Il benchmark su oltre 20 macchine di 3 competitor principali ha permesso di mappare tre segmenti di posizionamento distinti (Laminating SL, Multi-Process, Coating) e di capire come strutturare la nuova piattaforma di prodotto. L\'analisi sul campo ha poi identificato un gap funzionale non coperto da nessun competitor, integrato nella nuova gamma come funzionalità di processo proprietaria.', output:'Mappa dei 3 segmenti di mercato · Gap funzionale non presidiato dai competitor · Struttura della piattaforma di prodotto' },
+      { num:'01', title:'Diagnosi di mercato', badge:'Benchmark competitivo', body:'Uteco aveva già una gamma C&L, ma l\'analisi interna aveva rivelato tre problemi strutturali: scarsa trasversalità dei componenti tra le macchine, un prezzo di listino non competitivo rispetto al mercato, e una tecnologia meno sviluppata rispetto ai principali player europei. Il benchmark su oltre 20 macchine di 3 competitor principali ha permesso di mappare tre segmenti di posizionamento distinti (Laminating SL, Multi-Process, Coating) e di capire come strutturare la nuova piattaforma di prodotto. L\'analisi sul campo ha poi identificato un gap funzionale non coperto da nessun competitor, integrato nella nuova gamma come funzionalità di processo proprietaria.', output:'Mappa dei 3 segmenti di mercato · Gap funzionale non presidiato dai competitor · Struttura della piattaforma di prodotto' },
       { num:'02', title:'AHP + QFD', badge:'Analisi strutturata', body:'Con 15 bisogni di mercato identificati e nessuna gerarchia oggettiva tra loro, il rischio era di distribuire gli investimenti in modo uniforme invece di concentrarli dove creavano più valore. L\'AHP ha prodotto una ponderazione condivisa dei bisogni, che il QFD ha poi tradotto in 67 requisiti funzionali misurabili con target numerici per ogni design driver. Il risultato più rilevante: gli investimenti si sono concentrati su due moduli critici della macchina e su un driver di produttività trasversale, la riduzione dei tempi di changeover, del downtime e degli scarti di avviamento.', output:'67 requisiti funzionali con target numerici · 8 design driver prioritizzati · Orientamento degli investimenti verso i moduli ad alto impatto' },
       { num:'03', title:'Design to Cost', badge:'Target costing modulare', body:'Il target cost è stato definito top-down, partendo dal prezzo di mercato obiettivo e non dai costi storici interni. Questo ha imposto un vincolo reale a ogni scelta progettuale. I moduli della nuova gamma sono stati allineati con le altre piattaforme di prodotto Uteco per massimizzare gli acquisti in economia, ridurre la frammentazione della supply chain e rendere più efficienti i processi di montaggio e taratura. Il risultato è una piattaforma configurabile con 15 moduli standard e interfacce unificate: ogni variante si costruisce combinando moduli esistenti invece di riprogettare da zero.', output:'Target cost top-down per modulo · 15 moduli standard · −12% costi materiali · −60% codici unici supply chain · −27% ingombro configurazione triplex' },
       { num:'04', title:'Sviluppo R&D', badge:'Coordinamento team', body:'Il coordinamento tra Product Innovation, uffici tecnici meccanici ed elettrici e tecnici operatori ha richiesto uno sforzo simultaneo su più fronti, con vincoli e osservazioni che si generavano in parallelo tra dipartimenti con logiche e tempi diversi. Il Gantt multi-livello con milestone strutturate ha gestito la pianificazione macro, mentre in Jira è stato implementato un processo strutturato di avanzamento dei requisiti: ogni requisito transitava dalla valutazione preliminare al testing fino alla verifica della soddisfazione, creando un filo diretto tra i requisiti QFD definiti in fase 02 e la validazione finale.', output:'Team di 12 persone su 5 discipline · Gantt multi-livello · Tracciamento requisiti in Jira dalla valutazione al testing' },
@@ -854,7 +841,7 @@ const TL_DATA = {
       { num:'06', title:'Lancio Drupa 2024', badge:'Go-to-market', body:'La scadenza di Drupa 2024 ha funzionato da vincolo di sistema per tutto il progetto: ogni milestone era calibrata a ritroso rispetto alla data della fiera. In parallelo alla gestione del progetto, ho collaborato con il reparto marketing per costruire la value proposition commerciale della nuova gamma, traducendo i risultati tecnici e i target di Design to Cost in messaggi comprensibili per il mercato. Ogni beneficio dichiarato era tracciabile a un requisito validato in fase di test, rendendo la comunicazione commerciale fondata sui dati del progetto.', output:'Prototipo fisico presentato a Drupa 2024 · Value proposition costruita sui dati di validazione · Tracciabilità requisiti — test — comunicazione commerciale' }
     ],
     en: [
-      { num:'01', title:'Market analysis', badge:'Competitive benchmark', body:'Uteco already had a C&L range, but internal analysis had revealed three structural problems: low component commonality across machines, a non-competitive list price versus the market, and less developed technology compared to the leading European players. A benchmark across over 20 machines from 3 main competitors mapped three distinct positioning segments (Laminating SL, Multi-Process, Coating) and clarified how to structure the new product platform. Field research then identified a functional gap not covered by any competitor, integrated into the new range as a proprietary process feature.', output:'Map of 3 market segments · Functional gap not covered by competitors · Product platform structure' },
+      { num:'01', title:'Market diagnosis', badge:'Competitive benchmark', body:'Uteco already had a C&L range, but internal analysis had revealed three structural problems: low component commonality across machines, a non-competitive list price versus the market, and less developed technology compared to the leading European players. A benchmark across over 20 machines from 3 main competitors mapped three distinct positioning segments (Laminating SL, Multi-Process, Coating) and clarified how to structure the new product platform. Field research then identified a functional gap not covered by any competitor, integrated into the new range as a proprietary process feature.', output:'Map of 3 market segments · Functional gap not covered by competitors · Product platform structure' },
       { num:'02', title:'AHP + QFD', badge:'Structured analysis', body:'With 15 market needs identified and no objective hierarchy between them, the risk was spreading investment evenly rather than concentrating it where it created the most value. AHP produced a shared weighting of needs, which QFD then translated into 67 measurable functional requirements with numerical targets per design driver. The most significant outcome: investment concentrated on two critical machine modules and one cross-cutting productivity driver, reducing changeover time, downtime and start-up waste.', output:'67 functional requirements with numerical targets · 8 prioritised design drivers · Investment directed toward high-impact modules' },
       { num:'03', title:'Design to Cost', badge:'Modular target costing', body:'Target cost was defined top-down, starting from the market price objective rather than historical internal costs. This imposed a real constraint on every design decision. The modules of the new range were aligned with Uteco\'s other product platforms to maximise volume purchasing, reduce supply chain fragmentation and improve assembly and calibration efficiency. The result is a configurable platform with 15 standard modules and unified interfaces: each variant is built by combining existing modules rather than redesigning from scratch.', output:'Top-down target cost per module · 15 standard modules · −12% material costs · −60% unique supply chain codes · −27% triplex configuration footprint' },
       { num:'04', title:'R&D Development', badge:'Team coordination', body:'Coordinating Product Innovation, mechanical and electrical engineering offices and technical operators required a simultaneous effort across multiple fronts, with constraints and observations generated in parallel between departments with different logics and timelines. A multi-level Gantt with structured milestones managed macro planning, while Jira was used to implement a structured requirements progression process: each requirement moved from preliminary assessment through testing to satisfaction verification, creating a direct link between the QFD requirements defined in phase 02 and final validation.', output:'Team of 12 people across 5 disciplines · Multi-level Gantt · Requirements tracked in Jira from assessment to testing' },
@@ -865,13 +852,13 @@ const TL_DATA = {
   flex: {
     it: [
       { num:'01', title:'Analisi dell\'ecosistema', badge:'Mappatura satellite', body:'Attorno alle macchine Uteco esiste un ecosistema di prodotti satellite che i clienti acquistano da terze parti. La mappatura di questo ecosistema per tipologia di macchina (Flexo, Roto, C&L) ha identificato il tavolo di ispezione come punto di ingresso prioritario: era un prodotto già richiesto dai clienti esistenti e richiedeva un investimento di sviluppo contenuto rispetto ad altri prodotti satellite. Un ciclo di sviluppo breve su un bisogno già espresso dal mercato: il rapporto impatto/effort più favorevole dell\'ecosistema analizzato.', output:'Mappa dei prodotti satellite per tipologia di macchina · Tavolo di ispezione identificato come priorità per domanda esistente e investimento contenuto' },
-      { num:'02', title:'AHP + QFD + Requisiti', badge:'Analisi strutturata', body:'Le interviste a operatori e area manager hanno fatto emergere un gap preciso nel mercato: i tavoli di ispezione disponibili erano o prodotti basic con scarso appeal estetico, o soluzioni high-tech ad alto prezzo, senza nulla nel mezzo. L\'obiettivo è diventato sviluppare un prodotto economico ma con un\'estetica curata e un family feeling riconoscibile con le macchine Uteco, per favorire l\'acquisto congiunto. AHP e QFD hanno tradotto questo posizionamento in requisiti funzionali misurabili, con specifiche tecniche mid-high (ISO 3664:2009, microscopio integrato, monitor touch, superficie inclinabile) a un prezzo mid-low.', output:'Posizionamento mid-low con specifiche mid-high · Requisiti funzionali da interviste a operatori e area manager · Family feeling con portfolio Uteco come driver di acquisto congiunto' },
+      { num:'02', title:'AHP + QFD + Requisiti', badge:'Analisi strutturata', body:'Le interviste a operatori e area manager hanno fatto emergere un gap preciso nel mercato: i tavoli di ispezione disponibili erano o prodotti basic con scarso appeal estetico, o soluzioni high-tech ad alto prezzo, senza nulla nel mezzo. L\'obiettivo è diventato sviluppare un prodotto economico ma con un\'estetica curata e un family feeling riconoscibile con le macchine Uteco, per favorire l\'acquisto congiunto. AHP e QFD hanno tradotto questo posizionamento in requisiti funzionali misurabili, con specifiche tecniche mid-high (ISO 3364:2009, microscopio integrato, monitor touch, superficie inclinabile) a un prezzo mid-low.', output:'Posizionamento mid-low con specifiche mid-high · Requisiti funzionali da interviste a operatori e area manager · Family feeling con portfolio Uteco come driver di acquisto congiunto' },
       { num:'03', title:'Concept & Target Cost', badge:'Target costing', body:'Il concept estetico è stato sviluppato interamente in autonomia, a partire dai requisiti di family feeling con le macchine Uteco e dal posizionamento mid-low con appeal curato. La modellazione 3D ha permesso di iterare rapidamente sulla forma e verificare la coerenza visiva con il portfolio esistente. Il target cost è stato definito per modulo, con lo stesso approccio top-down usato su PRISMA: prima il prezzo obiettivo di mercato, poi i vincoli progettuali per ogni componente.', output:'Concept estetico sviluppato in autonomia · Modellazione 3D · Target cost top-down per modulo · Coerenza visiva con portfolio Uteco verificata in fase di concept' },
       { num:'04', title:'Sviluppo e prototipazione', badge:'Go-to-market', body:'Lo sviluppo ha seguito un Gantt strutturato con fasi presidiate, coordinando i fornitori esterni e i reparti interni. Il progetto ha raggiunto il primo prototipo fisico, presentato a Drupa 2024. Il prototipo incorpora le specifiche tecniche definite in fase di requisiti e il concept estetico sviluppato in fase 03, verificando la coerenza tra la direzione progettuale e il risultato fisico.', output:'Primo prototipo fisico realizzato · Presentato a Drupa 2024' }
     ],
     en: [
       { num:'01', title:'Ecosystem analysis', badge:'Satellite mapping', body:'Around Uteco\'s machines exists an ecosystem of satellite products that customers source from third parties. Mapping this ecosystem by machine type (Flexo, Roto, C&L) identified the inspection table as the priority entry point: it was a product already requested by existing customers and required a contained development investment compared to other satellite products. A short development cycle on a need already expressed by the market: the most favourable impact/effort ratio in the ecosystem analysed.', output:'Satellite product map by machine type · Inspection table identified as priority due to existing demand and contained investment' },
-      { num:'02', title:'AHP + QFD + Requirements', badge:'Structured analysis', body:'Interviews with operators and area managers revealed a precise gap in the market: available inspection tables were either basic products with poor aesthetic appeal, or high-tech high-price solutions, with nothing in between. The objective became developing an affordable product with refined aesthetics and a recognisable family feeling with Uteco machines, to encourage joint purchase. AHP and QFD translated this positioning into measurable functional requirements, with mid-high technical specifications (ISO 3664:2009, integrated microscope, touch monitor, tiltable surface) at a mid-low price.', output:'Mid-low positioning with mid-high specifications · Functional requirements from operator and area manager interviews · Family feeling with Uteco portfolio as joint purchase driver' },
+      { num:'02', title:'AHP + QFD + Requirements', badge:'Structured analysis', body:'Interviews with operators and area managers revealed a precise gap in the market: available inspection tables were either basic products with poor aesthetic appeal, or high-tech high-price solutions, with nothing in between. The objective became developing an affordable product with refined aesthetics and a recognisable family feeling with Uteco machines, to encourage joint purchase. AHP and QFD translated this positioning into measurable functional requirements, with mid-high technical specifications (ISO 3364:2009, integrated microscope, touch monitor, tiltable surface) at a mid-low price.', output:'Mid-low positioning with mid-high specifications · Functional requirements from operator and area manager interviews · Family feeling with Uteco portfolio as joint purchase driver' },
       { num:'03', title:'Concept & Target Cost', badge:'Target costing', body:'The aesthetic concept was developed entirely independently, starting from the family feeling requirements with Uteco machines and the mid-low positioning with refined appeal. 3D modelling allowed rapid iteration on the form and verification of visual consistency with the existing portfolio. Target cost was defined per module, using the same top-down approach as PRISMA: market price objective first, then design constraints for each component.', output:'Aesthetic concept developed independently · 3D modelling · Top-down target cost per module · Visual consistency with Uteco portfolio verified at concept stage' },
       { num:'04', title:'Development & Prototyping', badge:'Go-to-market', body:'Development followed a structured Gantt with supervised phases, coordinating external suppliers and internal departments. The project reached its first physical prototype, presented at Drupa 2024. The prototype incorporates the technical specifications defined during requirements and the aesthetic concept developed in phase 03, verifying the consistency between the design direction and the physical result.', output:'First physical prototype produced · Presented at Drupa 2024' }
     ]
@@ -938,10 +925,10 @@ it: {
   "strip.1":"Anni in R&D\nproduct management","strip.2":"Progetti R&D\ngestiti in parallelo","strip.3":"Prodotti sviluppati\ndal concept al prototipo","strip.4":"Budget R&D\ncumulativo gestito",
   "about.label":"Chi sono","about.title":"Gestione del prodotto dalla strategia al prototipo",
   "about.intro":"Ho costruito una base completa in product & design management, tra ideazione di prodotto, analisi di mercato, definizione dei requisiti e gestione del progetto, e in quattro anni di lavoro sono diventato Product & Project Manager R&D, seguendo in prima persona lo sviluppo di macchine da stampa e converting di livello internazionale. Parallelamente al lavoro a tempo pieno, sto conseguendo una laurea in Economia Aziendale e Management.",
-  "about.pm":"Product Management","about.pm.text":"Analisi di mercato e competitive intelligence, definizione dei requisiti di prodotto con metodologie strutturate come QFD (Quality Function Deployment) e AHP (Analytic Hierarchy Process), business planning, roadmap e gestione del ciclo di vita dal concept al lancio.",
+  "about.pm":"Product Management","about.pm.text":"Analisi di mercato e competitive intelligence, definizione dei requisiti di prodotto, business planning, roadmap e gestione del ciclo di vita dal concept al lancio.",
   "about.rd":"R&D Project Management","about.rd.text":"Coordinamento di team cross-funzionali, gestione multi-progetto con Gantt e milestone monitorate, monitoraggio di tempi, budget e obiettivi tecnici fino alla validazione del prototipo.",
   "exp.label":"Esperienze professionali",
-  "uteco.role1":"Product & R&D Project Manager","uteco.role2":"Junior Product & R&D Project Manager","uteco.role3":"Product Innovation Intern","henry.role":"Product Design Intern",
+  "uteco.role":"Product & Project Manager","henry.role":"Product Design Intern",
   "uteco.desc":"Sviluppo di nuove famiglie di prodotto nel segmento delle macchine da stampa flessografica e converting per il packaging flessibile. Ho seguito l'intero processo, dalla diagnosi di mercato alla validazione del prototipo fisico, coordinando team cross-funzionali di circa 12 persone. Gestione simultanea di fino a 5 progetti R&D: QFD, AHP, Design to Cost, Stage-Gate, Gantt multi-livello.",
   "henry.desc":"Sviluppo di concept di prodotto applicando il Circular Design Thinking. Analisi di mercato, definizione requisiti, concept design e modellazione 3D. Progettazione del tavolo Edo per Cafedesart, selezionato per il Salone del Mobile 2022 di Milano.",
   "proj.label":"Progetti selezionati","proj.intro":"Tre progetti che mostrano approcci diversi: dalla gestione di un programma R&D complesso, al lancio di un prodotto satellite in un segmento nuovo, al product design per il mercato del lusso.",
@@ -951,7 +938,7 @@ it: {
   "prisma.h1":"Il problema di business",
   "prisma.t1":"Uteco deteneva una quota marginale su un mercato da oltre 260 M€, con vendite C&L stagnanti da cinque anni nonostante una crescita sostenuta del settore. L'analisi interna rivelava una gamma frammentata, con bassa condivisione di componenti tra le macchine e alta percentuale di larghezze mai ordinate, e un posizionamento di prezzo non competitivo rispetto ai principali player europei. L'obiettivo: ridisegnare l'intera gamma secondo logiche di modularità, Design to Cost e family feeling con la nuova gamma flessografica.",
   "prisma.h2":"Metodologia e processo",
-  "prisma.s1t":"Analisi di mercato","prisma.s2t":"AHP + QFD","prisma.s3t":"Design to Cost","prisma.s4t":"Sviluppo R&D","prisma.s5t":"Test Plan","prisma.s6t":"Lancio Drupa",
+  "prisma.s1t":"Diagnosi di mercato","prisma.s2t":"AHP + QFD","prisma.s3t":"Design to Cost","prisma.s4t":"Sviluppo R&D","prisma.s5t":"Test Plan","prisma.s6t":"Lancio Drupa",
   "prisma.h3":"Target progettuali","prisma.k1":"Costi materiali","prisma.k2":"Codici unici supply chain","prisma.k3":"Tempo change over","prisma.k4":"Ingombro triplex",
   "prisma.h4":"Gli 8 design driver","prisma.t2":"Il progetto è strutturato attorno a 8 driver: Design to Cost, Design for Supply Chain, Design for Assembly, Design for Productivity, Design for Compactness, Design for Sustainability, Design for Configurability (15 moduli, interfacce unificate) e Design for Serviceability.",
   "flex.role":"Product Manager · Uteco Converting SpA",
@@ -972,7 +959,8 @@ it: {
   "contact.label":"Contatti","contact.title":"Parliamo.","contact.h":"Posizione aperta o collaborazione?",
   "contact.p":"Sono sempre disponibile per una conversazione su product management, R&D project management o un progetto interessante.",
   "form.name":"Nome","form.email":"Email","form.msg":"Messaggio","form.send":"Invia messaggio","footer.cv":"Curriculum",
-  "edu4.deg":"AI Fluency Framework & Foundations","edu4.note":"Collaborare con sistemi di intelligenza artificiale in modo efficace, efficiente, etico e sicuro. Approccio strutturato all'interazione uomo-AI, con focus sulle capacità e i limiti delle tecnologie AI attuali. Fornisce le basi concettuali per utilizzare gli strumenti AI in modo strategico anziché reattivo."
+  "edu4.deg":"AI Fluency Framework & Foundations","edu4.note":"Collaborare con sistemi di intelligenza artificiale in modo efficace, efficiente, etico e sicuro. Approccio strutturato all'interazione uomo-AI, con focus sulle capacità e i limiti delle tecnologie AI attuali. Fornisce le basi concettuali per utilizzare gli strumenti AI in modo strategico anziché reattivo.",
+  "cert2.deg":"Inbound Marketing Certified","cert2.note":"Metodologia inbound: come attrarre, coinvolgere e fidelizzare i clienti attraverso contenuti di valore, SEO, lead nurturing e automazione del marketing. Fornisce un framework strategico per allineare le attività di marketing agli obiettivi di business."
 },
 en: {
   "nav.about":"About","nav.exp":"Experience","nav.proj":"Projects","nav.edu":"Education","nav.cert":"Certifications","nav.contact":"Contact",
@@ -982,10 +970,10 @@ en: {
   "strip.1":"Years in R&D\nproduct management","strip.2":"R&D projects\nmanaged in parallel","strip.3":"Products developed\nfrom concept to prototype","strip.4":"Cumulative R&D\nbudget managed",
   "about.label":"About","about.title":"Product management from strategy to prototype",
   "about.intro":"I built a solid foundation in product & design management, spanning product ideation, market analysis, requirements definition and project management, and in four years became Product & R&D Project Manager, personally overseeing the development of international-level printing and converting machinery. Alongside full-time work, I am completing a degree in Business Administration and Management.",
-  "about.pm":"Product Management","about.pm.text":"Market analysis and competitive intelligence, product requirements definition using structured methodologies such as QFD (Quality Function Deployment) and AHP (Analytic Hierarchy Process), business planning, roadmap and lifecycle management from concept to launch.",
+  "about.pm":"Product Management","about.pm.text":"Market analysis and competitive intelligence, product requirements definition, business planning, roadmap and lifecycle management from concept to launch.",
   "about.rd":"R&D Project Management","about.rd.text":"Cross-functional team coordination, multi-project management with Gantt and monitored milestones, tracking time, budget and technical objectives through prototype validation.",
   "exp.label":"Professional Experience",
-  "uteco.role1":"Product & R&D Project Manager","uteco.role2":"Junior Product & R&D Project Manager","uteco.role3":"Product Innovation Intern","henry.role":"Product Design Intern",
+  "uteco.role":"Product & Project Manager","henry.role":"Product Design Intern",
   "uteco.desc":"Development of new product families in the flexographic printing and converting machinery segment for flexible packaging. I oversaw the entire process, from market analysis to physical prototype validation, coordinating cross-functional teams of ~12 people. Simultaneous management of up to 5 R&D projects: QFD, AHP, Design to Cost, Stage-Gate, multi-level Gantt.",
   "henry.desc":"Product concept development applying Circular Design Thinking. Market analysis, requirements definition, concept design and 3D modelling. Design of the Edo dining table for Cafedesart, selected for Salone del Mobile 2022.",
   "proj.label":"Selected Projects","proj.intro":"Three projects illustrating different approaches: managing a complex R&D programme, launching a satellite product in a new segment, and industrial product design for the luxury market.",
@@ -995,7 +983,7 @@ en: {
   "prisma.h1":"The business problem",
   "prisma.t1":"Uteco held a marginal share of a market worth over 260 M€, with stagnant C&L sales for five years despite sustained sector growth. Internal analysis revealed a fragmented range with low component commonality and non-competitive pricing versus leading European players. Objective: redesign the entire range around modularity, Design to Cost and visual family feeling.",
   "prisma.h2":"Methodology & process",
-  "prisma.s1t":"Market analysis","prisma.s2t":"AHP + QFD","prisma.s3t":"Design to Cost","prisma.s4t":"R&D Development","prisma.s5t":"Test Plan","prisma.s6t":"Drupa Launch",
+  "prisma.s1t":"Market diagnosis","prisma.s2t":"AHP + QFD","prisma.s3t":"Design to Cost","prisma.s4t":"R&D Development","prisma.s5t":"Test Plan","prisma.s6t":"Drupa Launch",
   "prisma.h3":"Design targets","prisma.k1":"Material costs","prisma.k2":"Unique codes supply chain","prisma.k3":"Change over time","prisma.k4":"Triplex footprint",
   "prisma.h4":"The 8 design drivers","prisma.t2":"The project is structured around 8 drivers: Design to Cost, Design for Supply Chain, Design for Assembly, Design for Productivity, Design for Compactness, Design for Sustainability, Design for Configurability (15 modules, unified interfaces) and Design for Serviceability.",
   "flex.role":"Product Manager · Uteco Converting SpA",
@@ -1016,7 +1004,8 @@ en: {
   "contact.label":"Contact","contact.title":"Let's talk.","contact.h":"Open role or collaboration?",
   "contact.p":"I am always available for a conversation about product management, R&D project management or an interesting project.",
   "form.name":"Name","form.email":"Email","form.msg":"Message","form.send":"Send message","footer.cv":"Curriculum Vitae",
-  "edu4.deg":"AI Fluency Framework & Foundations","edu4.note":"Learn to collaborate with AI systems effectively, efficiently, ethically, and safely. Structured approach to human-AI interaction, covering core capabilities and limitations of current AI technologies. Provides the conceptual grounding needed to approach AI tools strategically rather than reactively."
+  "edu4.deg":"AI Fluency Framework & Foundations","edu4.note":"Learn to collaborate with AI systems effectively, efficiently, ethically, and safely. Structured approach to human-AI interaction, covering core capabilities and limitations of current AI technologies. Provides the conceptual grounding needed to approach AI tools strategically rather than reactively.",
+  "cert2.deg":"Inbound Marketing Certified","cert2.note":"Inbound methodology: how to attract, engage and delight customers through valuable content, SEO, lead nurturing and marketing automation. Provides a strategic framework for aligning marketing activities with business objectives."
 }
 };
 
@@ -1035,52 +1024,10 @@ function setLang(lang) {
   document.getElementById('cv-link').href = cvFile;
   document.getElementById('cv-footer').href = cvFile;
   tlInitAll();
-  renderDur();
-}
-
-
-/* ── DURATA ESPERIENZA ── */
-function calcDur(startYear, startMonth, endYear, endMonth) {
-  var totalMonths = (endYear - startYear) * 12 + (endMonth - startMonth) + 1;
-  var years = Math.floor(totalMonths / 12);
-  var months = totalMonths % 12;
-  var lang = tlLang;
-  var parts = [];
-  if (years > 0) parts.push(years + (lang === 'it' ? (years === 1 ? ' anno' : ' anni') : (years === 1 ? ' year' : ' years')));
-  if (months > 0) parts.push(months + (lang === 'it' ? (months === 1 ? ' mese' : ' mesi') : (months === 1 ? ' month' : ' months')));
-  return parts.join(' ');
-}
-
-function renderDur() {
-  var now = new Date();
-  var ny = now.getFullYear();
-  var nm = now.getMonth() + 1;
-  var it = tlLang === 'it';
-
-  // Uteco totale (dinamico)
-  var elTotal = document.getElementById('dur-uteco-total');
-  if (elTotal) elTotal.textContent = calcDur(2022, 3, ny, nm);
-
-  // Ruolo 1: Product & R&D PM (dinamico, da 09/2025 a oggi)
-  var elR1 = document.getElementById('dur-uteco-r1');
-  if (elR1) elR1.textContent = '· ' + calcDur(2025, 9, ny, nm);
-
-  // Ruolo 2: Junior PM (fisso: 09/2022 - 09/2025 = 3 anni)
-  var elR2 = document.getElementById('dur-uteco-r2');
-  if (elR2) elR2.textContent = '· ' + (it ? '3 anni' : '3 years');
-
-  // Ruolo 3: Intern (fisso: 03/2022 - 09/2022 = 6 mesi)
-  var elR3 = document.getElementById('dur-uteco-r3');
-  if (elR3) elR3.textContent = '· ' + (it ? '6 mesi' : '6 months');
-
-  // Henry fisso: 02/2021 - 07/2021 = 6 mesi
-  var elHenry = document.getElementById('dur-henry-total');
-  if (elHenry) elHenry.textContent = it ? '6 mesi' : '6 months';
 }
 
 /* Init on load */
 tlInitAll();
-renderDur();
 </script>
 </body>
 </html>
