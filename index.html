@@ -360,7 +360,7 @@ section { border-top: 1px solid var(--faint); padding: clamp(3.5rem, 7vw, 6rem) 
 .cert-issuer { font-size: 0.8rem; color: var(--mid); margin-bottom: 0.2rem; }
 .cert-date { font-size: 0.75rem; color: var(--blue); font-weight: 500; margin-bottom: 0.6rem; }
 .cert-note { font-size: 0.8rem; color: var(--mid); line-height: 1.65; }
-
+.cert-list { display: flex; flex-direction: column; gap: 1rem; }
 
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
 .ci h3 { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 0.7rem; }
@@ -749,15 +749,28 @@ footer {
 <section id="certifications">
   <div class="container">
     <p class="sec-label" data-i18n="cert.label">Certificazioni</p>
-    <div class="cert-card">
-      <div class="cert-logo">
-        <img src="logo-anthropic.webp" alt="Anthropic">
+    <div class="cert-list">
+      <div class="cert-card">
+        <div class="cert-logo">
+          <img src="logo-anthropic.webp" alt="Anthropic">
+        </div>
+        <div class="cert-body">
+          <p class="cert-name" data-i18n="edu4.deg">AI Fluency Framework & Foundations</p>
+          <p class="cert-issuer">Anthropic</p>
+          <p class="cert-date">Giugno 2026</p>
+          <p class="cert-note" data-i18n="edu4.note">Collaborare con sistemi di intelligenza artificiale in modo efficace, efficiente, etico e sicuro. Approccio strutturato all'interazione uomo-AI, con focus sulle capacità e i limiti delle tecnologie AI attuali. Fornisce le basi concettuali per utilizzare gli strumenti AI in modo strategico anziché reattivo.</p>
+        </div>
       </div>
-      <div class="cert-body">
-        <p class="cert-name" data-i18n="edu4.deg">AI Fluency Framework & Foundations</p>
-        <p class="cert-issuer">Anthropic</p>
-        <p class="cert-date">Giugno 2026</p>
-        <p class="cert-note" data-i18n="edu4.note">Collaborare con sistemi di intelligenza artificiale in modo efficace, efficiente, etico e sicuro. Approccio strutturato all'interazione uomo-AI, con focus sulle capacità e i limiti delle tecnologie AI attuali. Fornisce le basi concettuali per utilizzare gli strumenti AI in modo strategico anziché reattivo.</p>
+      <div class="cert-card">
+        <div class="cert-logo">
+          <img src="hubspot_academy_logo.jpeg" alt="HubSpot Academy">
+        </div>
+        <div class="cert-body">
+          <p class="cert-name" data-i18n="cert2.deg">Inbound Marketing Certified</p>
+          <p class="cert-issuer">HubSpot Academy</p>
+          <p class="cert-date">Giugno 2026</p>
+          <p class="cert-note" data-i18n="cert2.note">Metodologia inbound: come attrarre, coinvolgere e fidelizzare i clienti attraverso contenuti di valore, SEO, lead nurturing e automazione del marketing. Fornisce un framework strategico per allineare le attività di marketing agli obiettivi di business.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -946,7 +959,8 @@ it: {
   "contact.label":"Contatti","contact.title":"Parliamo.","contact.h":"Posizione aperta o collaborazione?",
   "contact.p":"Sono sempre disponibile per una conversazione su product management, R&D project management o un progetto interessante.",
   "form.name":"Nome","form.email":"Email","form.msg":"Messaggio","form.send":"Invia messaggio","footer.cv":"Curriculum",
-  "edu4.deg":"AI Fluency Framework & Foundations","edu4.note":"Collaborare con sistemi di intelligenza artificiale in modo efficace, efficiente, etico e sicuro. Approccio strutturato all'interazione uomo-AI, con focus sulle capacità e i limiti delle tecnologie AI attuali. Fornisce le basi concettuali per utilizzare gli strumenti AI in modo strategico anziché reattivo."
+  "edu4.deg":"AI Fluency Framework & Foundations","edu4.note":"Collaborare con sistemi di intelligenza artificiale in modo efficace, efficiente, etico e sicuro. Approccio strutturato all'interazione uomo-AI, con focus sulle capacità e i limiti delle tecnologie AI attuali. Fornisce le basi concettuali per utilizzare gli strumenti AI in modo strategico anziché reattivo.",
+  "cert2.deg":"Inbound Marketing Certified","cert2.note":"Metodologia inbound: come attrarre, coinvolgere e fidelizzare i clienti attraverso contenuti di valore, SEO, lead nurturing e automazione del marketing. Fornisce un framework strategico per allineare le attività di marketing agli obiettivi di business."
 },
 en: {
   "nav.about":"About","nav.exp":"Experience","nav.proj":"Projects","nav.edu":"Education","nav.cert":"Certifications","nav.contact":"Contact",
@@ -990,7 +1004,8 @@ en: {
   "contact.label":"Contact","contact.title":"Let's talk.","contact.h":"Open role or collaboration?",
   "contact.p":"I am always available for a conversation about product management, R&D project management or an interesting project.",
   "form.name":"Name","form.email":"Email","form.msg":"Message","form.send":"Send message","footer.cv":"Curriculum Vitae",
-  "edu4.deg":"AI Fluency Framework & Foundations","edu4.note":"Learn to collaborate with AI systems effectively, efficiently, ethically, and safely. Structured approach to human-AI interaction, covering core capabilities and limitations of current AI technologies. Provides the conceptual grounding needed to approach AI tools strategically rather than reactively."
+  "edu4.deg":"AI Fluency Framework & Foundations","edu4.note":"Learn to collaborate with AI systems effectively, efficiently, ethically, and safely. Structured approach to human-AI interaction, covering core capabilities and limitations of current AI technologies. Provides the conceptual grounding needed to approach AI tools strategically rather than reactively.",
+  "cert2.deg":"Inbound Marketing Certified","cert2.note":"Inbound methodology: how to attract, engage and delight customers through valuable content, SEO, lead nurturing and marketing automation. Provides a strategic framework for aligning marketing activities with business objectives."
 }
 };
 
