@@ -360,7 +360,7 @@ section { border-top: 1px solid var(--faint); padding: clamp(3.5rem, 7vw, 6rem) 
 .cert-issuer { font-size: 0.8rem; color: var(--mid); margin-bottom: 0.2rem; }
 .cert-date { font-size: 0.75rem; color: var(--blue); font-weight: 500; margin-bottom: 0.6rem; }
 .cert-note { font-size: 0.8rem; color: var(--mid); line-height: 1.65; }
-.cert-list { display: flex; flex-direction: column; gap: 1rem; }
+
 
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
 .ci h3 { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 0.7rem; }
@@ -493,7 +493,7 @@ footer {
 <section id="about">
   <div class="container">
     <p class="sec-label" data-i18n="about.label">Chi sono</p>
-    <h2 class="sec-title col" data-i18n="about.title">Gestione del prodotto dalla strategia al prototipo</h2>
+    <h2 class="sec-title col" data-i18n="about.title">Gestione del prodotto dal concept al mercato</h2>
     <p class="sec-intro" data-i18n="about.intro">Ho costruito una base completa in product & design management, tra ideazione di prodotto, analisi di mercato, definizione dei requisiti e gestione del progetto, e in quattro anni di lavoro sono diventato Product & Project Manager R&D, seguendo in prima persona lo sviluppo di macchine da stampa e converting di livello internazionale. Parallelamente al lavoro a tempo pieno, sto conseguendo una laurea in Economia Aziendale e Management.</p>
     <div class="about-grid">
       <div class="about-card">
@@ -749,28 +749,15 @@ footer {
 <section id="certifications">
   <div class="container">
     <p class="sec-label" data-i18n="cert.label">Certificazioni</p>
-    <div class="cert-list">
-      <div class="cert-card">
-        <div class="cert-logo">
-          <img src="logo-anthropic.webp" alt="Anthropic">
-        </div>
-        <div class="cert-body">
-          <p class="cert-name" data-i18n="edu4.deg">AI Fluency Framework & Foundations</p>
-          <p class="cert-issuer">Anthropic</p>
-          <p class="cert-date">Giugno 2026</p>
-          <p class="cert-note" data-i18n="edu4.note">Collaborare con sistemi di intelligenza artificiale in modo efficace, efficiente, etico e sicuro. Approccio strutturato all'interazione uomo-AI, con focus sulle capacità e i limiti delle tecnologie AI attuali. Fornisce le basi concettuali per utilizzare gli strumenti AI in modo strategico anziché reattivo.</p>
-        </div>
+    <div class="cert-card">
+      <div class="cert-logo">
+        <img src="logo-anthropic.webp" alt="Anthropic">
       </div>
-      <div class="cert-card">
-        <div class="cert-logo">
-          <img src="hubspot_academy_logo.jpeg" alt="HubSpot Academy">
-        </div>
-        <div class="cert-body">
-          <p class="cert-name" data-i18n="cert2.deg">Inbound Marketing Certified</p>
-          <p class="cert-issuer">HubSpot Academy</p>
-          <p class="cert-date">Giugno 2026</p>
-          <p class="cert-note" data-i18n="cert2.note">Metodologia inbound: come attrarre, coinvolgere e fidelizzare i clienti attraverso contenuti di valore, SEO, lead nurturing e automazione del marketing. Fornisce un framework strategico per allineare le attività di marketing agli obiettivi di business.</p>
-        </div>
+      <div class="cert-body">
+        <p class="cert-name" data-i18n="edu4.deg">AI Fluency Framework & Foundations</p>
+        <p class="cert-issuer">Anthropic</p>
+        <p class="cert-date">Giugno 2026</p>
+        <p class="cert-note" data-i18n="edu4.note">Collaborare con sistemi di intelligenza artificiale in modo efficace, efficiente, etico e sicuro. Approccio strutturato all'interazione uomo-AI, con focus sulle capacità e i limiti delle tecnologie AI attuali. Fornisce le basi concettuali per utilizzare gli strumenti AI in modo strategico anziché reattivo.</p>
       </div>
     </div>
   </div>
@@ -923,7 +910,7 @@ it: {
   "hero.desc":"Gestisco l'intero ciclo di vita di prodotti industriali complessi, dall'analisi di mercato al prototipo fisico, coordinando team R&D cross-funzionali dal brief alla validazione.",
   "hero.cv":"Scarica CV","hero.proj":"Vedi progetti",
   "strip.1":"Anni in R&D\nproduct management","strip.2":"Progetti R&D\ngestiti in parallelo","strip.3":"Prodotti sviluppati\ndal concept al prototipo","strip.4":"Budget R&D\ncumulativo gestito",
-  "about.label":"Chi sono","about.title":"Gestione del prodotto dalla strategia al prototipo",
+  "about.label":"Chi sono","about.title":"Gestione del prodotto dal concept al mercato",
   "about.intro":"Ho costruito una base completa in product & design management, tra ideazione di prodotto, analisi di mercato, definizione dei requisiti e gestione del progetto, e in quattro anni di lavoro sono diventato Product & Project Manager R&D, seguendo in prima persona lo sviluppo di macchine da stampa e converting di livello internazionale. Parallelamente al lavoro a tempo pieno, sto conseguendo una laurea in Economia Aziendale e Management.",
   "about.pm":"Product Management","about.pm.text":"Analisi di mercato e competitive intelligence, definizione dei requisiti di prodotto, business planning, roadmap e gestione del ciclo di vita dal concept al lancio.",
   "about.rd":"R&D Project Management","about.rd.text":"Coordinamento di team cross-funzionali, gestione multi-progetto con Gantt e milestone monitorate, monitoraggio di tempi, budget e obiettivi tecnici fino alla validazione del prototipo.",
@@ -959,8 +946,7 @@ it: {
   "contact.label":"Contatti","contact.title":"Parliamo.","contact.h":"Posizione aperta o collaborazione?",
   "contact.p":"Sono sempre disponibile per una conversazione su product management, R&D project management o un progetto interessante.",
   "form.name":"Nome","form.email":"Email","form.msg":"Messaggio","form.send":"Invia messaggio","footer.cv":"Curriculum",
-  "edu4.deg":"AI Fluency Framework & Foundations","edu4.note":"Collaborare con sistemi di intelligenza artificiale in modo efficace, efficiente, etico e sicuro. Approccio strutturato all'interazione uomo-AI, con focus sulle capacità e i limiti delle tecnologie AI attuali. Fornisce le basi concettuali per utilizzare gli strumenti AI in modo strategico anziché reattivo.",
-  "cert2.deg":"Inbound Marketing Certified","cert2.note":"Metodologia inbound: come attrarre, coinvolgere e fidelizzare i clienti attraverso contenuti di valore, SEO, lead nurturing e automazione del marketing. Fornisce un framework strategico per allineare le attività di marketing agli obiettivi di business."
+  "edu4.deg":"AI Fluency Framework & Foundations","edu4.note":"Collaborare con sistemi di intelligenza artificiale in modo efficace, efficiente, etico e sicuro. Approccio strutturato all'interazione uomo-AI, con focus sulle capacità e i limiti delle tecnologie AI attuali. Fornisce le basi concettuali per utilizzare gli strumenti AI in modo strategico anziché reattivo."
 },
 en: {
   "nav.about":"About","nav.exp":"Experience","nav.proj":"Projects","nav.edu":"Education","nav.cert":"Certifications","nav.contact":"Contact",
@@ -968,7 +954,7 @@ en: {
   "hero.desc":"I manage the full lifecycle of complex industrial products, from market analysis to physical prototype, coordinating cross-functional R&D teams from brief to validation.",
   "hero.cv":"Download CV","hero.proj":"See projects",
   "strip.1":"Years in R&D\nproduct management","strip.2":"R&D projects\nmanaged in parallel","strip.3":"Products developed\nfrom concept to prototype","strip.4":"Cumulative R&D\nbudget managed",
-  "about.label":"About","about.title":"Product management from strategy to prototype",
+  "about.label":"About","about.title":"Product management from concept to market",
   "about.intro":"I built a solid foundation in product & design management, spanning product ideation, market analysis, requirements definition and project management, and in four years became Product & R&D Project Manager, personally overseeing the development of international-level printing and converting machinery. Alongside full-time work, I am completing a degree in Business Administration and Management.",
   "about.pm":"Product Management","about.pm.text":"Market analysis and competitive intelligence, product requirements definition, business planning, roadmap and lifecycle management from concept to launch.",
   "about.rd":"R&D Project Management","about.rd.text":"Cross-functional team coordination, multi-project management with Gantt and monitored milestones, tracking time, budget and technical objectives through prototype validation.",
@@ -1004,8 +990,7 @@ en: {
   "contact.label":"Contact","contact.title":"Let's talk.","contact.h":"Open role or collaboration?",
   "contact.p":"I am always available for a conversation about product management, R&D project management or an interesting project.",
   "form.name":"Name","form.email":"Email","form.msg":"Message","form.send":"Send message","footer.cv":"Curriculum Vitae",
-  "edu4.deg":"AI Fluency Framework & Foundations","edu4.note":"Learn to collaborate with AI systems effectively, efficiently, ethically, and safely. Structured approach to human-AI interaction, covering core capabilities and limitations of current AI technologies. Provides the conceptual grounding needed to approach AI tools strategically rather than reactively.",
-  "cert2.deg":"Inbound Marketing Certified","cert2.note":"Inbound methodology: how to attract, engage and delight customers through valuable content, SEO, lead nurturing and marketing automation. Provides a strategic framework for aligning marketing activities with business objectives."
+  "edu4.deg":"AI Fluency Framework & Foundations","edu4.note":"Learn to collaborate with AI systems effectively, efficiently, ethically, and safely. Structured approach to human-AI interaction, covering core capabilities and limitations of current AI technologies. Provides the conceptual grounding needed to approach AI tools strategically rather than reactively."
 }
 };
 
