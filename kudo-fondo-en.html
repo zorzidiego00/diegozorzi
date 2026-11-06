@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kudo Fondo — Case study · Diego Zorzi</title>
+<meta name="description" content="Product management case study: concept for a gravel helmet with interchangeable pads for fit and sweat management.">
+<link rel="alternate" hreflang="it" href="kudo-fondo.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white: #FFFFFF;
+  --ink: #0A0A0A;
+  --mid: #707070;
+  --faint: #E8E8E8;
+  --bg: #F5F5F5;
+  --blue: #0047FF;
+  --blue-light: #E0E8FF;
+  --font: 'Space Grotesk', system-ui, sans-serif;
+  --max: 1100px;
+  --col: 780px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font); font-size: 16px; line-height: 1.6;
+  color: var(--ink); background: var(--white); -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(255,255,255,0.94); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--faint);
+}
+.nav-inner { max-width: var(--max); margin: 0 auto; padding: 0 2rem; height: 60px; display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { font-size: 0.85rem; font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; }
+.nav-back { font-size: 0.8rem; color: var(--mid); transition: color 0.15s; }
+.nav-back:hover { color: var(--ink); }
+.nav-right { display: flex; align-items: center; gap: 1.5rem; }
+.lang-toggle { display: flex; gap: 4px; }
+.lang-btn { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid var(--faint); color: var(--mid); padding: 3px 8px; border-radius: 4px; transition: all 0.15s; }
+.lang-btn.active { color: var(--white); background: var(--blue); border-color: var(--blue); }
+.lang-btn:hover:not(.active) { border-color: var(--ink); color: var(--ink); }
+
+/* HERO */
+#hero { padding: 140px 0 0; border-bottom: 1px solid var(--faint); }
+.container { max-width: var(--max); margin: 0 auto; padding: 0 2rem; }
+.hero-label, .sec-label {
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.6rem;
+}
+.hero-label::before, .sec-label::before { content: ''; display: block; width: 18px; height: 1px; background: var(--blue); }
+.hero-name { font-size: clamp(3.2rem, 7vw, 6rem); font-weight: 700; line-height: 0.95; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
+.hero-name span { color: var(--blue); }
+.hero-desc { font-size: 1.05rem; font-weight: 300; line-height: 1.75; color: var(--mid); max-width: 620px; margin-bottom: 2rem; }
+.disclaimer {
+  font-size: 0.8rem; color: var(--mid); background: var(--bg); border-left: 3px solid var(--blue);
+  padding: 0.8rem 1rem; border-radius: 4px; max-width: 620px; margin-bottom: 3rem;
+}
+.meta-strip { border-top: 1px solid var(--faint); display: grid; grid-template-columns: repeat(4, 1fr); }
+.meta-item { padding: 1.4rem 0; border-right: 1px solid var(--faint); padding-right: 1.5rem; }
+.meta-item + .meta-item { padding-left: 1.5rem; }
+.meta-item:last-child { border-right: none; }
+.meta-k { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.3rem; }
+.meta-v { font-size: 0.85rem; color: var(--ink); line-height: 1.5; }
+
+/* SECTIONS */
+section { border-top: 1px solid var(--faint); padding: clamp(3.5rem, 7vw, 5.5rem) 0; }
+#hero { border-top: none; }
+section.alt { background: var(--bg); }
+.sec-title { font-size: clamp(1.8rem, 3.6vw, 2.8rem); font-weight: 700; letter-spacing: -0.025em; line-height: 1.08; margin-bottom: 1.2rem; max-width: var(--col); }
+.lead { font-size: 1.05rem; font-weight: 300; color: var(--mid); line-height: 1.75; max-width: var(--col); margin-bottom: 2.5rem; }
+.h3 { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin: 2.8rem 0 1rem; display: flex; align-items: center; gap: 0.5rem; }
+.h3::before { content: ''; display: block; width: 12px; height: 1px; background: var(--blue); }
+p.t { font-size: 0.92rem; line-height: 1.85; color: var(--mid); margin-bottom: 1rem; max-width: var(--col); }
+p.t strong, li strong { color: var(--ink); font-weight: 600; }
+.t a, li a, td a, .step-d a, .fig-cap a { color: var(--blue); }
+.t a:hover, li a:hover, td a:hover, .step-d a:hover, .fig-cap a:hover { text-decoration: underline; }
+ul.list, ol.list { max-width: var(--col); padding-left: 1.2rem; margin-bottom: 1rem; }
+ul.list li, ol.list li { font-size: 0.92rem; line-height: 1.8; color: var(--mid); margin-bottom: 0.5rem; }
+.note { font-size: 0.8rem; color: var(--mid); line-height: 1.65; max-width: var(--col); margin-top: 0.8rem; }
+
+/* TABLES */
+.tbl-wrap { overflow-x: auto; border: 1px solid var(--faint); border-radius: 6px; background: var(--white); margin: 1rem 0; max-width: 100%; }
+table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+th { text-align: left; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); background: var(--bg); padding: 0.75rem 1rem; border-bottom: 1px solid var(--faint); white-space: nowrap; }
+td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--faint); color: var(--ink); vertical-align: top; line-height: 1.5; }
+tr:last-child td { border-bottom: none; }
+tr.hl td { background: var(--blue-light); font-weight: 600; }
+
+/* FIGURES */
+.figure { background: var(--white); border: 1px solid var(--faint); border-radius: 6px; padding: 1.5rem; margin: 1.5rem 0 0.5rem; }
+.figure svg { width: 100%; height: auto; display: block; }
+.fig-cap { font-size: 0.75rem; color: var(--mid); margin-top: 0.6rem; line-height: 1.6; }
+
+/* STEPS / CARDS */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin: 1.5rem 0; }
+.step { background: var(--white); border-radius: 4px; border-left: 3px solid var(--blue); padding: 1.2rem; }
+section.alt .step { background: var(--white); }
+section:not(.alt) .step { background: var(--bg); }
+.step-n { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.12em; color: var(--blue); text-transform: uppercase; margin-bottom: 0.4rem; }
+.step-t { font-size: 0.92rem; font-weight: 600; margin-bottom: 0.35rem; }
+.step-d { font-size: 0.82rem; color: var(--mid); line-height: 1.65; }
+
+.persona-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin: 1.5rem 0; }
+.persona { background: var(--white); border: 1px solid var(--faint); border-radius: 6px; padding: 1.6rem; position: relative; overflow: hidden; }
+.persona::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--blue); }
+.persona-seg { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.4rem; }
+.persona-name { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 0.4rem; }
+.persona-bio { font-size: 0.82rem; color: var(--mid); line-height: 1.65; margin-bottom: 1rem; }
+.persona ul { padding-left: 1rem; }
+.persona li { font-size: 0.8rem; color: var(--mid); line-height: 1.65; margin-bottom: 0.45rem; }
+.persona-foot { font-size: 0.8rem; line-height: 1.6; border-top: 1px solid var(--faint); padding-top: 0.8rem; margin-top: 0.8rem; color: var(--ink); }
+.tag-hyp { display: inline-block; font-size: 0.64rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; background: var(--blue-light); color: var(--blue); padding: 2px 7px; border-radius: 3px; }
+
+.req-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin: 1rem 0; }
+.req { background: var(--white); border: 1px solid var(--faint); border-radius: 6px; padding: 1.3rem; }
+.req-k { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.6rem; }
+.req ul { padding-left: 1rem; }
+.req li { font-size: 0.82rem; color: var(--mid); line-height: 1.65; margin-bottom: 0.35rem; }
+
+.messages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--faint); border-radius: 6px; overflow: hidden; margin: 1.5rem 0; }
+.msg { background: var(--white); padding: 1.4rem 1.2rem; }
+.msg-n { font-size: 2rem; font-weight: 700; color: var(--blue); letter-spacing: -0.04em; line-height: 1; margin-bottom: 0.5rem; }
+.msg-t { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.35rem; }
+.msg-d { font-size: 0.8rem; color: var(--mid); line-height: 1.6; }
+
+.pitch { background: var(--white); border: 1px solid var(--faint); border-radius: 6px; padding: 1.5rem; max-width: var(--col); }
+.pitch-row { display: grid; grid-template-columns: 130px 1fr; gap: 1rem; padding: 0.7rem 0; border-bottom: 1px solid var(--faint); }
+.pitch-row:last-child { border-bottom: none; }
+.pitch-k { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue); padding-top: 0.2rem; }
+.pitch-v { font-size: 0.9rem; line-height: 1.6; }
+
+.sources ol { padding-left: 1.2rem; }
+.sources li { font-size: 0.78rem; color: var(--mid); line-height: 1.7; }
+
+/* FOOTER */
+footer { border-top: 1px solid var(--faint); padding: 1.8rem 0; }
+.footer-inner { max-width: var(--max); margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
+.fc { font-size: 0.75rem; color: var(--mid); }
+.fl { display: flex; gap: 1.5rem; }
+.fl a { font-size: 0.75rem; color: var(--mid); transition: color 0.15s; }
+.fl a:hover { color: var(--blue); }
+
+@media (max-width: 760px) {
+  .container, .nav-inner, .footer-inner { padding: 0 16px; }
+  #hero { padding-top: 110px; }
+  .meta-strip { grid-template-columns: 1fr 1fr; }
+  .meta-item { border-right: none; border-bottom: 1px solid var(--faint); padding-left: 0 !important; }
+  .steps, .persona-grid, .req-grid, .messages { grid-template-columns: 1fr; }
+  .pitch-row { grid-template-columns: 1fr; gap: 0.2rem; }
+  .footer-inner { flex-direction: column; gap: 0.8rem; text-align: center; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html?lang=en" class="nav-logo">Diego Zorzi</a>
+    <div class="nav-right">
+      <a href="index.html?lang=en#projects" class="nav-back">← All projects</a>
+      <div class="lang-toggle">
+        <a href="kudo-fondo.html" class="lang-btn">IT</a>
+        <a href="kudo-fondo-en.html" class="lang-btn active">EN</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container">
+    <p class="hero-label">Case study · Product concept</p>
+    <h1 class="hero-name">Kudo<br><span>Fondo</span></h1>
+    <p class="hero-desc">A gravel helmet that adapts to the shape of the head and keeps the forehead dry, through a system of interchangeable pads. It starts on gravel and, if the platform works, becomes the new Kudo.</p>
+    <p class="disclaimer">Personal concept, developed as a product management exercise. Not affiliated with or endorsed by fizik or the Selle Royal group.</p>
+  </div>
+  <div class="container">
+    <div class="meta-strip">
+      <div class="meta-item"><p class="meta-k">Type</p><p class="meta-v">Personal concept</p></div>
+      <div class="meta-item"><p class="meta-k">Segment</p><p class="meta-v">Gravel helmets, then road and MTB</p></div>
+      <div class="meta-item"><p class="meta-k">Methods</p><p class="meta-v">Benchmark, personas, beachhead, product brief</p></div>
+      <div class="meta-item"><p class="meta-k">Year</p><p class="meta-v">2026</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- THE PROBLEM -->
+<section class="alt">
+  <div class="container">
+    <p class="sec-label">The problem</p>
+    <h2 class="sec-title">On long rides the helmet becomes a nuisance</h2>
+    <p class="lead">Riders with a long or round head live with pressure points, and heavy sweaters end up with wet glasses. Current helmets only adjust the retention system, not the surface that rests on the head.</p>
+    <div class="steps">
+      <div class="step"><p class="step-n">The problem</p><p class="step-t">Fit and sweat</p><p class="step-d">Pressure points after hours in the saddle, sweat that soaks the padding and drips onto the glasses.</p></div>
+      <div class="step"><p class="step-n">The solution</p><p class="step-t">Interchangeable pads</p><p class="step-d">Soft pads in three zones and several thicknesses, combined into four recipes for four head shapes.</p></div>
+      <div class="step"><p class="step-n">The strategy</p><p class="step-t">A platform</p><p class="step-d">Launch on gravel, then extend to road and mountain bike.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 1. MARKET -->
+<section>
+  <div class="container">
+    <p class="sec-label">01 · Market and benchmark</p>
+    <h2 class="sec-title">No gravel helmet adapts the surface that rests on the head</h2>
+    <p class="lead">Gravel is the growing segment of cycling, and no gravel helmet works on the contact surface: that is the space Kudo Fondo takes.</p>
+
+    <p class="h3">Trends</p>
+    <ul class="list">
+      <li><strong>Gravel is growing.</strong> In Austria it is the fastest-growing category: 29,000 bikes sold, +48.3%, +74% for non-electric models <a href="https://www.tour-magazin.de/en/gravel-bike/48-per-cent-growth-boom-in-gravel-bikes-in-austria/" target="_blank" rel="noopener">[1]</a>. Paid market reports give estimates that contradict each other, so I do not use them.</li>
+      <li><strong>The gravel helmet is a young category.</strong> Until recently, helmets had stayed out of gravel specialisation <a href="https://cyclingweekly.com/products/lazer-releases-gravel-specific-helmet-cerro-kineticore-for-mixed-terrain-protection" target="_blank" rel="noopener">[2]</a>. Now launches are multiplying.</li>
+      <li><strong>Features are converging.</strong> Rotational protection, eyewear docking and a light mount are now found even at €90: they no longer differentiate.</li>
+    </ul>
+
+    <p class="h3">Benchmark</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Model</th><th>List price</th><th>Claimed weight (M)</th><th>Rotational protection</th><th>Fit adjustment</th></tr></thead>
+        <tbody>
+          <tr><td><a href="https://cyclingindustry.news/head-to-toe-fizik-steps-into-bike-helmet-market" target="_blank" rel="noopener">fizik Kudo</a></td><td>€290</td><td>from 270 g</td><td>MIPS Air Node</td><td>Circumference, tilt, crown, width</td></tr>
+          <tr><td><a href="https://www.bikeperfect.com/news/poc-releases-two-new-omne-helmets-one-for-performance-and-one-with-cargo-capabilities" target="_blank" rel="noopener">POC Omne Ultra MIPS</a></td><td>€200-220</td><td>340 g</td><td>MIPS</td><td>Circumference</td></tr>
+          <tr><td><a href="https://cyclingweekly.com/products/specialized-introduces-the-search-a-breezy-feature-packed-gravel-helmet" target="_blank" rel="noopener">Specialized Search</a></td><td>€150</td><td>290 g</td><td>MIPS Evolve Core</td><td>Circumference, angle</td></tr>
+          <tr><td><a href="https://probikeshop-irl.com/products/mtb-helmet-lazer-cerro-kineticore-taupe" target="_blank" rel="noopener">Lazer Cerro KinetiCore</a></td><td>€90</td><td>270 g</td><td>KinetiCore</td><td>Circumference, height</td></tr>
+          <tr><td><a href="https://www.tour-magazin.de/en/buying-advice/clothing/spectacles/gravel-kit-van-rysel-unveils-new-collection-featuring-a-helmet-jersey-bib-shorts-and-cycling-glasses/" target="_blank" rel="noopener">Van Rysel RCR-R MIPS</a></td><td>€90</td><td>280 g</td><td>MIPS Air Node</td><td>Circumference</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="t">They all adjust fit through the retention system. The Kudo is the most advanced: its Adaptive Fit System also changes the width of the retention <a href="https://cyclingweekly.com/products/fizik-now-makes-cycling-helmets-and-the-new-lids-might-suit-those-with-wide-or-narrow-heads" target="_blank" rel="noopener">[3]</a>. The pads take the next step: <strong>the Kudo adapts the width, Kudo Fondo adapts the shape.</strong></p>
+
+    <p class="h3">Positioning</p>
+    <div class="figure">
+      <svg viewBox="0 0 760 400" role="img" aria-label="Positioning map: Kudo Fondo brings head-shape fit at the price of the Kudo">
+        <g font-family="Space Grotesk, system-ui, sans-serif" font-size="12">
+          <text x="20" y="28" font-size="16" font-weight="600" fill="#0A0A0A">Kudo Fondo brings head-shape fit at the price of the Kudo</text>
+          <text x="20" y="50" fill="#707070">List price and level of fit customisation</text>
+          <text x="20" y="82" fill="#707070">Customisation</text>
+          <g stroke="#E8E8E8">
+            <line x1="170" x2="720" y1="340" y2="340"/><line x1="170" x2="720" y1="280" y2="280"/>
+            <line x1="170" x2="720" y1="220" y2="220"/><line x1="170" x2="720" y1="160" y2="160"/>
+            <line x1="170" x2="720" y1="100" y2="100"/>
+          </g>
+          <g fill="#707070" text-anchor="end">
+            <text x="160" y="344">Circumference only</text><text x="160" y="284">+ height or angle</text>
+            <text x="160" y="224">+ width</text><text x="160" y="164">Head shape</text>
+            <text x="160" y="104">Made to measure</text>
+          </g>
+          <g fill="#707070" text-anchor="middle">
+            <text x="261.7" y="364">€100</text><text x="445" y="364">€200</text><text x="628.3" y="364">€300</text>
+          </g>
+          <text x="720" y="390" text-anchor="end" fill="#707070">List price</text>
+          <line x1="610" x2="610" y1="211" y2="174" stroke="#0047FF" stroke-width="2"/>
+          <polygon points="610,170 605,179 615,179" fill="#0047FF"/>
+          <text x="620" y="194" fill="#707070">same price</text>
+          <circle cx="243.3" cy="340" r="6" fill="#B8B8B8"/><text x="255" y="344" fill="#707070">Van Rysel RCR-R · €90</text>
+          <circle cx="243.3" cy="280" r="6" fill="#B8B8B8"/><text x="243.3" y="266" text-anchor="middle" fill="#707070">Lazer Cerro · €90</text>
+          <circle cx="353.3" cy="280" r="6" fill="#B8B8B8"/><text x="365" y="284" fill="#707070">Specialized Search · €150</text>
+          <circle cx="463.3" cy="340" r="6" fill="#B8B8B8"/><text x="475" y="344" fill="#707070">POC Omne Ultra · €210</text>
+          <circle cx="610" cy="220" r="6" fill="#B8B8B8"/><text x="596" y="224" text-anchor="end" fill="#707070">fizik Kudo · €290</text>
+          <circle cx="610" cy="160" r="8" fill="#0047FF"/><text x="596" y="164" text-anchor="end" font-weight="700" fill="#0A0A0A">Kudo Fondo · €290</text>
+          <circle cx="659.5" cy="100" r="6" fill="none" stroke="#B8B8B8" stroke-width="2"/><text x="645" y="104" text-anchor="end" fill="#707070">KAV made to measure · €317</text>
+        </g>
+      </svg>
+    </div>
+    <p class="fig-cap">List prices from the benchmark sources; POC at the midpoint of €200-220; KAV Portola, a made-to-measure 3D-printed helmet, as a reference <a href="https://design-innovation-award.com/winner/kav-portola-helmet/" target="_blank" rel="noopener">[4]</a>. The customisation scale is my own, based on manufacturers' descriptions: from level 0, circumference only, to level 4, a fully made-to-measure helmet.</p>
+    <p class="t">Kudo Fondo moves one level above the Kudo at the same price, and gets close to made to measure without the waiting time.</p>
+
+    <p class="h3">The first market: a beachhead approach</p>
+    <p class="t">I do not launch the platform across the whole range at once. I follow Geoffrey Moore's beachhead approach (<em>Crossing the Chasm</em>, 1991), later formalised by Bill Aulet at MIT: win a narrow segment and use it as a base to expand into neighbouring segments, one after another <a href="https://www.stratrix.com/strategy-lexicon/beachhead-market" target="_blank" rel="noopener">[5]</a>.</p>
+    <div class="steps">
+      <div class="step"><p class="step-n">First market</p><p class="step-t">Long-distance gravel</p><p class="step-d">Where fit and sweat matter most.</p></div>
+      <div class="step"><p class="step-n">Second market</p><p class="step-t">Road</p><p class="step-d">The head-shape benefit is already supported by evidence.</p></div>
+      <div class="step"><p class="step-n">Third market</p><p class="step-t">Mountain bike</p><p class="step-d">The problem is stability: the benefit must first be proven with dedicated tests.</p></div>
+    </div>
+    <p class="note">The concept was born for startups and new technologies. I use an adapted form: for an established brand it reduces the launch risk of a new platform.</p>
+  </div>
+</section>
+
+<!-- 2. USER -->
+<section class="alt">
+  <div class="container">
+    <p class="sec-label">02 · User and need</p>
+    <h2 class="sec-title">Three personas, one for each market</h2>
+    <p class="lead">Luca defines the first market; Giulia and Andrea justify the extension to road and mountain bike. The personas are archetypes: names and ages are illustrative, while problems and behaviours come from forums, reviews and technical sources.</p>
+    <div class="persona-grid">
+      <div class="persona">
+        <p class="persona-seg">Gravel · first market</p>
+        <p class="persona-name">Luca, 38</p>
+        <p class="persona-bio">Rides 4-6 hours on gravel at weekends and always wears sunglasses. He wants to finish the ride without the helmet becoming a nuisance.</p>
+        <ul>
+          <li><strong>Heat on slow climbs:</strong> uphill the speed drops and the wind no longer cools <a href="https://www.julbo.com/en_gb/bicycle-helmets/gravel-helmet" target="_blank" rel="noopener">[6]</a>.</li>
+          <li><strong>Sweat that soaks the padding:</strong> once saturated, it lets a steady trickle run down <a href="https://community.escapecollective.com/t/sweat-management/5439" target="_blank" rel="noopener">[7]</a>.</li>
+          <li><strong>Short-lived fixes:</strong> sweatbands last about half an hour of hard effort <a href="https://www.desertcart.lk/products/125065880-halo" target="_blank" rel="noopener">[8]</a>.</li>
+        </ul>
+        <p class="persona-foot">He would value the anti-sweat front pad and the spare parts.</p>
+      </div>
+      <div class="persona">
+        <p class="persona-seg">Road · second market</p>
+        <p class="persona-name">Giulia, 31</p>
+        <p class="persona-bio">Rides on the road 3-4 times a week, has a long oval head and has changed three helmets in four years. Her problem is pressure that builds up after hours.</p>
+        <ul>
+          <li><strong>Long heads:</strong> even the largest size squeezes at the front and at one spot on the back of the head <a href="https://singletrackworld.com/forum/topic/helmets-to-fit-long-oval-head/" target="_blank" rel="noopener">[9]</a>.</li>
+          <li><strong>Round heads:</strong> pressure on the temples with some brands <a href="https://singletrackworld.com/forum/bike-forum/helmets-for-a-round-head/" target="_blank" rel="noopener">[10]</a>.</li>
+          <li><strong>Even a premium helmet may not fit:</strong> the Kudo reviewer marked it down partly because of the fit on his head <a href="https://www.cyclingweekly.com/reviews/helmets/fizik-kudo-helmet-review-sleek-comfortable-but-expensive" target="_blank" rel="noopener">[11]</a>.</li>
+        </ul>
+        <p class="persona-foot">She would value the recipe suggested from a photo, and being able to adjust it.</p>
+      </div>
+      <div class="persona">
+        <p class="persona-seg">MTB · third market</p>
+        <p class="persona-name">Andrea, 44</p>
+        <p class="persona-bio">Trail and light enduro at weekends. His helmet moves with the vibrations, and to keep it still he has to tighten it too much.</p>
+        <ul>
+          <li><strong>Vibrations make it worse:</strong> bumps and jolts increase helmet movement <a href="https://patents.justia.com/patent/5887288" target="_blank" rel="noopener">[12]</a>.</li>
+          <li><strong>Stability is an MTB requirement:</strong> the ideal helmet stays put on rough terrain <a href="https://www.mavic.com/en-int/t/mountain-bike-helmets-enduro-trail-" target="_blank" rel="noopener">[13]</a>.</li>
+          <li><strong>Tightening creates pressure:</strong> loose, the helmet wobbles; tight, it presses on the forehead <a href="https://singletrackworld.com/forum/topic/helmets-to-fit-long-oval-head/" target="_blank" rel="noopener">[9]</a>.</li>
+        </ul>
+        <p class="persona-foot"><span class="tag-hyp">Hypothesis</span> Whether the pads improve stability must be tested: that is why MTB is the last market.</p>
+      </div>
+    </div>
+    <p class="note">As I could not run interviews, in a real project these hypotheses would be validated with fit tests on a sample of riders.</p>
+  </div>
+</section>
+
+<!-- 3. CONCEPT -->
+<section>
+  <div class="container">
+    <p class="sec-label">03 · The concept</p>
+    <h2 class="sec-title">Comfortable from the first hour to the last</h2>
+    <p class="lead">Kudo Fondo adapts the helmet to the shape of the head, keeps the forehead dry and is renewed by replacing only the worn parts, through a system of interchangeable pads.</p>
+
+    <p class="h3">Why a pad system</p>
+    <p class="t">In the benchmark, every helmet adjusts fit only through the retention system, a ring that tightens around the head at one height. None works on the surface that rests on the head, where pressure points and gaps arise. That is exactly where the pads work.</p>
+    <p class="t">The idea has a precedent in motorcycle helmets: Arai offers different internal shapes and removable padding to fit the helmet to the head <a href="https://parts.araiamericas.com/the-arai-difference/fit" target="_blank" rel="noopener">[14]</a>. In bike helmets this approach does not exist yet.</p>
+
+    <p class="h3">How it works</p>
+    <div class="figure">
+      <svg viewBox="0 0 760 340" role="img" aria-label="Diagram of the three pad zones seen from above: forehead, temples and back of the head">
+        <g font-family="Space Grotesk, system-ui, sans-serif" font-size="12">
+          <text x="20" y="28" font-size="16" font-weight="600" fill="#0A0A0A">Three zones, several thicknesses, four recipes</text>
+          <text x="20" y="50" fill="#707070">Top view of the head inside the helmet</text>
+          <ellipse cx="250" cy="190" rx="118" ry="132" fill="#F5F5F5" stroke="#E8E8E8" stroke-width="2"/>
+          <ellipse cx="250" cy="190" rx="86" ry="104" fill="#FFFFFF" stroke="#B8B8B8" stroke-width="1.5"/>
+          <text x="250" y="194" text-anchor="middle" fill="#B8B8B8">head</text>
+          <path d="M 200 110 A 86 104 0 0 1 300 110" fill="none" stroke="#0047FF" stroke-width="12" stroke-linecap="round"/>
+          <path d="M 166 160 A 86 104 0 0 0 166 220" fill="none" stroke="#0047FF" stroke-opacity="0.55" stroke-width="12" stroke-linecap="round"/>
+          <path d="M 334 160 A 86 104 0 0 1 334 220" fill="none" stroke="#0047FF" stroke-opacity="0.55" stroke-width="12" stroke-linecap="round"/>
+          <path d="M 200 276 A 86 104 0 0 0 300 276" fill="none" stroke="#0047FF" stroke-opacity="0.3" stroke-width="12" stroke-linecap="round"/>
+          <text x="250" y="70" text-anchor="middle" font-size="11" fill="#707070">front</text>
+          <line x1="305" y1="104" x2="430" y2="104" stroke="#B8B8B8"/>
+          <text x="440" y="100" font-weight="700" fill="#0A0A0A">Forehead</text>
+          <text x="440" y="117" fill="#707070">anti-sweat pad: sends sweat past the glasses</text>
+          <line x1="346" y1="190" x2="430" y2="190" stroke="#B8B8B8"/>
+          <text x="440" y="186" font-weight="700" fill="#0A0A0A">Temples</text>
+          <text x="440" y="203" fill="#707070">correct the width: round or narrow heads</text>
+          <line x1="300" y1="282" x2="430" y2="282" stroke="#B8B8B8"/>
+          <text x="440" y="278" font-weight="700" fill="#0A0A0A">Back of the head</text>
+          <text x="440" y="295" fill="#707070">corrects the length: long oval heads</text>
+        </g>
+      </svg>
+    </div>
+    <p class="fig-cap">Illustrative diagram, not to scale.</p>
+    <ul class="list">
+      <li><strong>Three zones:</strong> forehead, temples and back of the head. In each zone a soft pad attaches with hook-and-loop, available in several thicknesses.</li>
+      <li><strong>Four recipes:</strong> long oval, intermediate oval, round and very round. The number comes from studies on head shapes: with three, many very round heads would be left out; with five, the extra variants would differ by only a few millimetres.</li>
+      <li><strong>Anti-sweat front pad:</strong> it includes a soft barrier that carries sweat past the edge of the glasses. It is the zone that wears most, and it can be replaced on its own.</li>
+      <li><strong>Spares, not waste:</strong> each pad is replaced individually, so the helmet lasts longer.</li>
+    </ul>
+
+    <p class="h3">How the recipe is chosen</p>
+    <div class="steps">
+      <div class="step"><p class="step-n">Online</p><p class="step-t">A photo from above</p><p class="step-d">With a tight cap and a credit-card-sized card for scale, plus the circumference measured with a tape. The circumference sets the size, the photo sets the recipe.</p></div>
+      <div class="step"><p class="step-n">In store</p><p class="step-t">The fitting kit</p><p class="step-d">The retailer has every pad and finds the combination together with the customer.</p></div>
+      <div class="step"><p class="step-n">After purchase</p><p class="step-t">One pad at a time</p><p class="step-d">If a pressure point appears, the customer buys only the pad for that zone.</p></div>
+    </div>
+    <p class="t">Since a correction has a cost, the app shows how reliable its suggestion is and, when reliability is low, recommends a fitting in store before buying.</p>
+
+    <p class="h3">Other features</p>
+    <ul class="list">
+      <li>Thin side straps and a padded chin strap, for long hours.</li>
+      <li>Design consistent with fizik's Terra line of gravel shoes and saddles, with the fizik rear light included as on the Kudo.</li>
+      <li>Baseline requirements: rotational protection, eyewear docking, ventilation at least equal to the Kudo.</li>
+    </ul>
+
+    <p class="h3">A platform that replaces the Kudo</p>
+    <p class="t">The pad system can work across the whole fizik range. Kudo Fondo starts on gravel at the same price as the Kudo. At launch both helmets stay in the catalogue; if the platform works, Kudo Fondo takes the Kudo's place and then extends to road and mountain bike.</p>
+
+    <p class="h3">Risks</p>
+    <ul class="list">
+      <li><strong>Rotational protection:</strong> on the Kudo the MIPS Air Node system is built into the padding <a href="https://www.bikeradar.com/news/fizik-helmet-range" target="_blank" rel="noopener">[15]</a>. Pads of variable thickness must be developed with the system's supplier.</li>
+      <li><strong>Certification:</strong> soft pads do not absorb impact. A maximum thickness is needed, with tests on the least favourable configuration.</li>
+      <li><strong>Photo accuracy:</strong> a wrong suggestion costs the customer an extra pad and spoils the experience.</li>
+      <li><strong>Intellectual property:</strong> there are patents on padding that diverts sweat <a href="https://patents.justia.com/patent/20240197012" target="_blank" rel="noopener">[16]</a>. A freedom-to-operate check is needed.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 4. BRIEF -->
+<section class="alt">
+  <div class="container">
+    <p class="sec-label">04 · Product brief</p>
+    <h2 class="sec-title">Same price as the Kudo, better fit, revenue from spares</h2>
+    <p class="lead">Kudo Fondo costs the same as the Kudo, €290, and replaces it: the customer gets a personalised fit and sweat management at the same price, and fizik adds revenue from spare parts.</p>
+
+    <p class="h3">Objective and positioning</p>
+    <p class="t">Bring into the Kudo range a helmet that solves the two most common problems on long rides, fit and sweat on the glasses, starting from gravel.</p>
+    <ul class="list">
+      <li><strong>Customer:</strong> gravel riders who ride for several hours, with attention to those who struggle to find a helmet of the right shape.</li>
+      <li><strong>Price:</strong> €290, like the Kudo. It is not a cheaper version but its evolution. At launch the Kudo and Kudo Fondo both stay in the catalogue; if the platform works, Kudo Fondo replaces the Kudo.</li>
+      <li><strong>Channels:</strong> specialist shops with a fitting kit, fizik e-commerce with recipe suggestion from a photo.</li>
+    </ul>
+
+    <p class="h3">Requirements</p>
+    <div class="req-grid">
+      <div class="req"><p class="req-k">Must have</p><ul>
+        <li>Pads in three zones and several thicknesses, attached with hook-and-loop, hook side on the pad so it does not catch the hair.</li>
+        <li>Four reference recipes for head shapes.</li>
+        <li>Anti-sweat front pad, effective even with the head tilted forward in riding position.</li>
+        <li>Pads replaceable individually, sold as spares.</li>
+        <li>Pad seats not interchangeable between zones, to avoid fitting mistakes.</li>
+        <li>Rotational protection compatible with the pads.</li>
+        <li>EN 1078 certification for Europe and CPSC 1203 for the United States.</li>
+        <li>Three sizes like the Kudo: S 52-56, M 56-59, L 59-61 cm.</li>
+      </ul></div>
+      <div class="req"><p class="req-k">Should have</p><ul>
+        <li>Online recipe suggestion, with a reliability indicator.</li>
+        <li>Fitting kit for shops.</li>
+        <li>Thin side straps and padded chin strap.</li>
+        <li>Ventilation at least equal to the Kudo, weight in line with the Kudo.</li>
+        <li>Eyewear docking, fizik rear light included.</li>
+      </ul></div>
+      <div class="req"><p class="req-k">Nice to have</p><ul>
+        <li>Design coordinated with the Terra line.</li>
+        <li>Provision for a crash detection module.</li>
+      </ul></div>
+      <div class="req"><p class="req-k">Out of scope</p><ul>
+        <li>Aerodynamic optimisation, already covered by the Kudo Aero.</li>
+        <li>Integrated electronics.</li>
+      </ul></div>
+    </div>
+
+    <p class="h3">Regulatory constraints</p>
+    <p class="t">In EN 1078 (2012) the chin strap must be at least 15 mm wide with no chin cup, and the buckle must not rest on the jawbone <a href="https://rascal-bikes-fr.wpjshop.cz/data/files/SZHH01490023.pdf" target="_blank" rel="noopener">[17]</a>. Thin straps are therefore possible only on the side sections. According to public sources the 2012 version is still the reference. A revision is under way (draft prEN 1078, 2023) that adds criteria on rotational impact absorption <a href="https://standards.iteh.ai/catalog/standards/cen/9b82afbf-09c5-477c-a593-cfce72238c50/pren-1078" target="_blank" rel="noopener">[18]</a>: a relevant point for compatibility between the pads and rotational protection. In a real project the applicable version would be confirmed with the certification lab.</p>
+
+    <p class="h3">Pad pricing</p>
+    <p class="t">Replacement pads on the market range from €3-16 for simple ones to about €28-40 for kits with integrated MIPS Air Node <a href="https://www.bike24.com/cycling/clothing/bike-helmets/accessories/replacement-pads" target="_blank" rel="noopener">[19]</a>. Giro's kit with sweat management costs $18 <a href="https://www.giro.com/p/aries-pad-kit/100050001500000061.html" target="_blank" rel="noopener">[20]</a>.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>What you buy</th><th>Indicative price</th><th>Rationale</th></tr></thead>
+        <tbody>
+          <tr class="hl"><td>Helmet with chosen recipe</td><td>€290</td><td>The recipe is included: a personalised fit is not an extra</td></tr>
+          <tr><td>Anti-sweat front pad</td><td>€15-20</td><td>The most frequent spare, an impulse-buy price</td></tr>
+          <tr><td>Single pad for other zones</td><td>€10-15</td><td>To correct the fit, priced like a simple spare</td></tr>
+          <tr><td>Full set</td><td>€35-40</td><td>In the range of MIPS Air Node kits, consistent with a premium brand</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Still to be confirmed: whether each pad can carry its own MIPS Air Node layer. If the system requires a single piece, only full sets are sold and the front pad becomes a comfort layer on top of the MIPS.</p>
+
+    <p class="h3">Cost: the levers</p>
+    <p class="t">I did not calculate a target cost: without internal data, any figure would be an unreliable estimate. Instead I identified what increases cost and what offsets it.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Increases cost</th><th>Offsets it</th></tr></thead>
+        <tbody>
+          <tr><td>More components per helmet</td><td>The same pads serve several sizes</td></tr>
+          <tr><td>Fitting kit for shops</td><td>Fewer size exchanges and fit-related returns</td></tr>
+          <tr><td>Development of the suggestion app</td><td>Head-shape data for future models</td></tr>
+          <tr><td>Certification on several configurations</td><td>Development amortised across the whole range</td></tr>
+          <tr><td></td><td>Revenue from spares after purchase</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="t">The criterion to check against company data: at €290, the helmet with pads must keep fizik's usual margin.</p>
+
+    <p class="h3">Acceptance criteria</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Requirement</th><th>How it is verified</th></tr></thead>
+        <tbody>
+          <tr><td>Fit</td><td>Tests with riders of the four head shapes: no pressure points after a long ride</td></tr>
+          <tr><td>Sweat</td><td>Rides in hot conditions on a reference climb, compared with a standard helmet</td></tr>
+          <tr><td>Protection</td><td>Certification in the least favourable configuration; target 5 stars in Virginia Tech ratings, one more than the current Kudo (4 stars)</td></tr>
+          <tr><td>Fitting</td><td>A customer fits the pads without mistakes using only the instructions</td></tr>
+          <tr><td>Online suggestion</td><td>Comparison between the recipe suggested from the photo and the one found in store</td></tr>
+          <tr><td>Ventilation</td><td>Lab cooling test, at least equal to the Kudo</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="h3">Launch and dependencies</p>
+    <p class="t">Launch before the spring gravel season. Main dependencies: the rotational protection supplier, the certification lab, the digital team for the app, the sales network for the fitting kit.</p>
+  </div>
+</section>
+
+<!-- 5. COMMUNICATION -->
+<section>
+  <div class="container">
+    <p class="sec-label">05 · Communication and launch</p>
+    <h2 class="sec-title">Show before you claim</h2>
+    <p class="lead">The launch aims to get people to try the pad system: it is the new part, and it has to be shown before it is claimed.</p>
+
+    <p class="h3">The name</p>
+    <p class="t">I stay in the Kudo family because the new helmet is its evolution. "Fondo" holds together the two sides of the product: in Italian it means both endurance riding ("di fondo") and the gravel surface underfoot ("fondo" sterrato).</p>
+
+    <p class="h3">Positioning</p>
+    <p class="t">For gravel riders who spend many hours in the saddle, Kudo Fondo is the fizik helmet that adapts to the shape of the head and keeps the forehead dry, through a system of interchangeable pads. Unlike other helmets, which only adjust the retention system, it works on the surface that rests on the head.</p>
+
+    <p class="h3">Key messages</p>
+    <div class="messages">
+      <div class="msg"><p class="msg-n">01</p><p class="msg-t">Fits like your head.</p><p class="msg-d">Four pad recipes for four head shapes, chosen from a photo or in store.</p></div>
+      <div class="msg"><p class="msg-n">02</p><p class="msg-t">Dry forehead, clean glasses.</p><p class="msg-d">The front pad carries sweat away from the glasses.</p></div>
+      <div class="msg"><p class="msg-n">03</p><p class="msg-t">Renew it, don't bin it.</p><p class="msg-d">When a pad wears out, you replace only that one.</p></div>
+    </div>
+    <p class="t">Each message is used only once the brief's tests have confirmed it, especially the second. An unproven promise, in a community that talks a lot, is the fastest way to lose credibility.</p>
+
+    <p class="h3">Launch plan</p>
+    <div class="steps">
+      <div class="step"><p class="step-n">Before</p><p class="step-t">Tests and training</p><p class="step-d">Field tests with riders of the four head shapes, whose feedback also becomes content. Training selected shops on the fitting kit. App trial with a small group of users.</p></div>
+      <div class="step"><p class="step-n">Launch</p><p class="step-t">Before the season</p><p class="step-d">Presentation a few months before Unbound Gravel, the biggest gravel event, held at the end of May <a href="https://road.cc/offroad/features/?e-page-1cb2071=2" target="_blank" rel="noopener">[21]</a>. Pad kit trials at events and partner shops, content showing how the recipe is chosen.</p></div>
+      <div class="step"><p class="step-n">After</p><p class="step-t">Data and spares</p><p class="step-d">App data to refine the recipes, customer feedback to time the extension to road, spares as a product in their own right.</p></div>
+    </div>
+
+    <p class="h3">The sales network: the helmet in 60 seconds</p>
+    <div class="pitch">
+      <div class="pitch-row"><p class="pitch-k">Opening</p><p class="pitch-v">"Does your helmet give you pressure points, or wet your glasses with sweat on long rides?"</p></div>
+      <div class="pitch-row"><p class="pitch-k">Product</p><p class="pitch-v">"Kudo Fondo adapts to the shape of your head with inner pads, and the one on the forehead diverts sweat."</p></div>
+      <div class="pitch-row"><p class="pitch-k">Trial</p><p class="pitch-v">"Let's try it with the kit: in two minutes we'll find your combination."</p></div>
+      <div class="pitch-row"><p class="pitch-k">Close</p><p class="pitch-v">"When a pad wears out, you replace just that one, not the helmet."</p></div>
+    </div>
+    <p class="t" style="margin-top:1rem">The trial is the decisive moment: that is when the customer feels the difference from any other helmet on the shelf.</p>
+
+    <p class="h3">How I would measure success</p>
+    <ul class="list">
+      <li><strong>Fit:</strong> fit-related returns and exchanges, compared with the current Kudo.</li>
+      <li><strong>System adoption:</strong> share of customers who use the app or fitting kit before buying.</li>
+      <li><strong>Spares:</strong> pad sales after the first year, a sign the system is really used.</li>
+      <li><strong>Satisfaction:</strong> reviews mentioning fit and sweat.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SOURCES -->
+<section class="alt sources">
+  <div class="container">
+    <p class="sec-label">Sources</p>
+    <ol>
+      <li><a href="https://www.tour-magazin.de/en/gravel-bike/48-per-cent-growth-boom-in-gravel-bikes-in-austria/" target="_blank" rel="noopener">Tour Magazin, Boom in gravel bikes in Austria</a></li>
+      <li><a href="https://cyclingweekly.com/products/lazer-releases-gravel-specific-helmet-cerro-kineticore-for-mixed-terrain-protection" target="_blank" rel="noopener">Cycling Weekly, Lazer Cerro KinetiCore</a></li>
+      <li><a href="https://cyclingweekly.com/products/fizik-now-makes-cycling-helmets-and-the-new-lids-might-suit-those-with-wide-or-narrow-heads" target="_blank" rel="noopener">Cycling Weekly, Fizik now makes cycling helmets</a></li>
+      <li><a href="https://design-innovation-award.com/winner/kav-portola-helmet/" target="_blank" rel="noopener">Design Innovation Award, KAV Portola</a></li>
+      <li><a href="https://www.stratrix.com/strategy-lexicon/beachhead-market" target="_blank" rel="noopener">Stratrix, Beachhead market</a></li>
+      <li><a href="https://www.julbo.com/en_gb/bicycle-helmets/gravel-helmet" target="_blank" rel="noopener">Julbo, Gravel helmets</a></li>
+      <li><a href="https://community.escapecollective.com/t/sweat-management/5439" target="_blank" rel="noopener">Escape Collective, Sweat management</a></li>
+      <li><a href="https://www.desertcart.lk/products/125065880-halo" target="_blank" rel="noopener">Halo sweatband reviews</a></li>
+      <li><a href="https://singletrackworld.com/forum/topic/helmets-to-fit-long-oval-head/" target="_blank" rel="noopener">Singletrack, Helmets to fit long oval head</a></li>
+      <li><a href="https://singletrackworld.com/forum/bike-forum/helmets-for-a-round-head/" target="_blank" rel="noopener">Singletrack, Helmets for a round head</a></li>
+      <li><a href="https://www.cyclingweekly.com/reviews/helmets/fizik-kudo-helmet-review-sleek-comfortable-but-expensive" target="_blank" rel="noopener">Cycling Weekly, Fizik Kudo review</a></li>
+      <li><a href="https://patents.justia.com/patent/5887288" target="_blank" rel="noopener">US patent 5887288, helmet stabilising system</a></li>
+      <li><a href="https://www.mavic.com/en-int/t/mountain-bike-helmets-enduro-trail-" target="_blank" rel="noopener">Mavic, Mountain bike helmets</a></li>
+      <li><a href="https://parts.araiamericas.com/the-arai-difference/fit" target="_blank" rel="noopener">Arai, The Arai Difference: Fit</a></li>
+      <li><a href="https://www.bikeradar.com/news/fizik-helmet-range" target="_blank" rel="noopener">BikeRadar, Fizik helmet range</a></li>
+      <li><a href="https://patents.justia.com/patent/20240197012" target="_blank" rel="noopener">Patent application 20240197012, sweat-guiding brow pad</a></li>
+      <li><a href="https://rascal-bikes-fr.wpjshop.cz/data/files/SZHH01490023.pdf" target="_blank" rel="noopener">Test report EN 1078:2012+A1:2012</a></li>
+      <li><a href="https://standards.iteh.ai/catalog/standards/cen/9b82afbf-09c5-477c-a593-cfce72238c50/pren-1078" target="_blank" rel="noopener">iTeh Standards, prEN 1078 Helmets for cyclists</a></li>
+      <li><a href="https://www.bike24.com/cycling/clothing/bike-helmets/accessories/replacement-pads" target="_blank" rel="noopener">Bike24, Replacement pads</a></li>
+      <li><a href="https://www.giro.com/p/aries-pad-kit/100050001500000061.html" target="_blank" rel="noopener">Giro, Aries Spherical Pad Kit</a></li>
+      <li><a href="https://road.cc/offroad/features/?e-page-1cb2071=2" target="_blank" rel="noopener">road.cc, Unbound Gravel 2026</a></li>
+    </ol>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <span class="fc">© 2026 Diego Zorzi</span>
+    <div class="fl">
+      <a href="index.html?lang=en#projects">Projects</a>
+      <a href="mailto:zorzi.diego.00@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/diegozorzi/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+try { localStorage.setItem('dz-lang', document.documentElement.lang); } catch (e) {}
+</script>
+</body>
+</html>

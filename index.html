@@ -549,14 +549,33 @@ footer {
 <section id="projects">
   <div class="container">
     <p class="sec-label" data-i18n="proj.label">Progetti selezionati</p>
-    <p class="sec-intro" data-i18n="proj.intro">Tre progetti che mostrano approcci diversi: dalla gestione di un programma R&D complesso, al lancio di un prodotto satellite in un segmento nuovo, al product design per il mercato del lusso.</p>
+    <p class="sec-intro" data-i18n="proj.intro">Quattro progetti che mostrano approcci diversi: dal concept di un prodotto sportivo sviluppato in autonomia, alla gestione di un programma R&D complesso, al lancio di un prodotto satellite in un segmento nuovo, fino al product design per il mercato del lusso.</p>
 
     <div class="proj-list">
+
+      <!-- KUDO FONDO -->
+      <div class="proj-card" id="pc4">
+        <div class="proj-head" onclick="toggleProj('pc4')">
+          <p class="proj-num">01</p>
+          <div class="proj-head-info">
+            <p class="proj-name">Kudo Fondo</p>
+            <p class="proj-tag" data-i18n="kudo.role">Concept personale · Casco gravel</p>
+          </div>
+          <div class="proj-arrow">+</div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-content">
+            <p class="proj-summary" data-i18n="kudo.summary">Concept di un casco gravel fizik che si adatta alla forma della testa e tiene la fronte asciutta, grazie a un sistema di patch intercambiabili. Dall'analisi di mercato al product brief, fino al piano di lancio e alla comunicazione.</p>
+            <a href="kudo-fondo.html" id="kudo-link" class="btn btn-blue" data-i18n="kudo.cta">Leggi il case study →</a>
+          </div>
+        </div>
+      </div>
+
 
       <!-- PRISMA -->
       <div class="proj-card" id="pc1">
         <div class="proj-head" onclick="toggleProj('pc1')">
-          <p class="proj-num">01</p>
+          <p class="proj-num">02</p>
           <div class="proj-head-info">
             <p class="proj-name">PRISMA</p>
             <p class="proj-tag" data-i18n="prisma.role">Product Manager · Uteco Converting SpA</p>
@@ -616,7 +635,7 @@ footer {
       <!-- FLEXLIGHT -->
       <div class="proj-card" id="pc2">
         <div class="proj-head" onclick="toggleProj('pc2')">
-          <p class="proj-num">02</p>
+          <p class="proj-num">03</p>
           <div class="proj-head-info">
             <p class="proj-name">Flexlight</p>
             <p class="proj-tag" data-i18n="flex.role">Product Manager · Uteco Converting SpA</p>
@@ -663,7 +682,7 @@ footer {
       <!-- EDO -->
       <div class="proj-card" id="pc3">
         <div class="proj-head" onclick="toggleProj('pc3')">
-          <p class="proj-num">03</p>
+          <p class="proj-num">04</p>
           <div class="proj-head-info">
             <p class="proj-name">Edo</p>
             <p class="proj-tag" data-i18n="edo.role">Product Designer · Henry & Co. / Cafedesart</p>
@@ -712,6 +731,7 @@ footer {
           </div>
         </div>
       </div>
+
 
     </div>
   </div>
@@ -931,7 +951,7 @@ it: {
   "uteco.role":"Product & R&D Project Manager","henry.role":"Product Design Intern",
   "uteco.desc":"Sviluppo di nuove famiglie di prodotto nel segmento delle macchine da stampa flessografica e converting per il packaging flessibile. Ho seguito l'intero processo, dall'analisi di mercato alla validazione del prototipo fisico, coordinando team cross-funzionali di circa 12 persone. Gestione simultanea di fino a 5 progetti R&D: QFD, AHP, Design to Cost, Stage-Gate, Gantt multi-livello.",
   "henry.desc":"Sviluppo di concept di prodotto applicando il Circular Design Thinking. Analisi di mercato, definizione requisiti, concept design e modellazione 3D. Progettazione del tavolo Edo per Cafedesart, selezionato per il Salone del Mobile 2022 di Milano.",
-  "proj.label":"Progetti selezionati","proj.intro":"Tre progetti che mostrano approcci diversi: dalla gestione di un programma R&D complesso, al lancio di un prodotto satellite in un segmento nuovo, al product design per il mercato del lusso.",
+  "proj.label":"Progetti selezionati","proj.intro":"Quattro progetti che mostrano approcci diversi: dal concept di un prodotto sportivo sviluppato in autonomia, alla gestione di un programma R&D complesso, al lancio di un prodotto satellite in un segmento nuovo, fino al product design per il mercato del lusso.",
   "proj.more":"Approfondisci",
   "prisma.role":"Product Manager · Uteco Converting SpA",
   "prisma.summary":"Nuova gamma di macchine Coating & Laminating per Uteco, dal concept al prototipo fisico presentato a Drupa 2024. Obiettivo: +10% di market share nel segmento C&L in 5 anni.",
@@ -952,6 +972,7 @@ it: {
   "edo.h1":"Il contesto",
   "edo.t1":"Henry & Co. applica il Circular Design Thinking, metodologia in quattro fasi non lineari (Comprensione, Definizione, Sviluppo e Pubblicazione) che integra economia circolare nel processo progettuale. Il brief richiedeva un tavolo moderno, leggero nelle forme, coerente con il DNA del brand.",
   "edo.s1t":"Analisi di mercato","edo.s2t":"Concept & 3D","edo.s3t":"CMF Selection","edo.s4t":"Salone del Mobile",
+  "kudo.role":"Concept personale · Casco gravel","kudo.summary":"Concept di un casco gravel fizik che si adatta alla forma della testa e tiene la fronte asciutta, grazie a un sistema di patch intercambiabili. Dall'analisi di mercato al product brief, fino al piano di lancio e alla comunicazione.","kudo.cta":"Leggi il case study →",
   "edu.label":"Formazione","cert.label":"Certificazioni",
   "edu1.deg":"Economia Aziendale e Management","edu1.note":"Part-time in parallelo al lavoro, per integrare le competenze tecniche con una base strategica e di business.",
   "edu2.deg":"Product & Design Management","edu2.note":"Diploma con 98/100. Competenze in product management, project management e product design.",
@@ -976,7 +997,7 @@ en: {
   "uteco.role":"Product & R&D Project Manager","henry.role":"Product Design Intern",
   "uteco.desc":"Development of new product families in the flexographic printing and converting machinery segment for flexible packaging. I oversaw the entire process, from market analysis to physical prototype validation, coordinating cross-functional teams of ~12 people. Simultaneous management of up to 5 R&D projects: QFD, AHP, Design to Cost, Stage-Gate, multi-level Gantt.",
   "henry.desc":"Product concept development applying Circular Design Thinking. Market analysis, requirements definition, concept design and 3D modelling. Design of the Edo dining table for Cafedesart, selected for Salone del Mobile 2022.",
-  "proj.label":"Selected Projects","proj.intro":"Three projects illustrating different approaches: managing a complex R&D programme, launching a satellite product in a new segment, and industrial product design for the luxury market.",
+  "proj.label":"Selected Projects","proj.intro":"Four projects illustrating different approaches: a self-initiated sports product concept, managing a complex R&D programme, launching a satellite product in a new segment, and industrial product design for the luxury market.",
   "proj.more":"Explore",
   "prisma.role":"Product Manager · Uteco Converting SpA",
   "prisma.summary":"New Coating & Laminating machine range for Uteco, from concept to physical prototype presented at Drupa 2024. Target: +10% market share in the C&L segment in 5 years.",
@@ -997,6 +1018,7 @@ en: {
   "edo.h1":"Context",
   "edo.t1":"Henry & Co. applies Circular Design Thinking, a methodology in four non-linear phases (Understanding, Definition, Development and Publication) integrating circular economy into the design process. The brief called for a modern dining table, light in form, coherent with the brand's DNA.",
   "edo.s1t":"Market analysis","edo.s2t":"Concept & 3D","edo.s3t":"CMF Selection","edo.s4t":"Salone del Mobile",
+  "kudo.role":"Personal concept · Gravel helmet","kudo.summary":"Concept for a fizik gravel helmet that adapts to the shape of the head and keeps the forehead dry, through a system of interchangeable pads. From market analysis to product brief, launch plan and communication.","kudo.cta":"Read the case study →",
   "edu.label":"Education","cert.label":"Certifications",
   "edu1.deg":"Business Administration & Management","edu1.note":"Part-time alongside full-time work, integrating technical expertise with strategic and business foundations.",
   "edu2.deg":"Product & Design Management","edu2.note":"Graduated 98/100. Competencies in product management, project management and product design.",
@@ -1011,6 +1033,7 @@ en: {
 
 function setLang(lang) {
   tlLang = lang;
+  try { localStorage.setItem('dz-lang', lang); } catch (e) {}
   document.getElementById('btn-it').classList.toggle('active', lang === 'it');
   document.getElementById('btn-en').classList.toggle('active', lang === 'en');
   document.documentElement.lang = lang;
@@ -1023,11 +1046,21 @@ function setLang(lang) {
     : 'CV_Diego_Zorzi_ITA.pdf';
   document.getElementById('cv-link').href = cvFile;
   document.getElementById('cv-footer').href = cvFile;
+  document.getElementById('kudo-link').href = lang === 'en' ? 'kudo-fondo-en.html' : 'kudo-fondo.html';
   tlInitAll();
 }
 
-/* Init on load */
-tlInitAll();
+/* Init on load: lingua da URL (?lang=en) o dall'ultima scelta */
+(function () {
+  var lang = 'it';
+  try {
+    var q = new URLSearchParams(window.location.search).get('lang');
+    var saved = localStorage.getItem('dz-lang');
+    if (q === 'it' || q === 'en') lang = q;
+    else if (saved === 'it' || saved === 'en') lang = saved;
+  } catch (e) {}
+  if (lang === 'en') setLang('en'); else tlInitAll();
+})();
 </script>
 </body>
 </html>
