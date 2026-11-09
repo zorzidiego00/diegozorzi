@@ -201,6 +201,26 @@ section { border-top: 1px solid var(--faint); padding: clamp(3.5rem, 7vw, 6rem) 
 }
 .exp-role span { color: var(--blue); }
 .exp-desc { font-size: 0.88rem; line-height: 1.8; color: var(--mid); }
+.exp-dur { font-size: 0.75rem; color: var(--blue); font-weight: 500; margin-top: 0.1rem; }
+
+/* Progressione ruoli (stile LinkedIn) */
+.role-tl { position: relative; list-style: none; margin: 0 0 1.4rem; padding-left: 1.4rem; }
+.role-tl::before {
+  content: ''; position: absolute; left: 4px; top: 0.55rem; bottom: 0.9rem;
+  width: 1px; background: var(--faint);
+}
+.role { position: relative; padding-bottom: 1rem; }
+.role:last-child { padding-bottom: 0; }
+.role::before {
+  content: ''; position: absolute; left: calc(-1.4rem + 0.5px); top: 0.45rem;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--white); border: 1.5px solid var(--mid);
+}
+.role.current::before { background: var(--blue); border-color: var(--blue); }
+.role-title { font-size: 1rem; font-weight: 600; color: var(--ink); line-height: 1.4; }
+.role:not(.current) .role-title { font-size: 0.92rem; color: var(--ink); font-weight: 500; }
+.role-meta { font-size: 0.75rem; color: var(--mid); }
+.role-meta .exp-dur-inline { color: var(--blue); font-weight: 500; }
 
 /* ── PROJECTS ── */
 #projects { background: var(--bg); }
@@ -470,7 +490,7 @@ footer {
   <div class="hero-strip">
     <div class="hero-strip-inner">
       <div class="strip-item">
-        <span class="strip-n">4+</span>
+        <span class="strip-n" data-years-since="2022-03">4+</span>
         <span class="strip-label" data-i18n="strip.1">Anni in R&D<br>product management</span>
       </div>
       <div class="strip-item">
@@ -522,11 +542,25 @@ footer {
       <div>
         <img src="Logo_Uteco_BaffoRosso.png" alt="Uteco" style="height:32px;width:auto;margin-bottom:0.8rem;object-fit:contain;">
         <p class="exp-co">Uteco Converting SpA</p>
-        <p class="exp-period">03/2022 — presente</p>
-        <p class="exp-loc">Verona, Italia</p>
+        <p class="exp-period">03/2022 — <span data-i18n="exp.present">presente</span></p>
+        <p class="exp-dur" data-dur-start="2022-03">4 anni e 9 mesi</p>
+        <p class="exp-loc" data-i18n="exp.verona">Verona, Italia</p>
       </div>
       <div>
-        <p class="exp-role" data-i18n="uteco.role">Product & R&D Project Manager</p>
+        <ol class="role-tl">
+          <li class="role current">
+            <p class="role-title" data-i18n="uteco.role1">Product & R&D Project Manager</p>
+            <p class="role-meta">09/2025 — <span data-i18n="exp.present">presente</span> · <span class="exp-dur-inline" data-dur-start="2025-09">1 anno e 3 mesi</span></p>
+          </li>
+          <li class="role">
+            <p class="role-title" data-i18n="uteco.role2">Junior Product & R&D Project Manager</p>
+            <p class="role-meta">09/2022 — 08/2025 · <span class="exp-dur-inline" data-dur-start="2022-09" data-dur-end="2025-08">3 anni</span></p>
+          </li>
+          <li class="role">
+            <p class="role-title" data-i18n="uteco.role3">Product Innovation Intern</p>
+            <p class="role-meta">03/2022 — 08/2022 · <span class="exp-dur-inline" data-dur-start="2022-03" data-dur-end="2022-08">6 mesi</span></p>
+          </li>
+        </ol>
         <p class="exp-desc" data-i18n="uteco.desc">Sviluppo di nuove famiglie di prodotto nel segmento delle macchine da stampa flessografica e converting per il packaging flessibile. Ho seguito l'intero processo, dall'analisi di mercato alla validazione del prototipo fisico, coordinando team cross-funzionali di circa 12 persone tra progettazione meccanica, elettrica, software, acquisti e marketing. Gestione simultanea di fino a 5 progetti R&D con metodologie strutturate: QFD, AHP, Design to Cost, Stage-Gate e Gantt multi-livello.</p>
       </div>
     </div>
@@ -535,7 +569,8 @@ footer {
         <img src="Logo_Henry___Co.png" alt="Henry & Co." style="height:40px;width:auto;margin-bottom:0.8rem;object-fit:contain;">
         <p class="exp-co">Henry & Co. Design Studio</p>
         <p class="exp-period">02/2021 — 07/2021</p>
-        <p class="exp-loc">Verona, Italia</p>
+        <p class="exp-dur" data-dur-start="2021-02" data-dur-end="2021-07">6 mesi</p>
+        <p class="exp-loc" data-i18n="exp.verona">Verona, Italia</p>
       </div>
       <div>
         <p class="exp-role" data-i18n="henry.role">Product Design Intern</p>
@@ -935,6 +970,35 @@ function tlInitAll() {
   ['prisma','flex','edo'].forEach(function(id) { tlRender(id); });
 }
 
+/* ── DURATA ESPERIENZE ──
+   Conteggio a mesi inclusivi, come LinkedIn (02/2021 - 07/2021 = 6 mesi).
+   Senza data-dur-end la durata arriva al mese corrente e si aggiorna da sola. */
+function expMonths(start, end) {
+  var s = start.split('-'), now = new Date();
+  var ey = end ? +end.split('-')[0] : now.getFullYear();
+  var em = end ? +end.split('-')[1] : now.getMonth() + 1;
+  return Math.max(1, (ey - +s[0]) * 12 + (em - +s[1]) + 1);
+}
+function expFormat(m, lang) {
+  var y = Math.floor(m / 12), r = m % 12;
+  var L = lang === 'en'
+    ? { y: ['year', 'years'], m: ['month', 'months'], j: ', ' }
+    : { y: ['anno', 'anni'], m: ['mese', 'mesi'], j: ' e ' };
+  var p = [];
+  if (y) p.push(y + ' ' + L.y[y === 1 ? 0 : 1]);
+  if (r) p.push(r + ' ' + L.m[r === 1 ? 0 : 1]);
+  return p.join(L.j);
+}
+function renderDurations(lang) {
+  document.querySelectorAll('[data-dur-start]').forEach(function (el) {
+    el.textContent = expFormat(expMonths(el.getAttribute('data-dur-start'), el.getAttribute('data-dur-end')), lang);
+  });
+  /* Anni compiuti + "+" (es. 4+), per la striscia numerica della hero */
+  document.querySelectorAll('[data-years-since]').forEach(function (el) {
+    el.textContent = Math.floor(expMonths(el.getAttribute('data-years-since')) / 12) + '+';
+  });
+}
+
 /* i18n */
 const T = {
 it: {
@@ -948,7 +1012,8 @@ it: {
   "about.pm":"Product Management","about.pm.text":"Analisi di mercato e competitive intelligence, definizione dei requisiti di prodotto, business planning, roadmap e gestione del ciclo di vita dal concept al lancio.",
   "about.rd":"R&D Project Management","about.rd.text":"Coordinamento di team cross-funzionali, gestione multi-progetto con Gantt e milestone monitorate, monitoraggio di tempi, budget e obiettivi tecnici fino alla validazione del prototipo.",
   "exp.label":"Esperienze professionali",
-  "uteco.role":"Product & R&D Project Manager","henry.role":"Product Design Intern",
+  "uteco.role1":"Product & R&D Project Manager","uteco.role2":"Junior Product & R&D Project Manager","uteco.role3":"Product Innovation Intern","henry.role":"Product Design Intern",
+  "exp.present":"presente","exp.verona":"Verona, Italia",
   "uteco.desc":"Sviluppo di nuove famiglie di prodotto nel segmento delle macchine da stampa flessografica e converting per il packaging flessibile. Ho seguito l'intero processo, dall'analisi di mercato alla validazione del prototipo fisico, coordinando team cross-funzionali di circa 12 persone. Gestione simultanea di fino a 5 progetti R&D: QFD, AHP, Design to Cost, Stage-Gate, Gantt multi-livello.",
   "henry.desc":"Sviluppo di concept di prodotto applicando il Circular Design Thinking. Analisi di mercato, definizione requisiti, concept design e modellazione 3D. Progettazione del tavolo Edo per Cafedesart, selezionato per il Salone del Mobile 2022 di Milano.",
   "proj.label":"Progetti selezionati","proj.intro":"Quattro progetti che mostrano approcci diversi: dal concept di un prodotto sportivo sviluppato in autonomia, alla gestione di un programma R&D complesso, al lancio di un prodotto satellite in un segmento nuovo, fino al product design per il mercato del lusso.",
@@ -994,7 +1059,8 @@ en: {
   "about.pm":"Product Management","about.pm.text":"Market analysis and competitive intelligence, product requirements definition, business planning, roadmap and lifecycle management from concept to launch.",
   "about.rd":"R&D Project Management","about.rd.text":"Cross-functional team coordination, multi-project management with Gantt and monitored milestones, tracking time, budget and technical objectives through prototype validation.",
   "exp.label":"Professional Experience",
-  "uteco.role":"Product & R&D Project Manager","henry.role":"Product Design Intern",
+  "uteco.role1":"Product & R&D Project Manager","uteco.role2":"Junior Product & R&D Project Manager","uteco.role3":"Product Innovation Intern","henry.role":"Product Design Intern",
+  "exp.present":"present","exp.verona":"Verona, Italy",
   "uteco.desc":"Development of new product families in the flexographic printing and converting machinery segment for flexible packaging. I oversaw the entire process, from market analysis to physical prototype validation, coordinating cross-functional teams of ~12 people. Simultaneous management of up to 5 R&D projects: QFD, AHP, Design to Cost, Stage-Gate, multi-level Gantt.",
   "henry.desc":"Product concept development applying Circular Design Thinking. Market analysis, requirements definition, concept design and 3D modelling. Design of the Edo dining table for Cafedesart, selected for Salone del Mobile 2022.",
   "proj.label":"Selected Projects","proj.intro":"Four projects illustrating different approaches: a self-initiated sports product concept, managing a complex R&D programme, launching a satellite product in a new segment, and industrial product design for the luxury market.",
@@ -1047,6 +1113,7 @@ function setLang(lang) {
   document.getElementById('cv-link').href = cvFile;
   document.getElementById('cv-footer').href = cvFile;
   document.getElementById('kudo-link').href = lang === 'en' ? 'kudo-fondo-en.html' : 'kudo-fondo.html';
+  renderDurations(lang);
   tlInitAll();
 }
 
@@ -1059,7 +1126,7 @@ function setLang(lang) {
     if (q === 'it' || q === 'en') lang = q;
     else if (saved === 'it' || saved === 'en') lang = saved;
   } catch (e) {}
-  if (lang === 'en') setLang('en'); else tlInitAll();
+  if (lang === 'en') setLang('en'); else { renderDurations('it'); tlInitAll(); }
 })();
 </script>
 </body>
