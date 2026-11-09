@@ -444,6 +444,14 @@ footer {
   .footer-inner { flex-direction: column; gap: 0.8rem; text-align: center; }
 }
 @media(prefers-reduced-motion:reduce) { * { transition: none !important; animation: none !important; } }
+
+/* ── NOME CHE SI GONFIA (WebGL, script mountPuffName in fondo alla pagina) ──
+   A riposo si vede il normale testo HTML. Durante l'hover un canvas con le
+   stesse lettere prende il suo posto (classe .pn-on) e sborda un po' per
+   lasciare spazio al rigonfiamento. Senza WebGL2 resta il titolo normale. */
+.hero-name { position: relative; }
+.pn-canvas { position: absolute; pointer-events: none; }
+.hero-name.pn-on, .hero-name.pn-on span { color: transparent; }
 </style>
 </head>
 <body>
@@ -1130,6 +1138,644 @@ function setLang(lang) {
   } catch (e) {}
   if (lang === 'en') setLang('en'); else { renderDurations('it'); tlInitAll(); }
 })();
+</script>
+<!-- Nome che si gonfia sotto il cursore (motore derivato da Originkit VelourBolster). -->
+<script>
+/*
+ * Puff Name: il nome nella hero si gonfia sotto il cursore.
+ * Motore a membrana derivato da "VelourBolster" di Originkit, adattato alla
+ * forma delle lettere invece che a un bottone.
+ *
+ * Il titolo <h1> resta testo HTML vero (SEO, lettori di schermo, copia).
+ * A riposo si vede solo il testo HTML. Quando il cursore arriva sul nome, un
+ * canvas con le stesse lettere, negli stessi colori e nella stessa posizione
+ * prende il suo posto e si deforma, sempre nei colori pieni del titolo; quando il nome torna fermo il canvas si
+ * nasconde e ricompare il testo originale. Senza WebGL2, o con "riduci
+ * movimento", resta sempre il titolo normale.
+ */
+(function () {
+  'use strict';
+
+  // ------------------------------------------------------------- costanti
+  // Unita' di misura della simulazione: 1 = dimensione del font del nome (em).
+  const STEP = 1 / 120;
+  const MARGIN = 0.35;      // spazio attorno al nome per il rigonfiamento, in em
+  const GRID_PITCH = 0.05;
+  const MAX_DPR = 2;
+  const PIXEL_CAP = 4e6;
+
+  const SIGMA = 0.42;       // ampiezza della zona che si gonfia attorno al cursore, in em
+  const LENS = 0.35;        // quanto le lettere vicine al cursore si allargano (effetto lente)
+  const DILATE = 0.04;      // quanto si inspessiscono i tratti a gonfiaggio pieno, in em
+  const LOCAL = 1.0;        // intensita' del gonfiaggio sotto il cursore
+  const PUFF_ALL = 0.1;     // gonfiaggio leggero di tutto il nome mentre il cursore e' sopra
+  const GROW = 0.02;        // crescita complessiva del nome a gonfiaggio pieno
+  const REACH = 0.04;       // distanza dalle lettere a cui inizia a reagire, in em
+  const HYST = 0.08;        // margine extra per "uscire", evita sfarfallii sul bordo
+
+  // Dinamica della membrana (stessi valori del bottone, Wobble 5, Drag 5).
+  const MEM_W = 13, MEM_T = 3, INF_W = 12;
+  const DWELL_SHARE = 0.22, DWELL_TAU = 0.6;
+  const WAKE_GAIN = 0.08, WAKE_MAX = 0.4;
+  const RELEASE = 0.7;      // secondi per tornare piatto dopo l'uscita
+  const DRAG_K = 3.8;
+
+  const clamp = (x, a, b) => (x < a ? a : x > b ? b : x);
+
+  // ------------------------------------------------------------- shader
+  const VERT = `#version 300 es
+void main() {
+    vec2 p = vec2((gl_VertexID << 1) & 2, gl_VertexID & 2);
+    gl_Position = vec4(p * 2.0 - 1.0, 0.0, 1.0);
+}`;
+
+  const FRAG = `#version 300 es
+precision highp float;
+precision highp sampler2D;
+uniform vec2 uCanvas;     // canvas in pixel
+uniform float uPxPerEm;   // pixel per em
+uniform vec4 uGrid;       // reticolo: origine e ampiezza, in em
+uniform float uDeform;
+uniform float uScale;
+uniform float uPuffAll;
+uniform float uDil;       // ispessimento massimo, in pixel
+uniform sampler2D uMask;  // le lettere, gia' colorate (alpha premoltiplicato)
+uniform sampler2D uDist;  // rgb = colore della lettera piu' vicina, a = distanza da essa in pixel
+uniform sampler2D uGridTex;
+out vec4 outColor;
+
+vec4 cubicW(float v) {
+    vec4 n = vec4(1.0, 2.0, 3.0, 4.0) - v;
+    vec4 s = n * n * n;
+    float x = s.x;
+    float y = s.y - 4.0 * s.x;
+    float z = s.z - 4.0 * s.y + 6.0 * s.x;
+    return vec4(x, y, z, 6.0 - x - y - z) * (1.0 / 6.0);
+}
+
+vec4 lattice(sampler2D tex, vec2 q) {
+    vec2 size = vec2(textureSize(tex, 0));
+    vec2 t = (q - uGrid.xy) / uGrid.zw * (size - 1.0);
+    vec2 f = fract(t);
+    t -= f;
+    vec4 xc = cubicW(f.x);
+    vec4 yc = cubicW(f.y);
+    vec4 c = t.xxyy + vec2(-0.5, 1.5).xyxy + 0.5;
+    vec4 s = vec4(xc.xz + xc.yw, yc.xz + yc.yw);
+    vec4 o = (c + vec4(xc.yw, yc.yw) / s) / size.xxyy;
+    vec4 s0 = texture(tex, o.xz);
+    vec4 s1 = texture(tex, o.yz);
+    vec4 s2 = texture(tex, o.xw);
+    vec4 s3 = texture(tex, o.yw);
+    float sx = s.x / (s.x + s.y);
+    float sy = s.z / (s.z + s.w);
+    return mix(mix(s3, s2, sx), mix(s1, s0, sx), sy);
+}
+
+void main() {
+    vec2 fc = vec2(gl_FragCoord.x, uCanvas.y - gl_FragCoord.y);   // pixel, y verso il basso
+    vec2 centre = uCanvas * 0.5;
+    vec2 p = (fc - centre) / uPxPerEm;                              // em dal centro del nome
+
+    // Inverto lo spostamento: quale punto delle lettere e' finito qui?
+    vec2 q = p / uScale;
+    vec4 D = vec4(0.0);
+    if (uDeform > 0.0) {
+        for (int i = 0; i < 3; i++) {
+            D = lattice(uGridTex, q);
+            q = (p - D.xy) / uScale;
+        }
+    }
+    vec2 uv = (q * uPxPerEm + centre) / uCanvas;
+    vec4 c = texture(uMask, uv);
+
+    // A riposo (s = 0) il risultato e' la copia esatta del testo.
+    float s = clamp(D.z + uPuffAll, 0.0, 1.0);
+    if (s > 0.002) {
+        // Lettere piu' piene: coloro tutto cio' che sta entro r pixel da una
+        // lettera, con il colore della lettera piu' vicina. Il bordo segue la
+        // mappa delle distanze, quindi resta una curva liscia.
+        float r = uDil * s;
+        vec4 nd = texture(uDist, uv);
+        float cover = clamp(r - nd.a + 0.5, 0.0, 1.0);
+        c = c + (1.0 - c.a) * vec4(nd.rgb, 1.0) * cover;
+
+        // Nessuna luce ne' ombra: le lettere restano del loro colore pieno.
+    }
+    outColor = c;
+}`;
+
+
+  // ------------------------------------------------------------- mappa delle distanze
+  // Per ogni pixel: distanza euclidea esatta dal pixel di lettera piu' vicino e
+  // colore di quella lettera (algoritmo di Felzenszwalb e Huttenlocher, separabile
+  // per colonne e righe, tenendo traccia del punto piu' vicino).
+  const BIG = 1e20;
+  function edt1d(f, n, d, arg, v, z) {
+    let k = 0;
+    v[0] = 0; z[0] = -Infinity; z[1] = Infinity;
+    for (let q = 1; q < n; q++) {
+      if (f[q] >= BIG) continue;              // i pixel vuoti non diventano mai "punto piu' vicino"
+      if (k === 0 && f[v[0]] >= BIG) { v[0] = q; continue; }
+      let s;
+      for (;;) {
+        const p = v[k];
+        s = ((f[q] + q * q) - (f[p] + p * p)) / (2 * q - 2 * p);
+        if (s <= z[k] && k > 0) k--; else break;
+      }
+      if (s <= z[k]) { v[k] = q; z[k + 1] = Infinity; continue; }
+      k++; v[k] = q; z[k] = s; z[k + 1] = Infinity;
+    }
+    if (f[v[0]] >= BIG) { for (let q = 0; q < n; q++) { d[q] = BIG; arg[q] = -1; } return; }
+    k = 0;
+    for (let q = 0; q < n; q++) {
+      while (z[k + 1] < q) k++;
+      const t = q - v[k];
+      d[q] = t * t + f[v[k]];
+      arg[q] = v[k];
+    }
+  }
+
+  function distanceMap(rgba, w, h) {
+    const N = w * h, MAXD = 64;
+    const colD = new Float64Array(N), colArg = new Int32Array(N);
+    const n = Math.max(w, h);
+    const f = new Float64Array(n), d = new Float64Array(n), arg = new Int32Array(n);
+    const v = new Int32Array(n), z = new Float64Array(n + 1);
+    // Colonne: riga del pixel di lettera piu' vicino nella stessa colonna.
+    for (let x = 0; x < w; x++) {
+      for (let y = 0; y < h; y++) f[y] = rgba[(y * w + x) * 4 + 3] >= 128 ? 0 : BIG;
+      edt1d(f, h, d, arg, v, z);
+      for (let y = 0; y < h; y++) { colD[y * w + x] = d[y]; colArg[y * w + x] = arg[y]; }
+    }
+    // Righe: combino le colonne, ottenendo distanza e punto piu' vicino in 2D.
+    const out = new Float32Array(N * 4);
+    for (let y = 0; y < h; y++) {
+      const row = y * w;
+      for (let x = 0; x < w; x++) f[x] = colD[row + x];
+      edt1d(f, w, d, arg, v, z);
+      for (let x = 0; x < w; x++) {
+        const o = (row + x) * 4;
+        const cx = arg[x];
+        if (cx < 0 || d[x] >= BIG) { out[o + 3] = MAXD; continue; }
+        const cy = colArg[row + cx];
+        const src = (cy * w + cx) * 4;
+        out[o] = rgba[src] / 255;               // colore della lettera piu' vicina
+        out[o + 1] = rgba[src + 1] / 255;
+        out[o + 2] = rgba[src + 2] / 255;
+        out[o + 3] = Math.min(MAXD, Math.sqrt(d[x]));
+      }
+    }
+    return out;
+  }
+
+  // ------------------------------------------------------------- montaggio
+  function mountPuffName(el) {
+    if (!el || el.__puffName) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const canvas = document.createElement('canvas');
+    canvas.className = 'pn-canvas';
+    canvas.setAttribute('aria-hidden', 'true');
+    const glOpts = { alpha: true, premultipliedAlpha: true, antialias: false, depth: false, stencil: false, powerPreference: 'low-power' };
+    let gl = canvas.getContext('webgl2', glOpts);
+    if (!gl) return;
+    el.__puffName = true;
+    el.appendChild(canvas);
+
+    // ---------------------------------------------------------- GL
+    let prog = null, texMask = null, texGrid = null, texDist = null, gridDims = '';
+    const loc = {};
+    const build = () => {
+      const g = gl;
+      const sh = (type, src) => { const s = g.createShader(type); g.shaderSource(s, src); g.compileShader(s); return s; };
+      const vs = sh(g.VERTEX_SHADER, VERT), fs = sh(g.FRAGMENT_SHADER, FRAG);
+      prog = g.createProgram();
+      g.attachShader(prog, vs); g.attachShader(prog, fs); g.linkProgram(prog);
+      if (!g.getProgramParameter(prog, g.LINK_STATUS)) {
+        console.warn('PuffName:', g.getShaderInfoLog(fs) || g.getProgramInfoLog(prog));
+        prog = null;
+        return;
+      }
+      g.useProgram(prog);
+      for (const n of ['uCanvas', 'uPxPerEm', 'uGrid', 'uDeform', 'uScale', 'uPuffAll', 'uDil', 'uMask', 'uGridTex', 'uDist'])
+        loc[n] = g.getUniformLocation(prog, n);
+      g.uniform1i(loc.uMask, 0);
+      g.uniform1i(loc.uGridTex, 1);
+      g.uniform1i(loc.uDist, 2);
+      const mk = (min) => {
+        const t = g.createTexture();
+        g.bindTexture(g.TEXTURE_2D, t);
+        g.texParameteri(g.TEXTURE_2D, g.TEXTURE_MIN_FILTER, min);
+        g.texParameteri(g.TEXTURE_2D, g.TEXTURE_MAG_FILTER, g.LINEAR);
+        g.texParameteri(g.TEXTURE_2D, g.TEXTURE_WRAP_S, g.CLAMP_TO_EDGE);
+        g.texParameteri(g.TEXTURE_2D, g.TEXTURE_WRAP_T, g.CLAMP_TO_EDGE);
+        return t;
+      };
+      texMask = mk(g.LINEAR_MIPMAP_LINEAR);
+      texGrid = mk(g.LINEAR);
+      texDist = mk(g.LINEAR);
+      gridDims = '';
+      layout.maskKey = '';
+      g.disable(g.BLEND);
+    };
+
+    // ---------------------------------------------------------- misure del testo
+    // Ogni pezzo di testo (Diego, Zorzi) con posizione, colore e font letti dal
+    // DOM: se cambi stile al titolo nel CSS, il canvas lo segue.
+    const layout = { words: [], U: 1, cx: 0, cy: 0, cssW: 1, cssH: 1, left: 0, top: 0, ux: 0, uy: 0, uw: 0, uh: 0, maskKey: '', ready: false };
+    const maskCanvas = document.createElement('canvas');
+
+    const measure = () => {
+      const hadOn = el.classList.contains('pn-on');
+      if (hadOn) el.classList.remove('pn-on'); // per leggere i colori veri
+      const er = el.getBoundingClientRect();
+      const words = [];
+      const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+      const range = document.createRange();
+      let n;
+      while ((n = walker.nextNode())) {
+        const text = n.nodeValue.replace(/\s+/g, ' ').trim();
+        if (!text) continue;
+        range.selectNodeContents(n);
+        const r = range.getBoundingClientRect();
+        if (!r.width || !r.height) continue;
+        const cs = getComputedStyle(n.parentElement);
+        // Linea di base reale misurata dal browser: un segnaposto invisibile,
+        // largo e alto zero, allineato alla linea di base subito dopo il testo.
+        const probe = document.createElement('span');
+        probe.style.cssText = 'display:inline-block;width:0;height:0;vertical-align:baseline;';
+        n.parentNode.insertBefore(probe, n.nextSibling);
+        const baseline = probe.getBoundingClientRect().bottom - er.top;
+        probe.remove();
+        words.push({
+          text, baseline,
+          x: r.left - er.left, y: r.top - er.top, w: r.width, h: r.height,
+          color: cs.color,
+          font: `${cs.fontStyle} ${cs.fontWeight} SIZE ${cs.fontFamily}`,
+          size: parseFloat(cs.fontSize) || 16,
+          ls: parseFloat(cs.letterSpacing) || 0,
+          tt: cs.textTransform,
+        });
+      }
+      if (hadOn) el.classList.add('pn-on');
+      if (!words.length) return false;
+      const U = words[0].size;
+      let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+      for (const w of words) {
+        x0 = Math.min(x0, w.x); y0 = Math.min(y0, w.y);
+        x1 = Math.max(x1, w.x + w.w); y1 = Math.max(y1, w.y + w.h);
+      }
+      const m = MARGIN * U;
+      layout.words = words;
+      layout.U = U;
+      layout.ux = x0; layout.uy = y0; layout.uw = x1 - x0; layout.uh = y1 - y0;
+      // Aggancio il canvas ai pixel fisici dello schermo: se parte da mezzo
+      // pixel il browser lo ricampiona e le lettere risultano spostate e sfocate
+      // rispetto al testo HTML.
+      const dpr = window.devicePixelRatio || 1;
+      const snap = (v) => Math.floor(v * dpr) / dpr;
+      const absL = snap(er.left + x0 - m), absT = snap(er.top + y0 - m);
+      layout.left = absL - er.left;
+      layout.top = absT - er.top;
+      layout.cssW = Math.ceil((er.left + x1 + m - absL) * dpr) / dpr;
+      layout.cssH = Math.ceil((er.top + y1 + m - absT) * dpr) / dpr;
+      // Centro della simulazione = centro del canvas (lo usa anche lo shader).
+      layout.cx = layout.left + layout.cssW / 2;
+      layout.cy = layout.top + layout.cssH / 2;
+      canvas.style.left = layout.left + 'px';
+      canvas.style.top = layout.top + 'px';
+      canvas.style.width = layout.cssW + 'px';
+      canvas.style.height = layout.cssH + 'px';
+      layout.maskKey = '';
+      return true;
+    };
+
+    // Disegno le lettere, gia' colorate, alla risoluzione del canvas.
+    const drawMask = (pw, ph, scale) => {
+      const key = pw + 'x' + ph + '|' + layout.left + ',' + layout.top + '|' + layout.words.map((w) => w.text + w.x + w.baseline + w.color + w.font).join('|');
+      if (key === layout.maskKey) return;
+      layout.maskKey = key;
+      maskCanvas.width = pw;
+      maskCanvas.height = ph;
+      const ctx = maskCanvas.getContext('2d', { willReadFrequently: true });
+      ctx.clearRect(0, 0, pw, ph);
+      ctx.setTransform(scale, 0, 0, scale, 0, 0);
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'alphabetic';
+      for (const w of layout.words) {
+        ctx.font = w.font.replace('SIZE', w.size + 'px');
+        if ('letterSpacing' in ctx) ctx.letterSpacing = w.ls + 'px';
+        const text = w.tt === 'uppercase' ? w.text.toUpperCase() : w.tt === 'lowercase' ? w.text.toLowerCase() : w.text;
+        const mt = ctx.measureText(text);
+        // Linea di base misurata; il calcolo dalle metriche del font e' solo una riserva.
+        const asc = mt.fontBoundingBoxAscent, desc = mt.fontBoundingBoxDescent;
+        const base = Number.isFinite(w.baseline) ? w.baseline
+          : Number.isFinite(asc) && Number.isFinite(desc) && asc + desc > 0
+            ? w.y + (w.h - (asc + desc)) / 2 + asc
+            : w.y + w.h * 0.8;
+        ctx.fillStyle = w.color;
+        ctx.fillText(text, w.x - layout.left, base - layout.top);
+      }
+      const g = gl;
+      g.activeTexture(g.TEXTURE0);
+      g.bindTexture(g.TEXTURE_2D, texMask);
+      g.pixelStorei(g.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
+      g.texImage2D(g.TEXTURE_2D, 0, g.RGBA8, g.RGBA, g.UNSIGNED_BYTE, maskCanvas);
+      // Ripristino subito: questa opzione vale anche per i caricamenti successivi
+      // e azzererebbe i dati del reticolo.
+      g.pixelStorei(g.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
+      g.generateMipmap(g.TEXTURE_2D);
+
+      // Mappa delle distanze, calcolata una volta per ogni nuovo disegno del nome.
+      const dist = distanceMap(ctx.getImageData(0, 0, pw, ph).data, pw, ph);
+      g.activeTexture(g.TEXTURE2);
+      g.bindTexture(g.TEXTURE_2D, texDist);
+      g.texImage2D(g.TEXTURE_2D, 0, g.RGBA16F, pw, ph, 0, g.RGBA, g.FLOAT, dist);
+      g.activeTexture(g.TEXTURE0);
+    };
+
+    // ---------------------------------------------------------- reticolo
+    let L = null;
+    const makeLattice = () => {
+      const spanX = layout.cssW / layout.U;
+      const spanY = layout.cssH / layout.U;
+      const nx = clamp(Math.round(spanX / GRID_PITCH) + 1, 8, 200);
+      const ny = clamp(Math.round(spanY / GRID_PITCH) + 1, 8, 120);
+      const n = nx * ny;
+      return {
+        nx, ny, ox: -spanX / 2, oy: -spanY / 2, spanX, spanY,
+        d: new Float32Array(n * 3), v: new Float32Array(n * 3),
+        gx: new Float32Array(nx), gy: new Float32Array(ny),
+        tex: new Float32Array(n * 4),
+        key: spanX.toFixed(3) + 'x' + spanY.toFixed(3),
+      };
+    };
+
+    // ---------------------------------------------------------- stato e puntatore
+    const st = { hov: 0, relT: -1, relFrom: 0, dwell: 0, target: 0, cx: 0, cy: 0, pvx: 0, pvy: 0, inf: 0, infV: 0, acc: 0, lost: false };
+    const pt = { has: false, x: 0, y: 0, dirty: false, bx: 0, by: 0 };
+    let on = false;
+    const setActive = (v) => {
+      if (on === v) return;
+      on = v;
+      canvas.style.visibility = v ? 'visible' : 'hidden';
+      el.classList.toggle('pn-on', v);
+    };
+    canvas.style.visibility = 'hidden';
+
+    const inCanvas = (x, y) => {
+      const r = canvas.getBoundingClientRect();
+      return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom;
+    };
+    const onMove = (e) => {
+      if (inCanvas(e.clientX, e.clientY) || st.target > 0) {
+        pt.x = e.clientX; pt.y = e.clientY; pt.has = true; pt.dirty = true;
+        wake();
+      } else if (pt.has) {
+        pt.has = false;
+        wake();
+      }
+    };
+    const onLeave = () => { if (pt.has) { pt.has = false; wake(); } };
+    const onUp = (e) => { if (e.pointerType === 'touch') onLeave(); };
+    // A fine scroll ricontrollo l'aggancio ai pixel fisici (lo scroll puo'
+    // fermarsi su una frazione di pixel).
+    let scrollT = 0;
+    const onScroll = () => {
+      if (pt.has) { pt.dirty = true; wake(); }
+      clearTimeout(scrollT);
+      scrollT = setTimeout(() => { if (layout.ready && visible) relayout(); }, 120);
+    };
+    window.addEventListener('pointermove', onMove, { passive: true });
+    window.addEventListener('pointerdown', onMove, { passive: true });
+    window.addEventListener('pointerup', onUp, { passive: true });
+    window.addEventListener('pointercancel', onLeave, { passive: true });
+    document.documentElement.addEventListener('pointerleave', onLeave);
+    window.addEventListener('blur', onLeave);
+    window.addEventListener('scroll', onScroll, { passive: true, capture: true });
+
+    // ---------------------------------------------------------- loop
+    let raf = 0, running = false, visible = true, pageVisible = !document.hidden, last = 0;
+    function wake() {
+      if (running || !visible || !pageVisible || st.lost || !layout.ready) return;
+      running = true;
+      last = 0;
+      raf = requestAnimationFrame(tick);
+    }
+    const tick = (now) => {
+      raf = 0;
+      if (!running) return;
+      if (frame(now)) raf = requestAnimationFrame(tick);
+      else running = false;
+    };
+
+    const stepLattice = () => {
+      const memK = MEM_W * MEM_W, damp = 2 * MEM_W;
+      const hx = L.spanX / (L.nx - 1), hy = L.spanY / (L.ny - 1);
+      const Tx = MEM_T / (hx * hx), Ty = MEM_T / (hy * hy);
+      const inv2s = 1 / (2 * SIGMA * SIGMA);
+      const wk = 1 + Math.min(WAKE_MAX, WAKE_GAIN * Math.hypot(st.pvx, st.pvy));
+      const amp = ((1 - DWELL_SHARE) * st.hov * st.hov + DWELL_SHARE * st.dwell) * wk;
+      const dvx = clamp(st.pvx, -12, 12) * DRAG_K * st.hov;
+      const dvy = clamp(st.pvy, -12, 12) * DRAG_K * st.hov;
+      const { nx, ny, d, v, gx, gy } = L;
+      const active = amp > 1e-5 || dvx !== 0 || dvy !== 0;
+      if (active) {
+        for (let i = 0; i < nx; i++) { const t = L.ox + (L.spanX * i) / (nx - 1) - st.cx; gx[i] = Math.exp(-t * t * inv2s); }
+        for (let j = 0; j < ny; j++) { const t = L.oy + (L.spanY * j) / (ny - 1) - st.cy; gy[j] = Math.exp(-t * t * inv2s); }
+      }
+      for (let j = 1; j < ny - 1; j++) {
+        const y = L.oy + (L.spanY * j) / (ny - 1);
+        for (let i = 1; i < nx - 1; i++) {
+          const k = j * nx + i, k3 = k * 3;
+          let tx = 0, ty = 0, tz = 0, gs = 0;
+          if (active) {
+            gs = gx[i] * gy[j];
+            const x = L.ox + (L.spanX * i) / (nx - 1);
+            // Lente: le lettere attorno al cursore si allargano verso l'esterno.
+            tx = amp * LENS * (x - st.cx) * gs;
+            ty = amp * LENS * (y - st.cy) * gs;
+            tz = amp * gs * LOCAL;
+          }
+          const kl = k3 - 3, kr = k3 + 3, ku = k3 - nx * 3, kd = k3 + nx * 3;
+          let di = d[k3];
+          v[k3] += (memK * (tx - di) + Tx * (d[kl] + d[kr] - 2 * di) + Ty * (d[ku] + d[kd] - 2 * di) - damp * v[k3] + dvx * gs) * STEP;
+          di = d[k3 + 1];
+          v[k3 + 1] += (memK * (ty - di) + Tx * (d[kl + 1] + d[kr + 1] - 2 * di) + Ty * (d[ku + 1] + d[kd + 1] - 2 * di) - damp * v[k3 + 1] + dvy * gs) * STEP;
+          di = d[k3 + 2];
+          v[k3 + 2] += (memK * (tz - di) + Tx * (d[kl + 2] + d[kr + 2] - 2 * di) + Ty * (d[ku + 2] + d[kd + 2] - 2 * di) - damp * v[k3 + 2]) * STEP;
+        }
+      }
+      for (let k = 0; k < nx * ny * 3; k++) d[k] += v[k] * STEP;
+    };
+
+    // Il cursore e' "sul nome" se e' sulle lettere (riquadro di ogni parola).
+    const overName = (bx, by) => {
+      const U = layout.U;
+      const cxPx = layout.cx, cyPx = layout.cy;
+      const pad = (REACH + (st.target > 0 ? HYST : 0)) * U;
+      const x = bx * U + cxPx, y = by * U + cyPx;
+      return layout.words.some((w) => x >= w.x - pad && x <= w.x + w.w + pad && y >= w.y + w.h * 0.12 - pad && y <= w.y + w.h * 0.92 + pad);
+    };
+
+    const frame = (now) => {
+      const g = gl;
+      if (!g || g.isContextLost() || !prog) return false;
+      const dt = last ? Math.min(0.1, (now - last) / 1000) : 1 / 60;
+      last = now;
+      const U = layout.U;
+
+      if (pt.has && pt.dirty) {
+        pt.dirty = false;
+        const er = el.getBoundingClientRect();
+        const z = el.offsetWidth ? er.width / el.offsetWidth : 1;
+        pt.bx = ((pt.x - er.left) / z - layout.cx) / U;
+        pt.by = ((pt.y - er.top) / z - layout.cy) / U;
+      }
+      let tx = st.cx, ty = st.cy, target = 0;
+      if (pt.has && overName(pt.bx, pt.by)) { target = 1; tx = pt.bx; ty = pt.by; }
+      st.target = target;
+
+      if (!L || L.key !== (layout.cssW / U).toFixed(3) + 'x' + (layout.cssH / U).toFixed(3)) L = makeLattice();
+
+      st.acc = Math.min(st.acc + dt, 0.1);
+      while (st.acc >= STEP) {
+        st.acc -= STEP;
+        if (st.target > st.hov) {
+          st.hov += (st.target - st.hov) * (1 - Math.exp(-STEP / 0.05));
+          st.relT = -1;
+        } else if (st.hov > 0) {
+          if (st.relT < 0) { st.relT = 0; st.relFrom = st.hov; }
+          st.relT += STEP;
+          const u = Math.min(1, st.relT / RELEASE);
+          st.hov = st.relFrom * (1 - u * u * (3 - 2 * u));
+        }
+        if (st.target > 0) st.dwell += (st.hov - st.dwell) * (1 - Math.exp(-STEP / DWELL_TAU));
+        st.dwell = Math.min(st.dwell, st.hov);
+        const kc = 1 - Math.exp(-STEP / 0.05);
+        const ncx = st.cx + (tx - st.cx) * kc, ncy = st.cy + (ty - st.cy) * kc;
+        const kv = 1 - Math.exp(-STEP / 0.06);
+        st.pvx += ((ncx - st.cx) / STEP - st.pvx) * kv;
+        st.pvy += ((ncy - st.cy) / STEP - st.pvy) * kv;
+        st.cx = ncx; st.cy = ncy;
+        const it = (1 - DWELL_SHARE) * st.hov + DWELL_SHARE * st.dwell;
+        st.infV += (INF_W * INF_W * (it - st.inf) - 2 * INF_W * st.infV) * STEP;
+        st.inf += st.infV * STEP;
+        stepLattice();
+      }
+
+      // Fermo? Torno esattamente piatto e smetto di disegnare.
+      let maxV = 0, maxD = 0, maxXY = 0;
+      for (let k = 0; k < L.d.length; k++) {
+        const a = Math.abs(L.v[k]); if (a > maxV) maxV = a;
+        const b = Math.abs(L.d[k]); if (b > maxD) maxD = b;
+        if (k % 3 !== 2 && b > maxXY) maxXY = b;
+      }
+      const tol = 0.25 / Math.max(U, 1);
+      let settled = Math.abs(st.hov - st.target) < 1e-3 && Math.abs(st.infV) < 0.01 &&
+        Math.abs(st.pvx) + Math.abs(st.pvy) < 0.01 && maxV < 2 * tol;
+      if (settled && st.target === 0) {
+        if (maxD < 4 * tol && Math.abs(st.inf) < 0.004) {
+          L.d.fill(0); L.v.fill(0);
+          maxD = 0; maxXY = 0;
+          st.inf = 0; st.infV = 0; st.hov = 0; st.dwell = 0;
+        } else settled = false;
+      }
+      const deformed = maxD > 1e-6;
+
+      // A riposo si vede il vero testo HTML: il canvas serve solo mentre il
+      // nome si muove. Garantisce che da fermo sia identico all'originale.
+      if (settled && st.target === 0 && !deformed && st.inf === 0) {
+        setActive(false);
+        return false;
+      }
+
+      // ---------------- risoluzione
+      const er = el.getBoundingClientRect();
+      const zoom = el.offsetWidth ? clamp(er.width / el.offsetWidth, 1, 2) : 1;
+      let scale = Math.min(MAX_DPR, (window.devicePixelRatio || 1) * zoom);
+      scale = Math.max(1, Math.min(scale, Math.sqrt(PIXEL_CAP / Math.max(1, layout.cssW * layout.cssH))));
+      const pw = Math.max(1, Math.round(layout.cssW * scale));
+      const ph = Math.max(1, Math.round(layout.cssH * scale));
+      if (canvas.width !== pw || canvas.height !== ph) { canvas.width = pw; canvas.height = ph; }
+      g.viewport(0, 0, pw, ph);
+      drawMask(pw, ph, scale);
+
+      // ---------------- reticolo sulla GPU
+      const Lt = L.tex;
+      for (let k = 0, n = L.nx * L.ny; k < n; k++) {
+        Lt[k * 4] = L.d[k * 3]; Lt[k * 4 + 1] = L.d[k * 3 + 1]; Lt[k * 4 + 2] = L.d[k * 3 + 2]; Lt[k * 4 + 3] = 1;
+      }
+      g.activeTexture(g.TEXTURE1);
+      g.bindTexture(g.TEXTURE_2D, texGrid);
+      const gd = L.nx + 'x' + L.ny;
+      if (gd !== gridDims) {
+        gridDims = gd;
+        g.texImage2D(g.TEXTURE_2D, 0, g.RGBA16F, L.nx, L.ny, 0, g.RGBA, g.FLOAT, Lt);
+      } else {
+        g.texSubImage2D(g.TEXTURE_2D, 0, 0, 0, L.nx, L.ny, g.RGBA, g.FLOAT, Lt);
+      }
+      g.activeTexture(g.TEXTURE0);
+      g.bindTexture(g.TEXTURE_2D, texMask);
+
+      const pxPerEm = U * scale;
+      g.uniform2f(loc.uCanvas, pw, ph);
+      g.uniform1f(loc.uPxPerEm, pxPerEm);
+      g.uniform4f(loc.uGrid, L.ox, L.oy, L.spanX, L.spanY);
+      g.uniform1f(loc.uDeform, deformed ? Math.max(maxXY, 1e-5) : 0);
+      g.uniform1f(loc.uScale, 1 + GROW * Math.max(0, st.inf));
+      g.uniform1f(loc.uPuffAll, PUFF_ALL * Math.max(0, st.inf));
+      g.uniform1f(loc.uDil, DILATE * pxPerEm);
+      g.drawArrays(g.TRIANGLES, 0, 3);
+
+      // Canvas e testo trasparente si attivano nello stesso frame del disegno.
+      setActive(true);
+      return !settled;
+    };
+
+    // ---------------------------------------------------------- avvio e aggiornamenti
+    const relayout = () => {
+      if (!measure()) return;
+      layout.ready = true;
+      if (!running) wake();
+    };
+    const io = new IntersectionObserver((es) => { visible = es[0].isIntersecting; if (visible) wake(); });
+    io.observe(el);
+    const onVis = () => { pageVisible = !document.hidden; if (pageVisible) wake(); };
+    document.addEventListener('visibilitychange', onVis);
+    const ro = new ResizeObserver(() => { if (layout.ready) relayout(); });
+    ro.observe(el);
+    const onFonts = () => relayout();
+    if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', onFonts);
+
+    canvas.addEventListener('webglcontextlost', (e) => {
+      e.preventDefault();
+      st.lost = true; running = false; cancelAnimationFrame(raf);
+      setActive(false);
+    });
+    canvas.addEventListener('webglcontextrestored', () => {
+      st.lost = false;
+      gl = canvas.getContext('webgl2', glOpts);
+      if (gl) { build(); L = null; wake(); }
+    });
+
+    build();
+    // Disegno solo dopo che il font del titolo e' caricato, cosi' il canvas
+    // combacia con il testo HTML fin dal primo frame.
+    const ready = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+    ready.then(relayout, relayout);
+  }
+
+  window.mountPuffName = mountPuffName;
+})();
+
+</script>
+<script>
+  /* Se qualcosa va storto resta il titolo normale e la pagina continua a funzionare. */
+  try {
+    if (typeof mountPuffName === 'function') mountPuffName(document.querySelector('.hero-name'));
+  } catch (e) { console.warn('Effetto sul nome disattivato:', e); }
 </script>
 </body>
 </html>
