@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" data-hero="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,451 +7,462 @@
 <meta name="description" content="Product & R&D Project Manager specializzato in sviluppo di macchine industriali per il packaging flessibile. Verona, Italia.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
+<script>
+/* Avvia la sequenza di ingresso quando il font e' pronto (o comunque dopo 1,2 s). */
+(function(){var d=document.documentElement;d.classList.add('js');var r=function(){d.classList.add('ready')};
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(r);setTimeout(r,1200);})();
+</script>
 <style>
+/* ─────────────────────────────────────────────────────────────
+   TOKEN
+   Inchiostro per hero e contatti, carta fredda per la pagina,
+   cobalto per la linea e i link, giallo solo per il punto attivo.
+   ───────────────────────────────────────────────────────────── */
 :root {
+  --ink: #1D1D1F;
+  --paper: #EEF0F2;
   --white: #FFFFFF;
-  --ink: #0A0A0A;
-  --mid: #707070;
-  --faint: #E8E8E8;
-  --bg: #F5F5F5;
-  --blue: #0047FF;
-  --blue-light: #E0E8FF;
-  --font: 'Space Grotesk', system-ui, sans-serif;
-  --max: 1100px;
-  --col: 780px;
+  --cobalt: #1F4FD8;      /* link e testo d'accento su fondo chiaro */
+  --line: #2B5CE6;        /* la linea: leggibile su chiaro e su scuro */
+  --line-lt: #8FB0FF;     /* link e focus su fondo scuro */
+  --alu: #8A93A0;
+  --text2: #55606F;       /* testo secondario su fondo chiaro */
+  --text2-dk: #B9C0CA;    /* testo secondario su fondo scuro */
+  --rule: #D5D9DE;
+  /* Sfondo di hero, contatti e footer: si cambia dall'attributo data-hero su <html>
+     (graphite, light oppure cobalt). */
+  --hero-bg: #1D1D1F; --hero-fg: #FFFFFF; --hero-fg2: #B8BABF;
+  --hero-rule: rgba(255,255,255,0.16); --hero-rule2: rgba(255,255,255,0.32);
+  --hero-field: rgba(255,255,255,0.05); --hero-focus: #8FB0FF; --hero-node: #2B5CE6;
+  --font: 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --max: 1180px;
+  --gut: 2rem;
+  --aside: 210px;
+  --nav-h: 64px;
+  /* Ascissa della linea verticale: bordo sinistro del contenuto */
+  --spine-x: max(var(--gut), calc((100% - var(--max)) / 2 + var(--gut)));
+}
+
+html[data-hero="light"] {
+  --hero-bg: #FFFFFF; --hero-fg: #1D1D1F; --hero-fg2: #55606F;
+  --hero-rule: #D5D9DE; --hero-rule2: #AEB4BC;
+  --hero-field: #F6F7F8; --hero-focus: #1F4FD8; --hero-node: #2B5CE6;
+}
+html[data-hero="cobalt"] {
+  --hero-bg: #1F4FD8; --hero-fg: #FFFFFF; --hero-fg2: #D6E0FB;
+  --hero-rule: rgba(255,255,255,0.26); --hero-rule2: rgba(255,255,255,0.5);
+  --hero-field: rgba(255,255,255,0.1); --hero-focus: #FFFFFF; --hero-node: #FFFFFF;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body {
   font-family: var(--font);
-  font-size: 16px;
+  font-size: 1.0625rem;
   line-height: 1.6;
+  font-stretch: 100%;
   color: var(--ink);
-  background: var(--white);
+  background: var(--paper);
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 img { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 3px; border-radius: 3px; }
+#hero :focus-visible, #contact :focus-visible, footer :focus-visible, nav:not(.solid) :focus-visible { outline-color: var(--hero-focus); }
+section { scroll-margin-top: var(--nav-h); }
+.container { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 var(--gut); }
+.col { max-width: none; }
 
-/* ── NAV ── */
+/* ── NAV ── trasparente sulla hero, chiara dopo ── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: rgba(255,255,255,0.94);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--faint);
+  color: var(--hero-fg);
+  border-bottom: 1px solid transparent;
+  transition: background 0.25s, color 0.25s, border-color 0.25s;
+}
+nav.scrolled { background: var(--hero-bg); background: color-mix(in srgb, var(--hero-bg) 90%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+nav.solid {
+  color: var(--ink);
+  background: rgba(238,240,242,0.9);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom-color: var(--rule);
 }
 .nav-inner {
-  max-width: var(--max); margin: 0 auto; padding: 0 2rem;
-  height: 60px; display: flex; align-items: center; justify-content: space-between;
+  max-width: var(--max); margin: 0 auto; padding: 0 var(--gut);
+  height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
 }
-.nav-logo {
-  font-size: 0.85rem; font-weight: 600; letter-spacing: 0.02em;
-  text-transform: uppercase; color: var(--ink);
+.nav-logo { font-size: 1rem; font-weight: 700; font-stretch: 112%; letter-spacing: -0.01em; }
+.nav-right { display: flex; align-items: center; gap: 1.75rem; }
+.nav-links { display: flex; gap: 1.5rem; list-style: none; }
+.nav-links a { font-size: 0.9rem; font-weight: 500; opacity: 0.72; transition: opacity 0.15s; }
+.nav-links a:hover { opacity: 1; }
+.nav-cv {
+  font-size: 0.85rem; font-weight: 600; padding: 0.4rem 0.95rem; border-radius: 999px;
+  border: 1.5px solid currentColor; transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
-.nav-right { display: flex; align-items: center; gap: 2.5rem; }
-.nav-links { display: flex; gap: 2rem; list-style: none; }
-.nav-links a {
-  font-size: 0.8rem; font-weight: 400; color: var(--mid);
-  letter-spacing: 0.02em; transition: color 0.15s;
-}
-.nav-links a:hover { color: var(--ink); }
-.lang-toggle { display: flex; gap: 4px; }
+nav .nav-cv:hover { background: var(--hero-fg); color: var(--hero-bg); border-color: var(--hero-fg); }
+nav.solid .nav-cv:hover { background: var(--ink); color: var(--white); border-color: var(--ink); }
+.lang-toggle { display: flex; gap: 2px; }
 .lang-btn {
-  font-family: var(--font); font-size: 0.72rem; font-weight: 600;
-  letter-spacing: 0.06em; text-transform: uppercase;
-  border: 1px solid var(--faint); background: none;
-  cursor: pointer; color: var(--mid); padding: 3px 8px; border-radius: 4px;
-  transition: all 0.15s;
+  font-family: var(--font); font-size: 0.8rem; font-weight: 600;
+  border: 0; background: none; cursor: pointer; color: inherit; opacity: 0.55;
+  padding: 0.3rem 0.45rem; border-radius: 4px; transition: opacity 0.15s;
 }
-.lang-btn.active { color: var(--white); background: var(--blue); border-color: var(--blue); }
-.lang-btn:hover:not(.active) { border-color: var(--ink); color: var(--ink); }
+.lang-btn:hover { opacity: 1; }
+.lang-btn.active { opacity: 1; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; }
+/* Su schermi stretti la linea diventa una barra di avanzamento sotto il menu */
+.nav-progress {
+  display: none; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px;
+  background: var(--line); transform: scaleX(0); transform-origin: left;
+}
 
-/* ── HERO ── */
+/* ── HERO ── nome e ruolo, poi i numeri ── */
 #hero {
-  padding-top: 60px; min-height: 100vh;
-  display: flex; flex-direction: column; justify-content: flex-end;
-  padding-bottom: 0; border-top: none;
-  border-bottom: 1px solid var(--faint);
+  background: var(--hero-bg); color: var(--hero-fg);
+  min-height: 100vh; min-height: 100svh;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding-top: calc(var(--nav-h) + clamp(1.5rem, 6vh, 4.5rem));
+  position: relative;
 }
-.hero-top {
-  max-width: var(--max); margin: 0 auto; padding: 5rem 2rem 3rem;
-  display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: start;
+.hero-main { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 3rem; align-items: end; }
+.hero-name {
+  font-size: clamp(4.2rem, 11.5vw, 9.5rem); font-weight: 800; font-stretch: 125%;
+  line-height: 0.86; letter-spacing: -0.035em;
+  margin-bottom: clamp(1.2rem, 3vh, 1.8rem);
 }
 .hero-label {
-  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em;
-  text-transform: uppercase; color: var(--blue); margin-bottom: 1.5rem;
-  display: flex; align-items: center; gap: 0.6rem;
+  font-size: clamp(1.2rem, 2.1vw, 1.8rem); font-weight: 500; line-height: 1.25;
+  margin-bottom: 1rem;
 }
-.hero-label::before {
-  content: ''; display: block; width: 20px; height: 1px; background: var(--blue);
-}
-.hero-name {
-  font-size: clamp(3.5rem, 7vw, 6.5rem); font-weight: 700;
-  line-height: 0.95; letter-spacing: -0.03em; color: var(--ink);
-  margin-bottom: 1.5rem;
-}
-.hero-name span { color: var(--blue); }
-.hero-desc {
-  font-size: 1.05rem; font-weight: 300; line-height: 1.7;
-  color: var(--mid); max-width: 500px; margin-bottom: 2.5rem;
-}
-.hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.hero-desc { max-width: 34rem; color: var(--hero-fg2); margin-bottom: 1.75rem; }
+.hero-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
 .btn {
   display: inline-flex; align-items: center; gap: 0.4rem;
-  padding: 0.7rem 1.5rem; font-family: var(--font);
-  font-size: 0.8rem; font-weight: 500; letter-spacing: 0.04em;
-  text-transform: uppercase; border-radius: 4px; cursor: pointer;
-  transition: all 0.15s; border: 1px solid transparent;
+  padding: 0.75rem 1.35rem; font-family: var(--font); font-size: 0.95rem; font-weight: 600;
+  border-radius: 999px; cursor: pointer; border: 1.5px solid transparent;
+  transition: background 0.15s, color 0.15s, border-color 0.15s, opacity 0.15s, transform 0.15s;
 }
-.btn-blue { background: var(--blue); color: var(--white); }
-.btn-blue:hover { background: #003ACC; }
-.btn-outline { border-color: var(--faint); color: var(--ink); background: var(--white); }
+.btn:active { transform: scale(0.97); }
+.btn-blue { background: var(--cobalt); color: var(--white); }
+.btn-blue:hover { background: #173FB3; }
+.btn-outline { border-color: var(--rule); color: var(--ink); }
 .btn-outline:hover { border-color: var(--ink); }
-.hero-photo {
-  width: 160px; flex-shrink: 0;
-  display: flex; flex-direction: column;
-}
-.hero-photo img {
-  width: 160px; height: 194px; object-fit: cover; object-position: center top;
-  border-radius: 4px 4px 0 0; display: block;
-}
-.hero-photo-bar {
-  width: 160px; height: 3px; background: var(--blue); flex-shrink: 0;
-}
+#hero .btn-blue { background: var(--hero-fg); color: var(--hero-bg); }
+#hero .btn-blue:hover { opacity: 0.86; }
+#hero .btn-outline { border-color: var(--hero-rule2); color: var(--hero-fg); }
+#hero .btn-outline:hover { border-color: var(--hero-fg); }
+.hero-photo { width: clamp(150px, 15vw, 210px); }
+.hero-photo img { width: 100%; aspect-ratio: 160 / 194; object-fit: cover; object-position: center top; border-radius: 8px; }
 
-/* Hero bottom strip — numeri */
-.hero-strip {
-  border-top: 1px solid var(--faint);
-  background: var(--white);
-}
+/* Numeri in sintesi, in fondo alla hero */
+.hero-strip { margin-top: clamp(2rem, 6vh, 4.5rem); }
 .hero-strip-inner {
-  max-width: var(--max); margin: 0 auto; padding: 0 2rem;
+  max-width: var(--max); margin: 0 auto; padding: 0 var(--gut);
   display: grid; grid-template-columns: repeat(4, 1fr);
 }
-.strip-item {
-  padding: 1.5rem 0; border-right: 1px solid var(--faint);
-  display: flex; gap: 1rem; align-items: center;
-}
-.strip-item:last-child { border-right: none; padding-left: 2rem; }
-.strip-item:nth-child(2) { padding-left: 2rem; }
-.strip-item:nth-child(3) { padding-left: 2rem; }
-.strip-n {
-  font-size: 2rem; font-weight: 700; letter-spacing: -0.04em;
-  color: var(--blue); line-height: 1;
-}
-.strip-label {
-  font-size: 0.78rem; color: var(--mid); line-height: 1.4; font-weight: 400;
-}
+.strip-item { padding: 1.75rem 1.5rem 2rem 0; display: flex; gap: 0.9rem; align-items: center; border-top: 1px solid var(--hero-rule); }
+.strip-item + .strip-item { padding-left: 1.5rem; border-left: 1px solid var(--hero-rule); }
+.strip-n { font-size: 2.4rem; font-weight: 700; font-stretch: 125%; letter-spacing: -0.03em; line-height: 1; white-space: nowrap; }
+.strip-label { font-size: 0.92rem; color: var(--hero-fg2); line-height: 1.35; white-space: pre-line; }
 
-/* ── SECTIONS ── */
-section { border-top: 1px solid var(--faint); padding: clamp(3.5rem, 7vw, 6rem) 0; }
-#hero { border-top: none; }
-.container { max-width: var(--max); margin: 0 auto; padding: 0 2rem; }
-.col { max-width: var(--col); }
+/* Sequenza di ingresso: un solo momento orchestrato, al caricamento.
+   Lo stato base di ogni elemento e' quello finale; i keyframe definiscono
+   solo la partenza, cosi' senza animazioni la pagina e' gia' completa. */
+html.js:not(.ready) #hero :is(.hero-name, .hero-label, .hero-desc, .hero-actions, .hero-photo, .strip-item) { opacity: 0; }
+@keyframes nameIn { from { font-stretch: 62%; letter-spacing: 0.01em; opacity: 0; } }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } }
+.ready .hero-name { animation: nameIn 1s cubic-bezier(0.2, 0.7, 0.1, 1) both; }
+.ready .hero-label { animation: rise 0.6s ease-out 0.35s both; }
+.ready .hero-desc, .ready .hero-photo { animation: rise 0.6s ease-out 0.5s both; }
+.ready .hero-actions { animation: rise 0.6s ease-out 0.62s both; }
+.ready .strip-item { animation: rise 0.6s ease-out 0.85s both; }
+.ready .strip-item:nth-child(2) { animation-delay: 0.95s; }
+.ready .strip-item:nth-child(3) { animation-delay: 1.05s; }
+.ready .strip-item:nth-child(4) { animation-delay: 1.15s; }
+
+/* ── PERCORSO: la linea prosegue in verticale lungo la pagina ── */
+.route { position: relative; }
+.spine {
+  position: absolute; top: 0; bottom: 0; left: var(--spine-x); width: 2px;
+  background: rgba(138,147,160,0.38); z-index: 1; pointer-events: none;
+}
+.spine-fill { position: absolute; top: 0; left: 0; width: 100%; height: 0; background: var(--line); }
+.route .container { position: relative; z-index: 2; }
+.route > section { padding: clamp(4rem, 9vw, 7.5rem) 0; }
+/* Stacco netto tra le sezioni: fondi alternati (grigio carta / bianco) e un filo di separazione */
+.route > section { --sec-bg: var(--paper); background: var(--sec-bg); border-top: 1px solid var(--rule); }
+#experience, #education { --sec-bg: var(--white); }
+
+/* Nome della sezione = fermata sulla linea */
 .sec-label {
-  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em;
-  text-transform: uppercase; color: var(--blue); margin-bottom: 1rem;
-  display: flex; align-items: center; gap: 0.6rem;
+  position: relative; font-size: 1rem; font-weight: 600; line-height: 1.3;
+  padding-left: 1.75rem; margin-bottom: 1.25rem; color: var(--ink);
 }
 .sec-label::before {
-  content: ''; display: block; width: 16px; height: 1px; background: var(--blue);
+  content: ''; position: absolute; left: -5px; top: 0.3em; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--sec-bg, var(--paper)); border: 2px solid var(--alu);
+  transition: background 0.25s, border-color 0.25s, transform 0.25s;
 }
+.sec-label.passed::before { background: var(--line); border-color: var(--line); }
+.sec-label.here::before { background: var(--line); border-color: var(--line); transform: scale(1.2); box-shadow: 0 0 0 5px rgba(43,92,230,0.18); }
 .sec-title {
-  font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700;
-  letter-spacing: -0.025em; line-height: 1.05; margin-bottom: 1.5rem;
+  font-size: clamp(2rem, 4.4vw, 3.5rem); font-weight: 700; font-stretch: 112%;
+  letter-spacing: -0.025em; line-height: 1.04; margin-bottom: 1.5rem; max-width: 20ch;
 }
-.sec-intro {
-  font-size: 1rem; color: var(--mid); line-height: 1.75; max-width: 580px;
-  font-weight: 300; margin-bottom: 3rem;
+.sec-intro { color: var(--text2); max-width: 44rem; margin-bottom: 3rem; }
+
+@media (min-width: 900px) {
+  .route > section > .container { display: grid; grid-template-columns: var(--aside) minmax(0, 1fr); column-gap: 2rem; }
+  .route > section > .container > * { grid-column: 2; }
+  .route > section > .container > .sec-label {
+    grid-column: 1; grid-row: 1 / span 30; align-self: start;
+    position: sticky; top: calc(var(--nav-h) + 2rem); margin-bottom: 0;
+  }
 }
 
-/* ── ABOUT ── */
-#about { background: var(--bg); }
-.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-.about-card {
-  background: var(--white); padding: 2rem; border-radius: 6px;
-  border: 1px solid var(--faint);
-}
-.about-card-label {
-  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--blue); margin-bottom: 0.8rem;
-}
-.about-card p { font-size: 0.88rem; color: var(--mid); line-height: 1.8; margin-bottom: 1.2rem; }
+/* ── CHI SONO ── */
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+.about-card { border-top: 2px solid var(--ink); padding-top: 1.25rem; }
+.about-card-label { font-size: 1.25rem; font-weight: 700; font-stretch: 112%; letter-spacing: -0.01em; margin-bottom: 0.6rem; }
+.about-card p:not(.about-card-label) { font-size: 1rem; color: var(--text2); margin-bottom: 1.2rem; }
 .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-.tag {
-  font-size: 0.72rem; font-weight: 500; padding: 0.25rem 0.6rem;
-  background: var(--bg); border: 1px solid var(--faint);
-  border-radius: 3px; color: var(--ink); letter-spacing: 0.02em;
-}
+.tag { font-size: 0.82rem; font-weight: 500; padding: 0.25rem 0.65rem; background: var(--white); border-radius: 4px; }
 
-/* ── EXPERIENCE ── */
-.exp-item {
-  display: grid; grid-template-columns: 200px 1fr;
-  gap: 2rem; padding: 2.5rem 0; border-bottom: 1px solid var(--faint);
-}
-.exp-item:last-child { border-bottom: none; }
-.exp-co { font-weight: 600; font-size: 0.88rem; margin-bottom: 0.2rem; }
-.exp-period, .exp-loc { font-size: 0.75rem; color: var(--mid); }
-.exp-role {
-  font-size: 1rem; font-weight: 600; color: var(--ink);
-  margin-bottom: 0.7rem;
-}
-.exp-role span { color: var(--blue); }
-.exp-desc { font-size: 0.88rem; line-height: 1.8; color: var(--mid); }
-.exp-dur { font-size: 0.75rem; color: var(--blue); font-weight: 500; margin-top: 0.1rem; }
-
-/* Progressione ruoli (stile LinkedIn) */
-.role-tl { position: relative; list-style: none; margin: 0 0 1.4rem; padding-left: 1.4rem; }
-.role-tl::before {
-  content: ''; position: absolute; left: 4px; top: 0.55rem; bottom: 0.9rem;
-  width: 1px; background: var(--faint);
-}
-.role { position: relative; padding-bottom: 1rem; }
+/* ── ESPERIENZE ── */
+.exp-item { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 2.5rem; padding: 2.5rem 0; border-top: 1px solid var(--rule); }
+.exp-item:first-of-type { border-top: 0; padding-top: 0; }
+.exp-item:last-child { padding-bottom: 0; }
+.exp-co { font-weight: 700; font-size: 1rem; margin-bottom: 0.2rem; }
+.exp-period, .exp-loc { font-size: 0.9rem; color: var(--text2); }
+.exp-dur { font-size: 0.9rem; color: var(--cobalt); font-weight: 600; }
+.exp-role { font-size: 1.25rem; font-weight: 700; font-stretch: 112%; margin-bottom: 0.7rem; }
+.exp-desc { font-size: 1rem; color: var(--text2); max-width: 44rem; }
+.role-tl { position: relative; list-style: none; margin: 0 0 1.5rem; padding-left: 1.5rem; }
+.role-tl::before { content: ''; position: absolute; left: 4px; top: 0.6rem; bottom: 1.1rem; width: 2px; background: var(--rule); }
+.role { position: relative; padding-bottom: 1.1rem; }
 .role:last-child { padding-bottom: 0; }
 .role::before {
-  content: ''; position: absolute; left: calc(-1.4rem + 0.5px); top: 0.45rem;
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--white); border: 1.5px solid var(--mid);
+  content: ''; position: absolute; left: calc(-1.5rem + 0px); top: 0.5rem;
+  width: 10px; height: 10px; border-radius: 50%; background: var(--sec-bg, var(--paper)); border: 2px solid var(--alu);
 }
-.role.current::before { background: var(--blue); border-color: var(--blue); }
-.role-title { font-size: 1rem; font-weight: 600; color: var(--ink); line-height: 1.4; }
-.role:not(.current) .role-title { font-size: 0.92rem; color: var(--ink); font-weight: 500; }
-.role-meta { font-size: 0.75rem; color: var(--mid); }
-.role-meta .exp-dur-inline { color: var(--blue); font-weight: 500; }
+.role.current::before { background: var(--line); border-color: var(--line); }
+.role-title { font-size: 1rem; font-weight: 600; line-height: 1.4; }
+.role.current .role-title { font-size: 1.25rem; font-weight: 700; font-stretch: 112%; }
+.role-meta { font-size: 0.9rem; color: var(--text2); }
+.role-meta .exp-dur-inline { color: var(--cobalt); font-weight: 600; }
 
-/* ── PROJECTS ── */
-#projects { background: var(--bg); }
-.proj-list { display: flex; flex-direction: column; gap: 1px; }
-.proj-card {
-  background: var(--white); border-radius: 6px; overflow: hidden;
-  border: 1px solid var(--faint);
-}
+/* ── PROGETTI ── */
+.proj-list { display: flex; flex-direction: column; gap: 0.75rem; }
+.proj-card { background: var(--white); border-radius: 12px; overflow: hidden; scroll-margin-top: calc(var(--nav-h) + 1rem); }
 .proj-head {
-  display: grid; grid-template-columns: 80px 1fr auto;
-  align-items: center; gap: 1.5rem;
-  padding: 1.8rem 2rem; cursor: pointer;
-  transition: background 0.15s;
+  display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 1.5rem;
+  padding: 1.6rem 1.75rem; cursor: pointer;
 }
-.proj-head:hover { background: var(--bg); }
-.proj-num {
-  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
-  color: var(--blue); text-transform: uppercase;
-}
-.proj-head-info {}
 .proj-name {
-  font-size: 1.3rem; font-weight: 700; letter-spacing: -0.02em;
-  line-height: 1.1; margin-bottom: 0.2rem;
+  font-size: clamp(1.6rem, 3vw, 2.3rem); font-weight: 700; font-stretch: 125%;
+  letter-spacing: -0.025em; line-height: 1.05; margin-bottom: 0.3rem; transition: color 0.15s;
 }
-.proj-tag {
-  font-size: 0.72rem; font-weight: 500; color: var(--mid);
-  letter-spacing: 0.04em; text-transform: uppercase;
-}
+.proj-head:hover .proj-name, .proj-card.open .proj-name { color: var(--cobalt); }
+.proj-tag { font-size: 0.92rem; color: var(--text2); }
+.proj-out { font-size: 0.88rem; font-weight: 500; color: var(--text2); text-align: right; }
 .proj-arrow {
-  width: 36px; height: 36px; border-radius: 50%;
-  border: 1px solid var(--faint); display: flex; align-items: center;
-  justify-content: center; flex-shrink: 0; transition: all 0.3s;
-  font-size: 0.9rem; color: var(--mid);
+  width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--rule);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  font-size: 1.2rem; line-height: 1; color: var(--ink);
+  transition: transform 0.35s, background 0.2s, color 0.2s, border-color 0.2s;
 }
-.proj-card.open .proj-arrow {
-  background: var(--blue); color: var(--white); border-color: var(--blue);
-  transform: rotate(45deg);
-}
-
-/* Proj body */
-.proj-body { display: none; border-top: 1px solid var(--faint); }
-.proj-card.open .proj-body { display: block; }
-.proj-image {
-  width: 100%; height: 360px; background: #EBEBEA; overflow: hidden;
-  padding: 2rem;
-}
-.proj-image img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
-.proj-image.contain img { object-fit: contain; }
-.proj-gallery {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--faint);
-}
-.proj-gallery-main { grid-column: 1/-1; height: 320px; overflow: hidden; background: var(--bg); }
-.proj-gallery-main img { width: 100%; height: 100%; object-fit: cover; }
-.proj-gallery-thumb { height: 180px; overflow: hidden; background: var(--bg); }
-.proj-gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
-.proj-content { padding: 2.5rem 2rem; }
-.proj-summary { font-size: 1rem; font-weight: 300; color: var(--mid); line-height: 1.75; margin-bottom: 2rem; max-width: 640px; }
-
-/* Toggle detail */
+.proj-head:hover .proj-arrow { border-color: var(--ink); }
+.proj-card.open .proj-arrow { background: var(--ink); color: var(--white); border-color: var(--ink); transform: rotate(45deg); }
+/* Apertura: l'altezza cresce in modo fluido (risposta a un'azione) */
+.proj-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.4s cubic-bezier(0.3, 0, 0.2, 1); }
+.proj-card.open .proj-body { grid-template-rows: 1fr; }
+.proj-body-in { min-height: 0; overflow: hidden; visibility: hidden; transition: visibility 0s 0.4s; }
+.proj-card.open .proj-body-in { visibility: visible; transition-delay: 0s; }
+.proj-image { width: 100%; height: 380px; background: var(--paper); overflow: hidden; padding: 2rem; }
+.proj-image img { width: 100%; height: 100%; object-fit: contain; object-position: center; mix-blend-mode: multiply; }
+.proj-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--white); }
+.proj-gallery-main { grid-column: 1 / -1; height: 340px; overflow: hidden; background: var(--paper); }
+.proj-gallery-thumb { height: 190px; overflow: hidden; background: var(--paper); }
+.proj-gallery-main img, .proj-gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.proj-content { padding: 2.25rem 1.75rem 2.5rem; }
+.proj-summary { font-size: 1.15rem; line-height: 1.55; margin-bottom: 1.75rem; max-width: 42rem; }
 .proj-detail-toggle {
   display: inline-flex; align-items: center; gap: 0.5rem;
-  font-family: var(--font); font-size: 0.75rem; font-weight: 600;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  background: none; border: 1px solid var(--faint);
-  padding: 0.55rem 1rem; border-radius: 4px; cursor: pointer;
-  color: var(--ink); transition: all 0.15s; margin-bottom: 0;
+  font-family: var(--font); font-size: 0.95rem; font-weight: 600;
+  background: none; border: 1.5px solid var(--rule); padding: 0.65rem 1.2rem; border-radius: 999px;
+  cursor: pointer; color: var(--ink); transition: border-color 0.15s, color 0.15s;
 }
-.proj-detail-toggle:hover { border-color: var(--blue); color: var(--blue); }
+.proj-detail-toggle:hover { border-color: var(--ink); }
 .proj-detail-toggle .arr { transition: transform 0.3s; display: inline-block; }
 .proj-detail-toggle.open .arr { transform: rotate(180deg); }
-.proj-detail { display: none; margin-top: 2.5rem; padding-top: 2.5rem; border-top: 1px solid var(--faint); }
-.proj-detail.open { display: block; }
-
-/* Process grid */
-.proc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin: 2rem 0; }
-.proc-step {
-  padding: 1.2rem; background: var(--bg); border-radius: 4px;
-  border-left: 3px solid var(--blue);
+.proj-detail { display: none; margin-top: 2.25rem; padding-top: 2.25rem; border-top: 1px solid var(--rule); }
+.proj-detail.open { display: block; animation: rise 0.35s ease-out both; }
+.dh { font-size: 1.25rem; font-weight: 700; font-stretch: 112%; letter-spacing: -0.01em; margin: 2.5rem 0 0.7rem; }
+.proj-detail > .dh:first-child { margin-top: 0; }
+.dt { font-size: 1rem; line-height: 1.7; color: var(--text2); margin-bottom: 1rem; max-width: 44rem; }
+.dt strong { color: var(--ink); font-weight: 600; }
+.ext-link {
+  display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.95rem; font-weight: 600; color: var(--cobalt);
+  margin-top: 0.5rem; text-decoration: underline; text-decoration-color: rgba(31,79,216,0.3); text-underline-offset: 4px;
 }
-.proc-n { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; color: var(--blue); margin-bottom: 0.4rem; text-transform: uppercase; }
-.proc-title { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.3rem; }
-.proc-desc { font-size: 0.8rem; color: var(--mid); line-height: 1.6; }
+.ext-link:hover { text-decoration-color: var(--cobalt); }
 
 /* KPI */
-.kpi-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
-  background: var(--faint); border-radius: 6px; overflow: hidden;
-  margin: 2rem 0;
-}
-.kpi-item { background: var(--white); padding: 1.5rem 1.2rem; }
-.kpi-val { font-size: 2.2rem; font-weight: 700; letter-spacing: -0.04em; color: var(--blue); line-height: 1; margin-bottom: 0.3rem; }
-.kpi-lbl { font-size: 0.75rem; color: var(--mid); line-height: 1.4; }
+.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); margin: 1.25rem 0 0.5rem; border-top: 2px solid var(--ink); }
+.kpi-item { padding: 1.25rem 1rem 1.25rem 0; }
+.kpi-item + .kpi-item { padding-left: 1rem; border-left: 1px solid var(--rule); }
+.kpi-val { font-size: 2.2rem; font-weight: 700; font-stretch: 125%; letter-spacing: -0.03em; line-height: 1; margin-bottom: 0.4rem; white-space: nowrap; }
+.kpi-lbl { font-size: 0.9rem; color: var(--text2); line-height: 1.35; }
 
-.dh { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin: 2rem 0 0.6rem; display: flex; align-items: center; gap: 0.5rem; }
-.dh::before { content: ''; display: block; width: 12px; height: 1px; background: var(--blue); }
-.dt { font-size: 0.88rem; line-height: 1.85; color: var(--mid); margin-bottom: 1rem; }
-.dt strong { color: var(--ink); font-weight: 600; }
-.ext-link { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.8rem; font-weight: 500; color: var(--blue); margin-top: 0.5rem; }
-.ext-link:hover { text-decoration: underline; }
-
-/* ── TIMELINE ── */
-.tl-wrap { margin: 2rem 0; }
+/* Timeline di processo (qui i numeri restano: le fasi sono una sequenza vera) */
+.tl-wrap { margin: 1.5rem 0 2rem; }
 .tl-track { position: relative; display: flex; justify-content: space-between; align-items: flex-start; }
-.tl-line-bg { position: absolute; top: 20px; left: 5%; right: 5%; height: 1px; background: var(--faint); z-index: 0; }
-.tl-line-fill { position: absolute; top: 20px; left: 5%; height: 1px; background: var(--blue); z-index: 1; transition: width 0.35s ease; }
+.tl-line-bg { position: absolute; top: 20px; left: 5%; right: 5%; height: 2px; background: var(--rule); z-index: 0; }
+.tl-line-fill { position: absolute; top: 20px; left: 5%; height: 2px; background: var(--line); z-index: 1; transition: width 0.4s cubic-bezier(0.3, 0, 0.2, 1); }
 .tl-step { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; cursor: pointer; z-index: 2; flex: 1; }
-.tl-dot { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--faint); background: var(--white); display: flex; align-items: center; justify-content: center; font-size: 0.62rem; font-weight: 700; color: var(--mid); transition: all 0.2s; flex-shrink: 0; letter-spacing: 0.04em; }
-.tl-step.tl-done .tl-dot { background: var(--blue-light); border-color: var(--blue); color: var(--blue); }
-.tl-step.tl-active .tl-dot { background: var(--blue); border-color: var(--blue); color: var(--white); }
-.tl-step-name { font-size: 0.68rem; font-weight: 500; color: var(--mid); text-align: center; line-height: 1.3; max-width: 72px; transition: color 0.2s; }
-.tl-step.tl-active .tl-step-name { color: var(--blue); font-weight: 600; }
+.tl-dot {
+  width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--rule); background: var(--white);
+  display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; color: var(--text2);
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s; flex-shrink: 0;
+}
+.tl-step:hover .tl-dot { border-color: var(--ink); color: var(--ink); }
+.tl-step.tl-done .tl-dot { background: var(--line); border-color: var(--line); color: var(--white); }
+.tl-step.tl-active .tl-dot { background: var(--ink); border-color: var(--ink); color: var(--white); transform: scale(1.1); }
+.tl-step-name { font-size: 0.82rem; font-weight: 500; color: var(--text2); text-align: center; line-height: 1.25; max-width: 88px; transition: color 0.2s; }
+.tl-step.tl-active .tl-step-name { color: var(--ink); font-weight: 700; }
 .tl-step.tl-done .tl-step-name { color: var(--ink); }
-.tl-panel { margin-top: 1.8rem; background: var(--bg); border-radius: 6px; border-left: 3px solid var(--blue); padding: 1.5rem; }
+.tl-panel { margin-top: 1.75rem; background: var(--paper); border-radius: 10px; padding: 1.6rem; }
+.tl-panel > * { animation: rise 0.3s ease-out both; }
 .tl-panel-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.8rem; flex-wrap: wrap; }
-.tl-panel-num { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; color: var(--blue); text-transform: uppercase; margin-bottom: 0.2rem; }
-.tl-panel-title { font-size: 0.95rem; font-weight: 700; letter-spacing: -0.015em; color: var(--ink); }
-.tl-panel-badge { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; background: var(--blue-light); color: var(--blue); padding: 3px 9px; border-radius: 3px; white-space: nowrap; flex-shrink: 0; }
-.tl-panel-body { font-size: 0.85rem; color: var(--mid); line-height: 1.75; margin-bottom: 1rem; }
-.tl-panel-output { padding-top: 0.8rem; border-top: 1px solid var(--faint); display: flex; gap: 0.5rem; align-items: baseline; flex-wrap: wrap; }
-.tl-panel-output-label { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue); white-space: nowrap; }
-.tl-panel-output-val { font-size: 0.8rem; color: var(--ink); font-weight: 500; line-height: 1.6; }
+.tl-panel-num { font-size: 0.85rem; font-weight: 600; color: var(--cobalt); margin-bottom: 0.15rem; }
+.tl-panel-title { font-size: 1.25rem; font-weight: 700; font-stretch: 112%; letter-spacing: -0.01em; }
+.tl-panel-badge { font-size: 0.82rem; font-weight: 600; background: var(--white); padding: 0.25rem 0.7rem; border-radius: 999px; white-space: nowrap; flex-shrink: 0; }
+.tl-panel-body { font-size: 1rem; color: var(--text2); line-height: 1.7; margin-bottom: 1rem; max-width: 44rem; }
+.tl-panel-output { padding-top: 0.9rem; border-top: 1px solid var(--rule); display: flex; gap: 0.6rem; align-items: baseline; flex-wrap: wrap; }
+.tl-panel-output-label { font-size: 0.85rem; font-weight: 700; color: var(--cobalt); white-space: nowrap; }
+.tl-panel-output-val { font-size: 0.95rem; font-weight: 500; line-height: 1.55; }
 .tl-nav { display: flex; gap: 0.5rem; margin-top: 1rem; }
-.tl-btn { font-family: var(--font); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; border: 1px solid var(--faint); background: var(--white); color: var(--ink); transition: all 0.15s; }
-.tl-btn:hover { border-color: var(--blue); color: var(--blue); }
-.tl-btn.tl-primary { background: var(--blue); color: var(--white); border-color: var(--blue); }
-.tl-btn.tl-primary:hover { background: #003ACC; }
+.tl-btn {
+  font-family: var(--font); font-size: 0.9rem; font-weight: 600; padding: 0.55rem 1.1rem; border-radius: 999px;
+  cursor: pointer; border: 1.5px solid var(--rule); background: var(--white); color: var(--ink);
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+.tl-btn:hover { border-color: var(--ink); }
+.tl-btn.tl-primary { background: var(--ink); color: var(--white); border-color: var(--ink); }
+.tl-btn.tl-primary:hover { background: #24344A; }
 .tl-btn:disabled { opacity: 0.3; cursor: default; pointer-events: none; }
 
-/* ── EDU ── */
-.edu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-.edu-card {
-  padding: 1.8rem; border-radius: 6px; border: 1px solid var(--faint);
-  position: relative; overflow: hidden;
-}
-.edu-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0;
-  height: 3px; background: var(--blue);
-}
-.edu-deg { font-weight: 700; font-size: 0.92rem; margin-bottom: 0.3rem; letter-spacing: -0.01em; }
-.edu-school { font-size: 0.8rem; color: var(--mid); margin-bottom: 0.2rem; }
-.edu-year { font-size: 0.75rem; color: var(--blue); font-weight: 500; margin-bottom: 0.8rem; }
-.edu-note { font-size: 0.8rem; color: var(--mid); line-height: 1.65; }
+/* ── FORMAZIONE ── */
+.edu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+.edu-card { border-top: 2px solid var(--ink); padding-top: 1.1rem; }
+.edu-deg { font-weight: 700; font-stretch: 112%; font-size: 1.25rem; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 0.5rem; }
+.edu-school { font-size: 0.95rem; }
+.edu-year { font-size: 0.9rem; color: var(--cobalt); font-weight: 600; margin-bottom: 0.7rem; }
+.edu-note { font-size: 0.95rem; color: var(--text2); }
 
-/* ── CERTIFICATIONS ── */
-.cert-card {
-  display: flex; gap: 2rem; align-items: flex-start;
-  padding: 2rem; border-radius: 6px; border: 1px solid var(--faint);
-  background: var(--white); max-width: 600px;
-}
+/* ── CERTIFICAZIONI ── */
+.cert-list { display: flex; flex-direction: column; }
+.cert-card { display: flex; gap: 1.5rem; align-items: flex-start; padding: 1.75rem 0; border-top: 1px solid var(--rule); max-width: 46rem; }
+.cert-card:first-child { border-top: 0; padding-top: 0; }
+.cert-card:last-child { padding-bottom: 0; }
 .cert-logo {
-  width: 48px; height: 48px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  background: var(--bg); border-radius: 6px; padding: 10px;
+  width: 56px; height: 56px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  background: var(--white); border-radius: 10px; padding: 10px;
 }
 .cert-logo img { width: 100%; height: 100%; object-fit: contain; }
-.cert-name { font-size: 0.92rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 0.2rem; }
-.cert-issuer { font-size: 0.8rem; color: var(--mid); margin-bottom: 0.2rem; }
-.cert-date { font-size: 0.75rem; color: var(--blue); font-weight: 500; margin-bottom: 0.6rem; }
-.cert-note { font-size: 0.8rem; color: var(--mid); line-height: 1.65; }
-.cert-list { display: flex; flex-direction: column; gap: 1rem; }
+.cert-name { font-size: 1.25rem; font-weight: 700; font-stretch: 112%; letter-spacing: -0.01em; line-height: 1.2; margin-bottom: 0.3rem; }
+.cert-issuer { font-size: 0.95rem; }
+.cert-date { font-size: 0.9rem; color: var(--cobalt); font-weight: 600; margin-bottom: 0.6rem; }
+.cert-note { font-size: 0.95rem; color: var(--text2); }
 
+/* ── CONTATTI: capolinea, stesso sfondo della hero ── */
+#contact { --sec-bg: var(--hero-bg); background: var(--hero-bg); color: var(--hero-fg); position: relative; }
+#contact .sec-label { color: var(--hero-fg); }
+#contact .sec-label::before { background: var(--hero-bg); border-color: var(--hero-rule2); }
+#contact .sec-label.passed::before, #contact .sec-label.here::before { background: var(--hero-node); border-color: var(--hero-node); }
+#contact .sec-title { font-size: clamp(3.5rem, 10vw, 8rem); font-weight: 800; font-stretch: 125%; letter-spacing: -0.035em; line-height: 0.9; margin-bottom: 3rem; max-width: none; }
+/* Sul fondo cobalto la linea blu sparirebbe: qui diventa bianca */
+html[data-hero="cobalt"] #contact::before {
+  content: ''; position: absolute; top: 0; bottom: 0; left: var(--spine-x); width: 2px; background: #8FA7EC; z-index: 1;
+}
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
-.ci h3 { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 0.7rem; }
-.ci p { font-size: 0.88rem; color: var(--mid); line-height: 1.75; margin-bottom: 1.5rem; }
+.ci h3 { font-size: 1.25rem; font-weight: 700; font-stretch: 112%; letter-spacing: -0.01em; margin-bottom: 0.7rem; }
+.ci p { color: var(--hero-fg2); margin-bottom: 1.5rem; }
 .ci-link {
-  display: flex; align-items: center; gap: 0.5rem;
-  font-size: 0.85rem; color: var(--ink); margin-bottom: 0.6rem;
-  font-weight: 500; transition: color 0.15s;
+  display: block; width: fit-content; font-size: 1.05rem; font-weight: 500; margin-bottom: 0.6rem;
+  text-decoration: underline; text-decoration-color: var(--hero-rule2); text-underline-offset: 5px;
+  transition: text-decoration-color 0.15s;
 }
-.ci-link:hover { color: var(--blue); }
-.ci-link::before { content: '→'; color: var(--blue); font-size: 0.8rem; }
-
-/* Form */
-.fg { margin-bottom: 1.2rem; }
-.fg label { display: block; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); margin-bottom: 0.4rem; }
+.ci-link:hover { text-decoration-color: var(--hero-fg); }
+.fg { margin-bottom: 1.1rem; }
+.fg label { display: block; font-size: 0.9rem; font-weight: 500; color: var(--hero-fg2); margin-bottom: 0.35rem; }
 .fg input, .fg textarea {
-  width: 100%; padding: 0.7rem 0.9rem; border: 1px solid var(--faint);
-  border-radius: 4px; font-family: var(--font); font-size: 0.88rem;
-  color: var(--ink); background: var(--white); outline: none; transition: border-color 0.15s;
+  width: 100%; padding: 0.8rem 0.95rem; border: 1.5px solid var(--hero-rule2); border-radius: 8px;
+  font-family: var(--font); font-size: 1rem; color: var(--hero-fg); background: var(--hero-field);
+  outline: none; transition: border-color 0.15s;
 }
-.fg input:focus, .fg textarea:focus { border-color: var(--blue); }
-.fg textarea { resize: vertical; min-height: 120px; }
+.fg input:focus, .fg textarea:focus { border-color: var(--hero-focus); }
+.fg textarea { resize: vertical; min-height: 130px; }
 .fs {
-  width: 100%; padding: 0.75rem; background: var(--blue); color: var(--white);
-  border: none; font-family: var(--font); font-size: 0.8rem; font-weight: 600;
-  letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
-  border-radius: 4px; transition: background 0.15s;
+  width: 100%; padding: 0.9rem; background: var(--hero-fg); color: var(--hero-bg); border: none;
+  font-family: var(--font); font-size: 1rem; font-weight: 700; cursor: pointer; border-radius: 999px;
+  transition: opacity 0.15s, transform 0.15s;
 }
-.fs:hover { background: #003ACC; }
+.fs:hover { opacity: 0.86; }
+.fs:active { transform: scale(0.985); }
 
 /* ── FOOTER ── */
-footer {
-  border-top: 1px solid var(--faint); padding: 1.8rem 0; background: var(--white);
-}
-.footer-inner {
-  max-width: var(--max); margin: 0 auto; padding: 0 2rem;
-  display: flex; justify-content: space-between; align-items: center;
-}
-.fc { font-size: 0.75rem; color: var(--mid); }
+footer { background: var(--hero-bg); color: var(--hero-fg2); border-top: 1px solid var(--hero-rule); padding: 1.6rem 0; }
+.footer-inner { max-width: var(--max); margin: 0 auto; padding: 0 var(--gut); display: flex; justify-content: space-between; align-items: center; }
+.fc { font-size: 0.9rem; }
 .fl { display: flex; gap: 1.5rem; }
-.fl a { font-size: 0.75rem; color: var(--mid); transition: color 0.15s; }
-.fl a:hover { color: var(--blue); }
+.fl a { font-size: 0.9rem; transition: color 0.15s; }
+.fl a:hover { color: var(--hero-fg); }
 
 /* ── RESPONSIVE ── */
-@media(max-width:700px) {
-  .hero-top { grid-template-columns: 1fr; }
-  .hero-photo { order: -1; width: 100px; }
-  .hero-photo img { width: 100px; height: 120px; }
-  .hero-strip-inner { grid-template-columns: 1fr; }
-  .strip-item { border-right: none; border-bottom: 1px solid var(--faint); padding-left: 0 !important; }
-  .strip-item:last-child { border-bottom: none; }
-  .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-  .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
-  .proc-grid { grid-template-columns: 1fr; }
+@media (max-width: 1020px) { .nav-links { display: none; } }
+@media (max-width: 899px) {
+  :root { --gut: 16px; }
+  .spine { display: none; }
+  .nav-progress { display: block; }
+  .sec-label { padding-left: 1.35rem; color: var(--text2); }
+  .sec-label::before { left: 0; }
+  #contact .sec-label { color: var(--hero-fg2); }
+  .hero-strip-inner { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .strip-item { padding: 1.2rem 0.75rem 1.2rem 0; min-width: 0; flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+  .strip-item + .strip-item { padding-left: 0; border-left: 0; }
+  .strip-item:nth-child(even) { padding-left: 0.9rem; border-left: 1px solid var(--hero-rule); }
+  .strip-n { font-size: 1.9rem; }
+  .about-grid, .contact-grid, .edu-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .exp-item { grid-template-columns: 1fr; gap: 1.25rem; }
   .kpi-grid { grid-template-columns: 1fr 1fr; }
-  .edu-grid { grid-template-columns: 1fr; }
+  .kpi-item:nth-child(3) { padding-left: 0; border-left: 0; }
+  .kpi-item:nth-child(n+3) { border-top: 1px solid var(--rule); }
   .proj-gallery { grid-template-columns: 1fr; }
-  .proj-gallery-main { grid-column: 1; }
-  .proj-head { grid-template-columns: 60px 1fr auto; }
-  .nav-links { display: none; }
+  .proj-gallery-main { grid-column: 1; height: 240px; }
+  .proj-image { height: 260px; padding: 1rem; }
+  .proj-head { grid-template-columns: minmax(0, 1fr) auto; gap: 0.4rem 1rem; padding: 1.25rem 1.1rem; }
+  .proj-out { grid-column: 1; grid-row: 2; text-align: left; }
+  .proj-arrow { grid-column: 2; grid-row: 1 / span 2; }
+  .proj-content { padding: 1.75rem 1.1rem 2rem; }
+  .tl-dot { width: 34px; height: 34px; font-size: 0.75rem; }
+  .tl-line-bg, .tl-line-fill { top: 16px; }
+  .tl-step-name { font-size: 0.72rem; max-width: 58px; overflow-wrap: anywhere; }
+  .tl-panel { padding: 1.2rem; }
   .footer-inner { flex-direction: column; gap: 0.8rem; text-align: center; }
 }
-@media(prefers-reduced-motion:reduce) { * { transition: none !important; animation: none !important; } }
-
-/* ── NOME CHE SI GONFIA (WebGL, script mountPuffName in fondo alla pagina) ──
-   A riposo si vede il normale testo HTML. Durante l'hover un canvas con le
-   stesse lettere prende il suo posto (classe .pn-on) e sborda un po' per
-   lasciare spazio al rigonfiamento. Senza WebGL2 resta il titolo normale. */
-.hero-name { position: relative; }
-.pn-canvas { position: absolute; pointer-events: none; }
-.hero-name.pn-on, .hero-name.pn-on span { color: transparent; }
+@media (max-width: 700px) {
+  .hero-main { grid-template-columns: 1fr; gap: 1.25rem; }
+  .hero-main { position: relative; }
+  .hero-photo { position: absolute; top: 0.35rem; right: 0; width: 76px; }
+  .hero-photo img { border-radius: 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
 </style>
 </head>
 <body>
@@ -469,30 +480,33 @@ footer {
         <li><a href="#certifications" data-i18n="nav.cert">Certificazioni</a></li>
         <li><a href="#contact" data-i18n="nav.contact">Contatti</a></li>
       </ul>
+      <a href="CV_Diego_Zorzi_ITA.pdf" id="cv-nav" class="nav-cv" data-i18n="hero.cv">Scarica CV</a>
       <div class="lang-toggle">
         <button class="lang-btn active" onclick="setLang('it')" id="btn-it">IT</button>
         <button class="lang-btn" onclick="setLang('en')" id="btn-en">EN</button>
       </div>
     </div>
   </div>
+  <div class="nav-progress" aria-hidden="true"></div>
 </nav>
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-top">
-    <div>
-      <p class="hero-label" data-i18n="hero.label">Product & R&D Project Manager</p>
-      <h1 class="hero-name">Diego<br><span>Zorzi</span></h1>
-      <p class="hero-desc" data-i18n="hero.desc">Gestisco l'intero ciclo di vita di prodotti industriali complessi, dall'analisi di mercato al prototipo fisico, coordinando team R&D cross-funzionali dal brief alla validazione.</p>
-      <div class="hero-actions">
-        <a href="CV_Diego_Zorzi_ITA.pdf" id="cv-link" class="btn btn-blue" data-i18n="hero.cv">Scarica CV</a>
-        <a href="#projects" class="btn btn-outline" data-i18n="hero.proj">Vedi progetti</a>
-        <a href="https://www.linkedin.com/in/diegozorzi/" target="_blank" rel="noopener" class="btn btn-outline">LinkedIn ↗</a>
+  <div class="container">
+    <div class="hero-main">
+      <div>
+        <h1 class="hero-name">Diego<br><span>Zorzi</span></h1>
+        <p class="hero-label" data-i18n="hero.label">Product & R&D Project Manager · Verona, Italia</p>
+        <p class="hero-desc" data-i18n="hero.desc">Gestisco l'intero ciclo di vita di prodotti industriali complessi, dall'analisi di mercato al prototipo fisico, coordinando team R&D cross-funzionali dal brief alla validazione.</p>
+        <div class="hero-actions">
+          <a href="CV_Diego_Zorzi_ITA.pdf" id="cv-link" class="btn btn-blue" data-i18n="hero.cv">Scarica CV</a>
+          <a href="#projects" class="btn btn-outline" data-i18n="hero.proj">Vedi progetti</a>
+          <a href="https://www.linkedin.com/in/diegozorzi/" target="_blank" rel="noopener" class="btn btn-outline">LinkedIn ↗</a>
+        </div>
       </div>
-    </div>
-    <div class="hero-photo">
-      <img src="IMG_6986.png" alt="Diego Zorzi" loading="eager">
-      <div class="hero-photo-bar"></div>
+      <div class="hero-photo">
+        <img src="IMG_6986.png" alt="Diego Zorzi" loading="eager">
+      </div>
     </div>
   </div>
   <div class="hero-strip">
@@ -516,6 +530,10 @@ footer {
     </div>
   </div>
 </section>
+
+<!-- PERCORSO: la linea verticale collega le sezioni e si colora con lo scroll -->
+<div class="route">
+  <div class="spine" aria-hidden="true"><div class="spine-fill"></div></div>
 
 <!-- CHI SONO -->
 <section id="about">
@@ -545,7 +563,7 @@ footer {
 <!-- ESPERIENZE -->
 <section id="experience">
   <div class="container">
-    <p class="sec-label" data-i18n="exp.label">Esperienze professionali</p>
+    <h2 class="sec-label" data-i18n="exp.label">Esperienze professionali</h2>
     <div class="exp-item">
       <div>
         <img src="Logo_Uteco_BaffoRosso.png" alt="Uteco" style="height:32px;width:auto;margin-bottom:0.8rem;object-fit:contain;">
@@ -591,41 +609,41 @@ footer {
 <!-- PROGETTI -->
 <section id="projects">
   <div class="container">
-    <p class="sec-label" data-i18n="proj.label">Progetti selezionati</p>
+    <h2 class="sec-label" data-i18n="proj.label">Progetti selezionati</h2>
     <p class="sec-intro" data-i18n="proj.intro">Quattro progetti che mostrano approcci diversi: dal concept di un prodotto sportivo sviluppato in autonomia, alla gestione di un programma R&D complesso, al lancio di un prodotto satellite in un segmento nuovo, fino al product design per il mercato del lusso.</p>
 
     <div class="proj-list">
 
       <!-- KUDO FONDO -->
       <div class="proj-card" id="pc4">
-        <div class="proj-head" onclick="toggleProj('pc4')">
-          <p class="proj-num">01</p>
+        <div class="proj-head" onclick="toggleProj('pc4')" role="button" tabindex="0" aria-expanded="false">
           <div class="proj-head-info">
             <p class="proj-name">Kudo Fondo</p>
             <p class="proj-tag" data-i18n="kudo.role">Concept personale · Casco gravel</p>
           </div>
-          <div class="proj-arrow">+</div>
+          <p class="proj-out" data-i18n="out.kudo">Case study completo</p>
+          <div class="proj-arrow" aria-hidden="true">+</div>
         </div>
-        <div class="proj-body">
+        <div class="proj-body"><div class="proj-body-in">
           <div class="proj-content">
             <p class="proj-summary" data-i18n="kudo.summary">Concept di un casco gravel fizik che si adatta alla forma della testa e tiene la fronte asciutta, grazie a un sistema di patch intercambiabili. Dall'analisi di mercato al product brief, fino al piano di lancio e alla comunicazione.</p>
             <a href="kudo-fondo.html" id="kudo-link" class="btn btn-blue" data-i18n="kudo.cta">Leggi il case study →</a>
           </div>
-        </div>
+        </div></div>
       </div>
 
 
       <!-- PRISMA -->
       <div class="proj-card" id="pc1">
-        <div class="proj-head" onclick="toggleProj('pc1')">
-          <p class="proj-num">02</p>
+        <div class="proj-head" onclick="toggleProj('pc1')" role="button" tabindex="0" aria-expanded="false">
           <div class="proj-head-info">
             <p class="proj-name">PRISMA</p>
             <p class="proj-tag" data-i18n="prisma.role">Product Manager · Uteco Converting SpA</p>
           </div>
-          <div class="proj-arrow">+</div>
+          <p class="proj-out" data-i18n="out.prisma">Presentato a Drupa 2024</p>
+          <div class="proj-arrow" aria-hidden="true">+</div>
         </div>
-        <div class="proj-body">
+        <div class="proj-body"><div class="proj-body-in">
           <!-- EDIT: file Frontale_PRISMA_CLG_4k.23.png -->
           <div class="proj-image">
             <img src="Frontale_PRISMA_CLG_4k.23.png" alt="Uteco PRISMA CLG" loading="lazy">
@@ -637,7 +655,7 @@ footer {
             </button>
             <div class="proj-detail">
               <p class="dh" data-i18n="prisma.h1">Il problema di business</p>
-              <p class="dt" data-i18n="prisma.t1">Uteco deteneva una quota marginale su un mercato da oltre 260 M€, con vendite C&L stagnanti da cinque anni nonostante una crescita sostenuta del settore. L'analisi interna rivelava una gamma frammentata, con bassa condivisione di componenti tra le macchine e alta percentuale di larghezze mai ordinate, e un posizionamento di prezzo non competitivo rispetto ai principali player europei (Bobst, NordMeccanica, Comexi). L'obiettivo: ridisegnare l'intera gamma secondo logiche di modularità, Design to Cost e family feeling con la nuova gamma flessografica.</p>
+              <p class="dt" data-i18n="prisma.t1">Uteco deteneva una quota marginale su un mercato da oltre 260 M€, con vendite C&L stagnanti da cinque anni nonostante una crescita sostenuta del settore. L'analisi interna rivelava una gamma frammentata, con bassa condivisione di componenti tra le macchine e alta percentuale di larghezze mai ordinate, e un posizionamento di prezzo non competitivo rispetto ai principali player europei. L'obiettivo: ridisegnare l'intera gamma secondo logiche di modularità, Design to Cost e family feeling con la nuova gamma flessografica.</p>
               <p class="dh" data-i18n="prisma.h2">Metodologia e processo</p>
               <div class="tl-wrap" id="tl-prisma">
                 <div class="tl-track">
@@ -664,7 +682,7 @@ footer {
                 <div class="kpi-item"><p class="kpi-val">−27%</p><p class="kpi-lbl" data-i18n="prisma.k4">Ingombro triplex</p></div>
               </div>
               <p class="dh" data-i18n="prisma.h4">Gli 8 design driver</p>
-              <p class="dt" data-i18n="prisma.t2">Il progetto è stato strutturato attorno a 8 driver progettuali: <strong>Design to Cost</strong> per la competitività di prezzo, <strong>Design for Supply Chain</strong> per ridurre la frammentazione dei componenti, <strong>Design for Assembly</strong> per ottimizzare i tempi interni, <strong>Design for Productivity</strong> con automazioni di change over e setup, <strong>Design for Compactness</strong> per ridurre l'ingombro della configurazione triplex, <strong>Design for Sustainability</strong> con recupero adesivo e riduzione scarti, <strong>Design for Configurability</strong> con 15 moduli standard e interfacce unificate, <strong>Design for Serviceability</strong> con upgrade plug & play.</p>
+              <p class="dt" data-i18n="prisma.t2">Il progetto è strutturato attorno a 8 driver: Design to Cost, Design for Supply Chain, Design for Assembly, Design for Productivity, Design for Compactness, Design for Sustainability, Design for Configurability (15 moduli, interfacce unificate) e Design for Serviceability.</p>
               <!-- EDIT: file Prospettica_PRISMA_CLG_4k.22.png -->
               <div class="proj-image" style="margin-top:1.5rem;height:260px;border-radius:4px;overflow:hidden;">
                 <img src="Prospettica_PRISMA_CLG_4k.22.png" alt="PRISMA CLG — vista prospettica" loading="lazy">
@@ -672,31 +690,31 @@ footer {
               <a href="https://www.uteco.com/it/i-nostri-prodotti/spalmatrici-e-accoppiatrici/prismaclg" target="_blank" rel="noopener" class="ext-link" style="margin-top:1rem;">PRISMA CLG <span data-i18n="link.on">su</span> uteco.com ↗</a>
             </div>
           </div>
-        </div>
+        </div></div>
       </div>
 
       <!-- FLEXLIGHT -->
       <div class="proj-card" id="pc2">
-        <div class="proj-head" onclick="toggleProj('pc2')">
-          <p class="proj-num">03</p>
+        <div class="proj-head" onclick="toggleProj('pc2')" role="button" tabindex="0" aria-expanded="false">
           <div class="proj-head-info">
             <p class="proj-name">Flexlight</p>
             <p class="proj-tag" data-i18n="flex.role">Product Manager · Uteco Converting SpA</p>
           </div>
-          <div class="proj-arrow">+</div>
+          <p class="proj-out" data-i18n="out.flex">Presentato a Drupa 2024</p>
+          <div class="proj-arrow" aria-hidden="true">+</div>
         </div>
-        <div class="proj-body">
-          <div class="proj-image contain" style="background:#F5F5F5;">
+        <div class="proj-body"><div class="proj-body-in">
+          <div class="proj-image contain">
             <img src="Inspection_Table_2.0.5.png" alt="Flexlight — Uteco Inspection Table" loading="lazy">
           </div>
           <div class="proj-content">
-            <p class="proj-summary" data-i18n="flex.summary">Prodotto satellite per l'ispezione offline della qualità di stampa, sviluppato per completare il portfolio Uteco e aprire un nuovo stream di vendite nel segmento mid-low, non presidiato dai competitor al momento dell'analisi.</p>
+            <p class="proj-summary" data-i18n="flex.summary">Prodotto satellite per l'ispezione offline della qualità di stampa, sviluppato per completare il portfolio Uteco e aprire un nuovo stream di vendite nel segmento mid-low, non presidiato dai competitor.</p>
             <button class="proj-detail-toggle" onclick="toggleDetail(this)">
               <span data-i18n="proj.more">Approfondisci</span> <span class="arr">↓</span>
             </button>
             <div class="proj-detail">
               <p class="dh" data-i18n="flex.h1">Contesto strategico</p>
-              <p class="dt" data-i18n="flex.t1">Attorno alle macchine da stampa Uteco gravita un ecosistema di prodotti satellite, come sistemi di stoccaggio, tavoli di ispezione e lavatori di anilox, che i clienti acquistano da terze parti. L'analisi dell'ecosistema ha identificato il tavolo di ispezione come punto di ingresso strategico: ciclo di sviluppo breve e un gap preciso nel posizionamento mid-low, non occupato da nessun player. I competitor si dividevano tra prodotti basic senza tecnologia e soluzioni high-tech ad alto prezzo, senza nulla nel mezzo.</p>
+              <p class="dt" data-i18n="flex.t1">Attorno alle macchine Uteco gravita un ecosistema di prodotti satellite che i clienti acquistano da terze parti. L'analisi ha identificato il tavolo di ispezione come punto di ingresso strategico: ciclo di sviluppo breve e un gap preciso nel posizionamento mid-low. I competitor si dividevano tra prodotti basic e soluzioni high-tech ad alto prezzo, senza nulla nel mezzo.</p>
               <p class="dh" data-i18n="flex.h2">Processo</p>
               <div class="tl-wrap" id="tl-flex">
                 <div class="tl-track">
@@ -714,25 +732,25 @@ footer {
                 </div>
               </div>
               <a href="https://www.uteco.com/it/i-nostri-prodotti/accessori-ed-equipaggiamento-add/flexlight-tavolo-di-controllo-qualita-la-stampa" target="_blank" rel="noopener" class="ext-link">Flexlight <span data-i18n="link.on">su</span> uteco.com ↗</a>
-              <div class="proj-image contain" style="background:#EBEBEA;margin-top:1.5rem;height:280px;border-radius:4px;overflow:hidden;">
+              <div class="proj-image contain" style="margin-top:1.5rem;height:280px;border-radius:4px;overflow:hidden;">
                 <img src="Inspection_Table_2.6.png" alt="Flexlight — vista frontale" loading="lazy">
               </div>
             </div>
           </div>
-        </div>
+        </div></div>
       </div>
 
       <!-- EDO -->
       <div class="proj-card" id="pc3">
-        <div class="proj-head" onclick="toggleProj('pc3')">
-          <p class="proj-num">04</p>
+        <div class="proj-head" onclick="toggleProj('pc3')" role="button" tabindex="0" aria-expanded="false">
           <div class="proj-head-info">
             <p class="proj-name">Edo</p>
             <p class="proj-tag" data-i18n="edo.role">Product Designer · Henry & Co. / Cafedesart</p>
           </div>
-          <div class="proj-arrow">+</div>
+          <p class="proj-out">Salone del Mobile 2022</p>
+          <div class="proj-arrow" aria-hidden="true">+</div>
         </div>
-        <div class="proj-body">
+        <div class="proj-body"><div class="proj-body-in">
           <div class="proj-gallery">
             <!-- EDIT: Souffle_Cafedesart_1_front.jpg, top_diamond_chiaro.jpg, Souffle_Cafedesart_gambe.jpg -->
             <div class="proj-gallery-main"><img src="Souffle_Cafedesart_1_front.jpg" alt="Edo — Cafedesart dining table" loading="lazy"></div>
@@ -740,13 +758,13 @@ footer {
             <div class="proj-gallery-thumb"><img src="Souffle_Cafedesart_gambe.jpg" alt="Edo — basi" loading="lazy"></div>
           </div>
           <div class="proj-content">
-            <p class="proj-summary" data-i18n="edo.summary">Tavolo da pranzo per Cafedesart, brand italiano di arredo di lusso Art Déco e Mid Century. Selezionato per il Salone del Mobile 2022 di Milano. Sviluppato con il metodo Circular Design Thinking di Henry & Co.</p>
+            <p class="proj-summary" data-i18n="edo.summary">Tavolo da pranzo per Cafedesart, brand italiano di arredo di lusso Art Déco e Mid Century. Selezionato per il Salone del Mobile 2022 di Milano.</p>
             <button class="proj-detail-toggle" onclick="toggleDetail(this)">
               <span data-i18n="proj.more">Approfondisci</span> <span class="arr">↓</span>
             </button>
             <div class="proj-detail">
               <p class="dh" data-i18n="edo.h1">Il contesto</p>
-              <p class="dt" data-i18n="edo.t1">Henry & Co. applica il <strong>Circular Design Thinking</strong>, metodologia strutturata in quattro fasi non lineari (Comprensione, Definizione, Sviluppo e Pubblicazione) che integra principi di economia circolare nel processo progettuale. Il brief di Cafedesart richiedeva un tavolo da pranzo moderno, leggero nelle forme, adatto al living contemporaneo, coerente con il DNA Art Déco e Mid Century del brand.</p>
+              <p class="dt" data-i18n="edo.t1">Henry & Co. applica il Circular Design Thinking, metodologia in quattro fasi non lineari (Comprensione, Definizione, Sviluppo e Pubblicazione) che integra economia circolare nel processo progettuale. Il brief richiedeva un tavolo moderno, leggero nelle forme, coerente con il DNA del brand.</p>
               <div class="tl-wrap" id="tl-edo">
                 <div class="tl-track">
                   <div class="tl-line-bg"></div>
@@ -772,7 +790,7 @@ footer {
               <a href="https://cafedesart.com/prodotto/edo/" target="_blank" rel="noopener" class="ext-link" style="margin-top:1rem;">Edo <span data-i18n="link.on">su</span> cafedesart.com ↗</a>
             </div>
           </div>
-        </div>
+        </div></div>
       </div>
 
 
@@ -783,26 +801,25 @@ footer {
 <!-- FORMAZIONE -->
 <section id="education">
   <div class="container">
-    <p class="sec-label" data-i18n="edu.label">Formazione</p>
+    <h2 class="sec-label" data-i18n="edu.label">Formazione</h2>
     <div class="edu-grid">
       <div class="edu-card">
         <p class="edu-deg" data-i18n="edu1.deg">Economia Aziendale e Management</p>
         <p class="edu-school">Università di Verona</p>
         <p class="edu-year">2025 — <span data-i18n="edu.ongoing">in corso</span></p>
-        <p class="edu-note" data-i18n="edu1.note">Percorso part-time in parallelo al lavoro a tempo pieno, per integrare le competenze tecniche con una solida base strategica e di business.</p>
+        <p class="edu-note" data-i18n="edu1.note">Part-time in parallelo al lavoro, per integrare le competenze tecniche con una base strategica e di business.</p>
       </div>
       <div class="edu-card">
         <p class="edu-deg" data-i18n="edu2.deg">Product & Design Management</p>
         <p class="edu-school">ITS Machina Lonati, Brescia</p>
         <p class="edu-year">2019 — 2021</p>
-        <p class="edu-note" data-i18n="edu2.note">Diploma con 98/100. Competenze in product management, project management e product design con focus su ideazione, sviluppo e prototipazione rapida.</p>
+        <p class="edu-note" data-i18n="edu2.note">Diploma con 98/100. Competenze in product management, project management e product design.</p>
       </div>
       <div class="edu-card">
         <p class="edu-deg" data-i18n="edu3.deg">Elettronica ed Elettrotecnica</p>
         <p class="edu-school">ITIS G. Marconi, Verona</p>
         <p class="edu-year">2014 — 2019</p>
-        <p class="edu-note" data-i18n="edu3.note">Conoscenze di base di sistemi elettronici e informatici, utili per la comprensione tecnica dei prodotti industriali gestiti.</p>
-      </div>
+        <p class="edu-note" data-i18n="edu3.note">Conoscenze di base di sistemi elettronici e informatici.</p>
       </div>
     </div>
   </div>
@@ -811,7 +828,7 @@ footer {
 <!-- CERTIFICAZIONI -->
 <section id="certifications">
   <div class="container">
-    <p class="sec-label" data-i18n="cert.label">Certificazioni</p>
+    <h2 class="sec-label" data-i18n="cert.label">Certificazioni</h2>
     <div class="cert-list">
       <div class="cert-card">
         <div class="cert-logo">
@@ -863,6 +880,8 @@ footer {
     </div>
   </div>
 </section>
+
+</div><!-- /route -->
 
 <footer>
   <div class="footer-inner">
@@ -1010,6 +1029,7 @@ function renderDurations(lang) {
 /* i18n */
 const T = {
 it: {
+  "out.kudo":"Case study completo","out.prisma":"Presentato a Drupa 2024","out.flex":"Presentato a Drupa 2024",
   "nav.about":"Chi sono","nav.exp":"Esperienze","nav.proj":"Progetti","nav.edu":"Formazione","nav.cert":"Certificazioni","nav.contact":"Contatti",
   "hero.label":"Product & R&D Project Manager · Verona, Italia",
   "hero.desc":"Gestisco l'intero ciclo di vita di prodotti industriali complessi, dall'analisi di mercato al prototipo fisico, coordinando team R&D cross-funzionali dal brief alla validazione.",
@@ -1058,6 +1078,7 @@ it: {
   "cert2.deg":"Inbound Marketing Certified","cert2.note":"Metodologia inbound: come attrarre, coinvolgere e fidelizzare i clienti attraverso contenuti di valore, SEO, lead nurturing e automazione del marketing. Fornisce un framework strategico per allineare le attività di marketing agli obiettivi di business."
 },
 en: {
+  "out.kudo":"Full case study","out.prisma":"Presented at Drupa 2024","out.flex":"Presented at Drupa 2024",
   "nav.about":"About","nav.exp":"Experience","nav.proj":"Projects","nav.edu":"Education","nav.cert":"Certifications","nav.contact":"Contact",
   "hero.label":"Product & R&D Project Manager · Verona, Italy",
   "hero.desc":"I manage the full lifecycle of complex industrial products, from market analysis to physical prototype, coordinating cross-functional R&D teams from brief to validation.",
@@ -1122,6 +1143,7 @@ function setLang(lang) {
     : 'CV_Diego_Zorzi_ITA.pdf';
   document.getElementById('cv-link').href = cvFile;
   document.getElementById('cv-footer').href = cvFile;
+  document.getElementById('cv-nav').href = cvFile;
   document.getElementById('kudo-link').href = lang === 'en' ? 'kudo-fondo-en.html' : 'kudo-fondo.html';
   renderDurations(lang);
   tlInitAll();
@@ -1139,643 +1161,58 @@ function setLang(lang) {
   if (lang === 'en') setLang('en'); else { renderDurations('it'); tlInitAll(); }
 })();
 </script>
-<!-- Nome che si gonfia sotto il cursore (motore derivato da Originkit VelourBolster). -->
+<!-- Movimento della pagina: menu e linea verticale che si colora con lo scroll. -->
 <script>
-/*
- * Puff Name: il nome nella hero si gonfia sotto il cursore.
- * Motore a membrana derivato da "VelourBolster" di Originkit, adattato alla
- * forma delle lettere invece che a un bottone.
- *
- * Il titolo <h1> resta testo HTML vero (SEO, lettori di schermo, copia).
- * A riposo si vede solo il testo HTML. Quando il cursore arriva sul nome, un
- * canvas con le stesse lettere, negli stessi colori e nella stessa posizione
- * prende il suo posto e si deforma, sempre nei colori pieni del titolo; quando il nome torna fermo il canvas si
- * nasconde e ricompare il testo originale. Senza WebGL2, o con "riduci
- * movimento", resta sempre il titolo normale.
- */
 (function () {
   'use strict';
+  var nav = document.querySelector('nav');
+  var hero = document.getElementById('hero');
+  var route = document.querySelector('.route');
+  var fill = document.querySelector('.spine-fill');
+  var prog = document.querySelector('.nav-progress');
+  var labels = Array.prototype.slice.call(document.querySelectorAll('.route .sec-label'));
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var ticking = false;
 
-  // ------------------------------------------------------------- costanti
-  // Unita' di misura della simulazione: 1 = dimensione del font del nome (em).
-  const STEP = 1 / 120;
-  const MARGIN = 0.35;      // spazio attorno al nome per il rigonfiamento, in em
-  const GRID_PITCH = 0.05;
-  const MAX_DPR = 2;
-  const PIXEL_CAP = 4e6;
-
-  const SIGMA = 0.42;       // ampiezza della zona che si gonfia attorno al cursore, in em
-  const LENS = 0.35;        // quanto le lettere vicine al cursore si allargano (effetto lente)
-  const DILATE = 0.04;      // quanto si inspessiscono i tratti a gonfiaggio pieno, in em
-  const LOCAL = 1.0;        // intensita' del gonfiaggio sotto il cursore
-  const PUFF_ALL = 0.1;     // gonfiaggio leggero di tutto il nome mentre il cursore e' sopra
-  const GROW = 0.02;        // crescita complessiva del nome a gonfiaggio pieno
-  const REACH = 0.04;       // distanza dalle lettere a cui inizia a reagire, in em
-  const HYST = 0.08;        // margine extra per "uscire", evita sfarfallii sul bordo
-
-  // Dinamica della membrana (stessi valori del bottone, Wobble 5, Drag 5).
-  const MEM_W = 13, MEM_T = 3, INF_W = 12;
-  const DWELL_SHARE = 0.22, DWELL_TAU = 0.6;
-  const WAKE_GAIN = 0.08, WAKE_MAX = 0.4;
-  const RELEASE = 0.7;      // secondi per tornare piatto dopo l'uscita
-  const DRAG_K = 3.8;
-
-  const clamp = (x, a, b) => (x < a ? a : x > b ? b : x);
-
-  // ------------------------------------------------------------- shader
-  const VERT = `#version 300 es
-void main() {
-    vec2 p = vec2((gl_VertexID << 1) & 2, gl_VertexID & 2);
-    gl_Position = vec4(p * 2.0 - 1.0, 0.0, 1.0);
-}`;
-
-  const FRAG = `#version 300 es
-precision highp float;
-precision highp sampler2D;
-uniform vec2 uCanvas;     // canvas in pixel
-uniform float uPxPerEm;   // pixel per em
-uniform vec4 uGrid;       // reticolo: origine e ampiezza, in em
-uniform float uDeform;
-uniform float uScale;
-uniform float uPuffAll;
-uniform float uDil;       // ispessimento massimo, in pixel
-uniform sampler2D uMask;  // le lettere, gia' colorate (alpha premoltiplicato)
-uniform sampler2D uDist;  // rgb = colore della lettera piu' vicina, a = distanza da essa in pixel
-uniform sampler2D uGridTex;
-out vec4 outColor;
-
-vec4 cubicW(float v) {
-    vec4 n = vec4(1.0, 2.0, 3.0, 4.0) - v;
-    vec4 s = n * n * n;
-    float x = s.x;
-    float y = s.y - 4.0 * s.x;
-    float z = s.z - 4.0 * s.y + 6.0 * s.x;
-    return vec4(x, y, z, 6.0 - x - y - z) * (1.0 / 6.0);
-}
-
-vec4 lattice(sampler2D tex, vec2 q) {
-    vec2 size = vec2(textureSize(tex, 0));
-    vec2 t = (q - uGrid.xy) / uGrid.zw * (size - 1.0);
-    vec2 f = fract(t);
-    t -= f;
-    vec4 xc = cubicW(f.x);
-    vec4 yc = cubicW(f.y);
-    vec4 c = t.xxyy + vec2(-0.5, 1.5).xyxy + 0.5;
-    vec4 s = vec4(xc.xz + xc.yw, yc.xz + yc.yw);
-    vec4 o = (c + vec4(xc.yw, yc.yw) / s) / size.xxyy;
-    vec4 s0 = texture(tex, o.xz);
-    vec4 s1 = texture(tex, o.yz);
-    vec4 s2 = texture(tex, o.xw);
-    vec4 s3 = texture(tex, o.yw);
-    float sx = s.x / (s.x + s.y);
-    float sy = s.z / (s.z + s.w);
-    return mix(mix(s3, s2, sx), mix(s1, s0, sx), sy);
-}
-
-void main() {
-    vec2 fc = vec2(gl_FragCoord.x, uCanvas.y - gl_FragCoord.y);   // pixel, y verso il basso
-    vec2 centre = uCanvas * 0.5;
-    vec2 p = (fc - centre) / uPxPerEm;                              // em dal centro del nome
-
-    // Inverto lo spostamento: quale punto delle lettere e' finito qui?
-    vec2 q = p / uScale;
-    vec4 D = vec4(0.0);
-    if (uDeform > 0.0) {
-        for (int i = 0; i < 3; i++) {
-            D = lattice(uGridTex, q);
-            q = (p - D.xy) / uScale;
-        }
-    }
-    vec2 uv = (q * uPxPerEm + centre) / uCanvas;
-    vec4 c = texture(uMask, uv);
-
-    // A riposo (s = 0) il risultato e' la copia esatta del testo.
-    float s = clamp(D.z + uPuffAll, 0.0, 1.0);
-    if (s > 0.002) {
-        // Lettere piu' piene: coloro tutto cio' che sta entro r pixel da una
-        // lettera, con il colore della lettera piu' vicina. Il bordo segue la
-        // mappa delle distanze, quindi resta una curva liscia.
-        float r = uDil * s;
-        vec4 nd = texture(uDist, uv);
-        float cover = clamp(r - nd.a + 0.5, 0.0, 1.0);
-        c = c + (1.0 - c.a) * vec4(nd.rgb, 1.0) * cover;
-
-        // Nessuna luce ne' ombra: le lettere restano del loro colore pieno.
-    }
-    outColor = c;
-}`;
-
-
-  // ------------------------------------------------------------- mappa delle distanze
-  // Per ogni pixel: distanza euclidea esatta dal pixel di lettera piu' vicino e
-  // colore di quella lettera (algoritmo di Felzenszwalb e Huttenlocher, separabile
-  // per colonne e righe, tenendo traccia del punto piu' vicino).
-  const BIG = 1e20;
-  function edt1d(f, n, d, arg, v, z) {
-    let k = 0;
-    v[0] = 0; z[0] = -Infinity; z[1] = Infinity;
-    for (let q = 1; q < n; q++) {
-      if (f[q] >= BIG) continue;              // i pixel vuoti non diventano mai "punto piu' vicino"
-      if (k === 0 && f[v[0]] >= BIG) { v[0] = q; continue; }
-      let s;
-      for (;;) {
-        const p = v[k];
-        s = ((f[q] + q * q) - (f[p] + p * p)) / (2 * q - 2 * p);
-        if (s <= z[k] && k > 0) k--; else break;
-      }
-      if (s <= z[k]) { v[k] = q; z[k + 1] = Infinity; continue; }
-      k++; v[k] = q; z[k] = s; z[k + 1] = Infinity;
-    }
-    if (f[v[0]] >= BIG) { for (let q = 0; q < n; q++) { d[q] = BIG; arg[q] = -1; } return; }
-    k = 0;
-    for (let q = 0; q < n; q++) {
-      while (z[k + 1] < q) k++;
-      const t = q - v[k];
-      d[q] = t * t + f[v[k]];
-      arg[q] = v[k];
-    }
-  }
-
-  function distanceMap(rgba, w, h) {
-    const N = w * h, MAXD = 64;
-    const colD = new Float64Array(N), colArg = new Int32Array(N);
-    const n = Math.max(w, h);
-    const f = new Float64Array(n), d = new Float64Array(n), arg = new Int32Array(n);
-    const v = new Int32Array(n), z = new Float64Array(n + 1);
-    // Colonne: riga del pixel di lettera piu' vicino nella stessa colonna.
-    for (let x = 0; x < w; x++) {
-      for (let y = 0; y < h; y++) f[y] = rgba[(y * w + x) * 4 + 3] >= 128 ? 0 : BIG;
-      edt1d(f, h, d, arg, v, z);
-      for (let y = 0; y < h; y++) { colD[y * w + x] = d[y]; colArg[y * w + x] = arg[y]; }
-    }
-    // Righe: combino le colonne, ottenendo distanza e punto piu' vicino in 2D.
-    const out = new Float32Array(N * 4);
-    for (let y = 0; y < h; y++) {
-      const row = y * w;
-      for (let x = 0; x < w; x++) f[x] = colD[row + x];
-      edt1d(f, w, d, arg, v, z);
-      for (let x = 0; x < w; x++) {
-        const o = (row + x) * 4;
-        const cx = arg[x];
-        if (cx < 0 || d[x] >= BIG) { out[o + 3] = MAXD; continue; }
-        const cy = colArg[row + cx];
-        const src = (cy * w + cx) * 4;
-        out[o] = rgba[src] / 255;               // colore della lettera piu' vicina
-        out[o + 1] = rgba[src + 1] / 255;
-        out[o + 2] = rgba[src + 2] / 255;
-        out[o + 3] = Math.min(MAXD, Math.sqrt(d[x]));
-      }
-    }
-    return out;
-  }
-
-  // ------------------------------------------------------------- montaggio
-  function mountPuffName(el) {
-    if (!el || el.__puffName) return;
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const canvas = document.createElement('canvas');
-    canvas.className = 'pn-canvas';
-    canvas.setAttribute('aria-hidden', 'true');
-    const glOpts = { alpha: true, premultipliedAlpha: true, antialias: false, depth: false, stencil: false, powerPreference: 'low-power' };
-    let gl = canvas.getContext('webgl2', glOpts);
-    if (!gl) return;
-    el.__puffName = true;
-    el.appendChild(canvas);
-
-    // ---------------------------------------------------------- GL
-    let prog = null, texMask = null, texGrid = null, texDist = null, gridDims = '';
-    const loc = {};
-    const build = () => {
-      const g = gl;
-      const sh = (type, src) => { const s = g.createShader(type); g.shaderSource(s, src); g.compileShader(s); return s; };
-      const vs = sh(g.VERTEX_SHADER, VERT), fs = sh(g.FRAGMENT_SHADER, FRAG);
-      prog = g.createProgram();
-      g.attachShader(prog, vs); g.attachShader(prog, fs); g.linkProgram(prog);
-      if (!g.getProgramParameter(prog, g.LINK_STATUS)) {
-        console.warn('PuffName:', g.getShaderInfoLog(fs) || g.getProgramInfoLog(prog));
-        prog = null;
-        return;
-      }
-      g.useProgram(prog);
-      for (const n of ['uCanvas', 'uPxPerEm', 'uGrid', 'uDeform', 'uScale', 'uPuffAll', 'uDil', 'uMask', 'uGridTex', 'uDist'])
-        loc[n] = g.getUniformLocation(prog, n);
-      g.uniform1i(loc.uMask, 0);
-      g.uniform1i(loc.uGridTex, 1);
-      g.uniform1i(loc.uDist, 2);
-      const mk = (min) => {
-        const t = g.createTexture();
-        g.bindTexture(g.TEXTURE_2D, t);
-        g.texParameteri(g.TEXTURE_2D, g.TEXTURE_MIN_FILTER, min);
-        g.texParameteri(g.TEXTURE_2D, g.TEXTURE_MAG_FILTER, g.LINEAR);
-        g.texParameteri(g.TEXTURE_2D, g.TEXTURE_WRAP_S, g.CLAMP_TO_EDGE);
-        g.texParameteri(g.TEXTURE_2D, g.TEXTURE_WRAP_T, g.CLAMP_TO_EDGE);
-        return t;
-      };
-      texMask = mk(g.LINEAR_MIPMAP_LINEAR);
-      texGrid = mk(g.LINEAR);
-      texDist = mk(g.LINEAR);
-      gridDims = '';
-      layout.maskKey = '';
-      g.disable(g.BLEND);
-    };
-
-    // ---------------------------------------------------------- misure del testo
-    // Ogni pezzo di testo (Diego, Zorzi) con posizione, colore e font letti dal
-    // DOM: se cambi stile al titolo nel CSS, il canvas lo segue.
-    const layout = { words: [], U: 1, cx: 0, cy: 0, cssW: 1, cssH: 1, left: 0, top: 0, ux: 0, uy: 0, uw: 0, uh: 0, maskKey: '', ready: false };
-    const maskCanvas = document.createElement('canvas');
-
-    const measure = () => {
-      const hadOn = el.classList.contains('pn-on');
-      if (hadOn) el.classList.remove('pn-on'); // per leggere i colori veri
-      const er = el.getBoundingClientRect();
-      const words = [];
-      const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
-      const range = document.createRange();
-      let n;
-      while ((n = walker.nextNode())) {
-        const text = n.nodeValue.replace(/\s+/g, ' ').trim();
-        if (!text) continue;
-        range.selectNodeContents(n);
-        const r = range.getBoundingClientRect();
-        if (!r.width || !r.height) continue;
-        const cs = getComputedStyle(n.parentElement);
-        // Linea di base reale misurata dal browser: un segnaposto invisibile,
-        // largo e alto zero, allineato alla linea di base subito dopo il testo.
-        const probe = document.createElement('span');
-        probe.style.cssText = 'display:inline-block;width:0;height:0;vertical-align:baseline;';
-        n.parentNode.insertBefore(probe, n.nextSibling);
-        const baseline = probe.getBoundingClientRect().bottom - er.top;
-        probe.remove();
-        words.push({
-          text, baseline,
-          x: r.left - er.left, y: r.top - er.top, w: r.width, h: r.height,
-          color: cs.color,
-          font: `${cs.fontStyle} ${cs.fontWeight} SIZE ${cs.fontFamily}`,
-          size: parseFloat(cs.fontSize) || 16,
-          ls: parseFloat(cs.letterSpacing) || 0,
-          tt: cs.textTransform,
-        });
-      }
-      if (hadOn) el.classList.add('pn-on');
-      if (!words.length) return false;
-      const U = words[0].size;
-      let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
-      for (const w of words) {
-        x0 = Math.min(x0, w.x); y0 = Math.min(y0, w.y);
-        x1 = Math.max(x1, w.x + w.w); y1 = Math.max(y1, w.y + w.h);
-      }
-      const m = MARGIN * U;
-      layout.words = words;
-      layout.U = U;
-      layout.ux = x0; layout.uy = y0; layout.uw = x1 - x0; layout.uh = y1 - y0;
-      // Aggancio il canvas ai pixel fisici dello schermo: se parte da mezzo
-      // pixel il browser lo ricampiona e le lettere risultano spostate e sfocate
-      // rispetto al testo HTML.
-      const dpr = window.devicePixelRatio || 1;
-      const snap = (v) => Math.floor(v * dpr) / dpr;
-      const absL = snap(er.left + x0 - m), absT = snap(er.top + y0 - m);
-      layout.left = absL - er.left;
-      layout.top = absT - er.top;
-      layout.cssW = Math.ceil((er.left + x1 + m - absL) * dpr) / dpr;
-      layout.cssH = Math.ceil((er.top + y1 + m - absT) * dpr) / dpr;
-      // Centro della simulazione = centro del canvas (lo usa anche lo shader).
-      layout.cx = layout.left + layout.cssW / 2;
-      layout.cy = layout.top + layout.cssH / 2;
-      canvas.style.left = layout.left + 'px';
-      canvas.style.top = layout.top + 'px';
-      canvas.style.width = layout.cssW + 'px';
-      canvas.style.height = layout.cssH + 'px';
-      layout.maskKey = '';
-      return true;
-    };
-
-    // Disegno le lettere, gia' colorate, alla risoluzione del canvas.
-    const drawMask = (pw, ph, scale) => {
-      const key = pw + 'x' + ph + '|' + layout.left + ',' + layout.top + '|' + layout.words.map((w) => w.text + w.x + w.baseline + w.color + w.font).join('|');
-      if (key === layout.maskKey) return;
-      layout.maskKey = key;
-      maskCanvas.width = pw;
-      maskCanvas.height = ph;
-      const ctx = maskCanvas.getContext('2d', { willReadFrequently: true });
-      ctx.clearRect(0, 0, pw, ph);
-      ctx.setTransform(scale, 0, 0, scale, 0, 0);
-      ctx.textAlign = 'left';
-      ctx.textBaseline = 'alphabetic';
-      for (const w of layout.words) {
-        ctx.font = w.font.replace('SIZE', w.size + 'px');
-        if ('letterSpacing' in ctx) ctx.letterSpacing = w.ls + 'px';
-        const text = w.tt === 'uppercase' ? w.text.toUpperCase() : w.tt === 'lowercase' ? w.text.toLowerCase() : w.text;
-        const mt = ctx.measureText(text);
-        // Linea di base misurata; il calcolo dalle metriche del font e' solo una riserva.
-        const asc = mt.fontBoundingBoxAscent, desc = mt.fontBoundingBoxDescent;
-        const base = Number.isFinite(w.baseline) ? w.baseline
-          : Number.isFinite(asc) && Number.isFinite(desc) && asc + desc > 0
-            ? w.y + (w.h - (asc + desc)) / 2 + asc
-            : w.y + w.h * 0.8;
-        ctx.fillStyle = w.color;
-        ctx.fillText(text, w.x - layout.left, base - layout.top);
-      }
-      const g = gl;
-      g.activeTexture(g.TEXTURE0);
-      g.bindTexture(g.TEXTURE_2D, texMask);
-      g.pixelStorei(g.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
-      g.texImage2D(g.TEXTURE_2D, 0, g.RGBA8, g.RGBA, g.UNSIGNED_BYTE, maskCanvas);
-      // Ripristino subito: questa opzione vale anche per i caricamenti successivi
-      // e azzererebbe i dati del reticolo.
-      g.pixelStorei(g.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
-      g.generateMipmap(g.TEXTURE_2D);
-
-      // Mappa delle distanze, calcolata una volta per ogni nuovo disegno del nome.
-      const dist = distanceMap(ctx.getImageData(0, 0, pw, ph).data, pw, ph);
-      g.activeTexture(g.TEXTURE2);
-      g.bindTexture(g.TEXTURE_2D, texDist);
-      g.texImage2D(g.TEXTURE_2D, 0, g.RGBA16F, pw, ph, 0, g.RGBA, g.FLOAT, dist);
-      g.activeTexture(g.TEXTURE0);
-    };
-
-    // ---------------------------------------------------------- reticolo
-    let L = null;
-    const makeLattice = () => {
-      const spanX = layout.cssW / layout.U;
-      const spanY = layout.cssH / layout.U;
-      const nx = clamp(Math.round(spanX / GRID_PITCH) + 1, 8, 200);
-      const ny = clamp(Math.round(spanY / GRID_PITCH) + 1, 8, 120);
-      const n = nx * ny;
-      return {
-        nx, ny, ox: -spanX / 2, oy: -spanY / 2, spanX, spanY,
-        d: new Float32Array(n * 3), v: new Float32Array(n * 3),
-        gx: new Float32Array(nx), gy: new Float32Array(ny),
-        tex: new Float32Array(n * 4),
-        key: spanX.toFixed(3) + 'x' + spanY.toFixed(3),
-      };
-    };
-
-    // ---------------------------------------------------------- stato e puntatore
-    const st = { hov: 0, relT: -1, relFrom: 0, dwell: 0, target: 0, cx: 0, cy: 0, pvx: 0, pvy: 0, inf: 0, infV: 0, acc: 0, lost: false };
-    const pt = { has: false, x: 0, y: 0, dirty: false, bx: 0, by: 0 };
-    let on = false;
-    const setActive = (v) => {
-      if (on === v) return;
-      on = v;
-      canvas.style.visibility = v ? 'visible' : 'hidden';
-      el.classList.toggle('pn-on', v);
-    };
-    canvas.style.visibility = 'hidden';
-
-    const inCanvas = (x, y) => {
-      const r = canvas.getBoundingClientRect();
-      return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom;
-    };
-    const onMove = (e) => {
-      if (inCanvas(e.clientX, e.clientY) || st.target > 0) {
-        pt.x = e.clientX; pt.y = e.clientY; pt.has = true; pt.dirty = true;
-        wake();
-      } else if (pt.has) {
-        pt.has = false;
-        wake();
-      }
-    };
-    const onLeave = () => { if (pt.has) { pt.has = false; wake(); } };
-    const onUp = (e) => { if (e.pointerType === 'touch') onLeave(); };
-    // A fine scroll ricontrollo l'aggancio ai pixel fisici (lo scroll puo'
-    // fermarsi su una frazione di pixel).
-    let scrollT = 0;
-    const onScroll = () => {
-      if (pt.has) { pt.dirty = true; wake(); }
-      clearTimeout(scrollT);
-      scrollT = setTimeout(() => { if (layout.ready && visible) relayout(); }, 120);
-    };
-    window.addEventListener('pointermove', onMove, { passive: true });
-    window.addEventListener('pointerdown', onMove, { passive: true });
-    window.addEventListener('pointerup', onUp, { passive: true });
-    window.addEventListener('pointercancel', onLeave, { passive: true });
-    document.documentElement.addEventListener('pointerleave', onLeave);
-    window.addEventListener('blur', onLeave);
-    window.addEventListener('scroll', onScroll, { passive: true, capture: true });
-
-    // ---------------------------------------------------------- loop
-    let raf = 0, running = false, visible = true, pageVisible = !document.hidden, last = 0;
-    function wake() {
-      if (running || !visible || !pageVisible || st.lost || !layout.ready) return;
-      running = true;
-      last = 0;
-      raf = requestAnimationFrame(tick);
-    }
-    const tick = (now) => {
-      raf = 0;
-      if (!running) return;
-      if (frame(now)) raf = requestAnimationFrame(tick);
-      else running = false;
-    };
-
-    const stepLattice = () => {
-      const memK = MEM_W * MEM_W, damp = 2 * MEM_W;
-      const hx = L.spanX / (L.nx - 1), hy = L.spanY / (L.ny - 1);
-      const Tx = MEM_T / (hx * hx), Ty = MEM_T / (hy * hy);
-      const inv2s = 1 / (2 * SIGMA * SIGMA);
-      const wk = 1 + Math.min(WAKE_MAX, WAKE_GAIN * Math.hypot(st.pvx, st.pvy));
-      const amp = ((1 - DWELL_SHARE) * st.hov * st.hov + DWELL_SHARE * st.dwell) * wk;
-      const dvx = clamp(st.pvx, -12, 12) * DRAG_K * st.hov;
-      const dvy = clamp(st.pvy, -12, 12) * DRAG_K * st.hov;
-      const { nx, ny, d, v, gx, gy } = L;
-      const active = amp > 1e-5 || dvx !== 0 || dvy !== 0;
-      if (active) {
-        for (let i = 0; i < nx; i++) { const t = L.ox + (L.spanX * i) / (nx - 1) - st.cx; gx[i] = Math.exp(-t * t * inv2s); }
-        for (let j = 0; j < ny; j++) { const t = L.oy + (L.spanY * j) / (ny - 1) - st.cy; gy[j] = Math.exp(-t * t * inv2s); }
-      }
-      for (let j = 1; j < ny - 1; j++) {
-        const y = L.oy + (L.spanY * j) / (ny - 1);
-        for (let i = 1; i < nx - 1; i++) {
-          const k = j * nx + i, k3 = k * 3;
-          let tx = 0, ty = 0, tz = 0, gs = 0;
-          if (active) {
-            gs = gx[i] * gy[j];
-            const x = L.ox + (L.spanX * i) / (nx - 1);
-            // Lente: le lettere attorno al cursore si allargano verso l'esterno.
-            tx = amp * LENS * (x - st.cx) * gs;
-            ty = amp * LENS * (y - st.cy) * gs;
-            tz = amp * gs * LOCAL;
-          }
-          const kl = k3 - 3, kr = k3 + 3, ku = k3 - nx * 3, kd = k3 + nx * 3;
-          let di = d[k3];
-          v[k3] += (memK * (tx - di) + Tx * (d[kl] + d[kr] - 2 * di) + Ty * (d[ku] + d[kd] - 2 * di) - damp * v[k3] + dvx * gs) * STEP;
-          di = d[k3 + 1];
-          v[k3 + 1] += (memK * (ty - di) + Tx * (d[kl + 1] + d[kr + 1] - 2 * di) + Ty * (d[ku + 1] + d[kd + 1] - 2 * di) - damp * v[k3 + 1] + dvy * gs) * STEP;
-          di = d[k3 + 2];
-          v[k3 + 2] += (memK * (tz - di) + Tx * (d[kl + 2] + d[kr + 2] - 2 * di) + Ty * (d[ku + 2] + d[kd + 2] - 2 * di) - damp * v[k3 + 2]) * STEP;
-        }
-      }
-      for (let k = 0; k < nx * ny * 3; k++) d[k] += v[k] * STEP;
-    };
-
-    // Il cursore e' "sul nome" se e' sulle lettere (riquadro di ogni parola).
-    const overName = (bx, by) => {
-      const U = layout.U;
-      const cxPx = layout.cx, cyPx = layout.cy;
-      const pad = (REACH + (st.target > 0 ? HYST : 0)) * U;
-      const x = bx * U + cxPx, y = by * U + cyPx;
-      return layout.words.some((w) => x >= w.x - pad && x <= w.x + w.w + pad && y >= w.y + w.h * 0.12 - pad && y <= w.y + w.h * 0.92 + pad);
-    };
-
-    const frame = (now) => {
-      const g = gl;
-      if (!g || g.isContextLost() || !prog) return false;
-      const dt = last ? Math.min(0.1, (now - last) / 1000) : 1 / 60;
-      last = now;
-      const U = layout.U;
-
-      if (pt.has && pt.dirty) {
-        pt.dirty = false;
-        const er = el.getBoundingClientRect();
-        const z = el.offsetWidth ? er.width / el.offsetWidth : 1;
-        pt.bx = ((pt.x - er.left) / z - layout.cx) / U;
-        pt.by = ((pt.y - er.top) / z - layout.cy) / U;
-      }
-      let tx = st.cx, ty = st.cy, target = 0;
-      if (pt.has && overName(pt.bx, pt.by)) { target = 1; tx = pt.bx; ty = pt.by; }
-      st.target = target;
-
-      if (!L || L.key !== (layout.cssW / U).toFixed(3) + 'x' + (layout.cssH / U).toFixed(3)) L = makeLattice();
-
-      st.acc = Math.min(st.acc + dt, 0.1);
-      while (st.acc >= STEP) {
-        st.acc -= STEP;
-        if (st.target > st.hov) {
-          st.hov += (st.target - st.hov) * (1 - Math.exp(-STEP / 0.05));
-          st.relT = -1;
-        } else if (st.hov > 0) {
-          if (st.relT < 0) { st.relT = 0; st.relFrom = st.hov; }
-          st.relT += STEP;
-          const u = Math.min(1, st.relT / RELEASE);
-          st.hov = st.relFrom * (1 - u * u * (3 - 2 * u));
-        }
-        if (st.target > 0) st.dwell += (st.hov - st.dwell) * (1 - Math.exp(-STEP / DWELL_TAU));
-        st.dwell = Math.min(st.dwell, st.hov);
-        const kc = 1 - Math.exp(-STEP / 0.05);
-        const ncx = st.cx + (tx - st.cx) * kc, ncy = st.cy + (ty - st.cy) * kc;
-        const kv = 1 - Math.exp(-STEP / 0.06);
-        st.pvx += ((ncx - st.cx) / STEP - st.pvx) * kv;
-        st.pvy += ((ncy - st.cy) / STEP - st.pvy) * kv;
-        st.cx = ncx; st.cy = ncy;
-        const it = (1 - DWELL_SHARE) * st.hov + DWELL_SHARE * st.dwell;
-        st.infV += (INF_W * INF_W * (it - st.inf) - 2 * INF_W * st.infV) * STEP;
-        st.inf += st.infV * STEP;
-        stepLattice();
-      }
-
-      // Fermo? Torno esattamente piatto e smetto di disegnare.
-      let maxV = 0, maxD = 0, maxXY = 0;
-      for (let k = 0; k < L.d.length; k++) {
-        const a = Math.abs(L.v[k]); if (a > maxV) maxV = a;
-        const b = Math.abs(L.d[k]); if (b > maxD) maxD = b;
-        if (k % 3 !== 2 && b > maxXY) maxXY = b;
-      }
-      const tol = 0.25 / Math.max(U, 1);
-      let settled = Math.abs(st.hov - st.target) < 1e-3 && Math.abs(st.infV) < 0.01 &&
-        Math.abs(st.pvx) + Math.abs(st.pvy) < 0.01 && maxV < 2 * tol;
-      if (settled && st.target === 0) {
-        if (maxD < 4 * tol && Math.abs(st.inf) < 0.004) {
-          L.d.fill(0); L.v.fill(0);
-          maxD = 0; maxXY = 0;
-          st.inf = 0; st.infV = 0; st.hov = 0; st.dwell = 0;
-        } else settled = false;
-      }
-      const deformed = maxD > 1e-6;
-
-      // A riposo si vede il vero testo HTML: il canvas serve solo mentre il
-      // nome si muove. Garantisce che da fermo sia identico all'originale.
-      if (settled && st.target === 0 && !deformed && st.inf === 0) {
-        setActive(false);
-        return false;
-      }
-
-      // ---------------- risoluzione
-      const er = el.getBoundingClientRect();
-      const zoom = el.offsetWidth ? clamp(er.width / el.offsetWidth, 1, 2) : 1;
-      let scale = Math.min(MAX_DPR, (window.devicePixelRatio || 1) * zoom);
-      scale = Math.max(1, Math.min(scale, Math.sqrt(PIXEL_CAP / Math.max(1, layout.cssW * layout.cssH))));
-      const pw = Math.max(1, Math.round(layout.cssW * scale));
-      const ph = Math.max(1, Math.round(layout.cssH * scale));
-      if (canvas.width !== pw || canvas.height !== ph) { canvas.width = pw; canvas.height = ph; }
-      g.viewport(0, 0, pw, ph);
-      drawMask(pw, ph, scale);
-
-      // ---------------- reticolo sulla GPU
-      const Lt = L.tex;
-      for (let k = 0, n = L.nx * L.ny; k < n; k++) {
-        Lt[k * 4] = L.d[k * 3]; Lt[k * 4 + 1] = L.d[k * 3 + 1]; Lt[k * 4 + 2] = L.d[k * 3 + 2]; Lt[k * 4 + 3] = 1;
-      }
-      g.activeTexture(g.TEXTURE1);
-      g.bindTexture(g.TEXTURE_2D, texGrid);
-      const gd = L.nx + 'x' + L.ny;
-      if (gd !== gridDims) {
-        gridDims = gd;
-        g.texImage2D(g.TEXTURE_2D, 0, g.RGBA16F, L.nx, L.ny, 0, g.RGBA, g.FLOAT, Lt);
-      } else {
-        g.texSubImage2D(g.TEXTURE_2D, 0, 0, 0, L.nx, L.ny, g.RGBA, g.FLOAT, Lt);
-      }
-      g.activeTexture(g.TEXTURE0);
-      g.bindTexture(g.TEXTURE_2D, texMask);
-
-      const pxPerEm = U * scale;
-      g.uniform2f(loc.uCanvas, pw, ph);
-      g.uniform1f(loc.uPxPerEm, pxPerEm);
-      g.uniform4f(loc.uGrid, L.ox, L.oy, L.spanX, L.spanY);
-      g.uniform1f(loc.uDeform, deformed ? Math.max(maxXY, 1e-5) : 0);
-      g.uniform1f(loc.uScale, 1 + GROW * Math.max(0, st.inf));
-      g.uniform1f(loc.uPuffAll, PUFF_ALL * Math.max(0, st.inf));
-      g.uniform1f(loc.uDil, DILATE * pxPerEm);
-      g.drawArrays(g.TRIANGLES, 0, 3);
-
-      // Canvas e testo trasparente si attivano nello stesso frame del disegno.
-      setActive(true);
-      return !settled;
-    };
-
-    // ---------------------------------------------------------- avvio e aggiornamenti
-    const relayout = () => {
-      if (!measure()) return;
-      layout.ready = true;
-      if (!running) wake();
-    };
-    const io = new IntersectionObserver((es) => { visible = es[0].isIntersecting; if (visible) wake(); });
-    io.observe(el);
-    const onVis = () => { pageVisible = !document.hidden; if (pageVisible) wake(); };
-    document.addEventListener('visibilitychange', onVis);
-    const ro = new ResizeObserver(() => { if (layout.ready) relayout(); });
-    ro.observe(el);
-    const onFonts = () => relayout();
-    if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', onFonts);
-
-    canvas.addEventListener('webglcontextlost', (e) => {
-      e.preventDefault();
-      st.lost = true; running = false; cancelAnimationFrame(raf);
-      setActive(false);
+  /* La linea verticale si riempie fino a poco oltre meta' schermo; le fermate
+     gia' superate diventano blu, quella corrente gialla. */
+  function update() {
+    ticking = false;
+    var vh = window.innerHeight;
+    nav.classList.toggle('scrolled', window.scrollY > 24);
+    nav.classList.toggle('solid', window.scrollY > hero.offsetHeight - 70);
+    var rt = route.getBoundingClientRect();
+    var f = Math.max(0, Math.min(rt.height, vh * 0.55 - rt.top));
+    fill.style.height = f + 'px';
+    var max = document.documentElement.scrollHeight - vh;
+    prog.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, window.scrollY / max) : 0) + ')';
+    var last = -1;
+    labels.forEach(function (l, i) {
+      var passed = l.getBoundingClientRect().top - rt.top + 10 <= f;
+      l.classList.toggle('passed', passed);
+      if (passed) last = i;
     });
-    canvas.addEventListener('webglcontextrestored', () => {
-      st.lost = false;
-      gl = canvas.getContext('webgl2', glOpts);
-      if (gl) { build(); L = null; wake(); }
-    });
-
-    build();
-    // Disegno solo dopo che il font del titolo e' caricato, cosi' il canvas
-    // combacia con il testo HTML fin dal primo frame.
-    const ready = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
-    ready.then(relayout, relayout);
+    labels.forEach(function (l, i) { l.classList.toggle('here', i === last); });
   }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  update();
 
-  window.mountPuffName = mountPuffName;
+  /* Progetti: intestazioni usabili anche da tastiera, stato annunciato ai lettori di schermo. */
+  var heads = Array.prototype.slice.call(document.querySelectorAll('.proj-head'));
+  function syncHeads() {
+    heads.forEach(function (h) { h.setAttribute('aria-expanded', h.parentElement.classList.contains('open') ? 'true' : 'false'); });
+    onScroll();
+  }
+  heads.forEach(function (h) {
+    h.addEventListener('click', function () { setTimeout(syncHeads, 0); });
+    h.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); h.click(); }
+    });
+  });
+  document.querySelectorAll('.proj-body').forEach(function (b) { b.addEventListener('transitionend', onScroll); });
 })();
-
-</script>
-<script>
-  /* Se qualcosa va storto resta il titolo normale e la pagina continua a funzionare. */
-  try {
-    if (typeof mountPuffName === 'function') mountPuffName(document.querySelector('.hero-name'));
-  } catch (e) { console.warn('Effetto sul nome disattivato:', e); }
 </script>
 </body>
 </html>
