@@ -280,6 +280,7 @@ html.js:not(.ready) #hero :is(.hero-name, .hero-label, .hero-desc, .hero-actions
 .proj-card.open .proj-body { grid-template-rows: 1fr; }
 .proj-body-in { min-height: 0; overflow: hidden; visibility: hidden; transition: visibility 0s 0.4s; }
 .proj-card.open .proj-body-in { visibility: visible; transition-delay: 0s; }
+.proj-card.no-anim .proj-body, .proj-card.no-anim .proj-body-in { transition: none; }
 .proj-image { width: 100%; height: 380px; background: var(--paper); overflow: hidden; padding: 2rem; }
 .proj-image img { width: 100%; height: 100%; object-fit: contain; object-position: center; mix-blend-mode: multiply; }
 .proj-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--white); }
@@ -1198,6 +1199,37 @@ function setLang(lang) {
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll);
   update();
+
+  /* Apertura progetti. Quando si apre un progetto mentre un altro (magari lungo,
+     con "Approfondisci" aperto) e' gia' aperto sopra, quello sopra si chiude subito
+     e la pagina viene compensata: l'intestazione cliccata resta ferma dove si trova
+     sullo schermo, invece di lasciare scivolare la pagina verso il fondo. */
+  window.toggleProj = function (id) {
+    var card = document.getElementById(id);
+    if (!card) return;
+    var wasOpen = card.classList.contains('open');
+    var before = card.getBoundingClientRect().top;
+    document.querySelectorAll('.proj-card.open').forEach(function (c) {
+      if (c === card) return;
+      c.classList.add('no-anim');
+      c.classList.remove('open');
+    });
+    void card.offsetHeight;
+    var shift = card.getBoundingClientRect().top - before;
+    if (shift) window.scrollTo({ top: window.scrollY + shift, behavior: 'instant' });
+    card.classList.toggle('open', !wasOpen);
+    /* Se il progetto aperto e' nella parte bassa dello schermo, lo porta in alto
+       per mostrarne il contenuto (come faceva il sito originale). */
+    if (!wasOpen) {
+      var top = card.getBoundingClientRect().top;
+      if (top > window.innerHeight * 0.55) {
+        window.scrollTo({ top: window.scrollY + top - 80, behavior: reduce ? 'instant' : 'smooth' });
+      }
+    }
+    requestAnimationFrame(function () {
+      document.querySelectorAll('.proj-card.no-anim').forEach(function (c) { c.classList.remove('no-anim'); });
+    });
+  };
 
   /* Progetti: intestazioni usabili anche da tastiera, stato annunciato ai lettori di schermo. */
   var heads = Array.prototype.slice.call(document.querySelectorAll('.proj-head'));
